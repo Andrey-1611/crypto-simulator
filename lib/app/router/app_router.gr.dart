@@ -27,12 +27,59 @@ class BriefcaseRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [FavouritePage]
-class FavouritesRoute extends PageRouteInfo<void> {
-  const FavouritesRoute({List<PageRouteInfo>? children})
-    : super(FavouritesRoute.name, initialChildren: children);
+/// [CryptoCoinPage]
+class CryptoCoinRoute extends PageRouteInfo<CryptoCoinRouteArgs> {
+  CryptoCoinRoute({
+    Key? key,
+    required CryptoCoin coin,
+    List<PageRouteInfo>? children,
+  }) : super(
+         CryptoCoinRoute.name,
+         args: CryptoCoinRouteArgs(key: key, coin: coin),
+         initialChildren: children,
+       );
 
-  static const String name = 'FavouritesRoute';
+  static const String name = 'CryptoCoinRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<CryptoCoinRouteArgs>();
+      return CryptoCoinPage(key: args.key, coin: args.coin);
+    },
+  );
+}
+
+class CryptoCoinRouteArgs {
+  const CryptoCoinRouteArgs({this.key, required this.coin});
+
+  final Key? key;
+
+  final CryptoCoin coin;
+
+  @override
+  String toString() {
+    return 'CryptoCoinRouteArgs{key: $key, coin: $coin}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! CryptoCoinRouteArgs) return false;
+    return key == other.key && coin == other.coin;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ coin.hashCode;
+}
+
+/// generated route for
+/// [FavouritePage]
+class FavouriteRoute extends PageRouteInfo<void> {
+  const FavouriteRoute({List<PageRouteInfo>? children})
+    : super(FavouriteRoute.name, initialChildren: children);
+
+  static const String name = 'FavouriteRoute';
 
   static PageInfo page = PageInfo(
     name,
