@@ -56,7 +56,11 @@ final _textTheme = TextTheme(
   displayMedium: TextStyle(fontWeight: FontWeight.w800, fontSize: 22.sp),
   displaySmall: TextStyle(fontWeight: FontWeight.w600, fontSize: 18.sp),
   bodyLarge: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.sp),
-  bodyMedium: TextStyle(fontWeight: FontWeight.w400, fontSize: 16.sp, color: _hintColor),
+  bodyMedium: TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 16.sp,
+    color: _hintColor,
+  ),
   labelLarge: TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp),
 );
 
@@ -116,6 +120,11 @@ final _elevatedButtonTheme = ElevatedButtonThemeData(
   style: ElevatedButton.styleFrom(
     foregroundColor: Colors.white,
     backgroundColor: _primary,
+    textStyle: TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.w500,
+      fontSize: 20.sp,
+    ),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
   ),
 );

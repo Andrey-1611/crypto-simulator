@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import '../../../data/models/crypto_coin.dart';
 import '../providers/market_provider.dart';
 
 class MarketSortSheet extends ConsumerWidget {
@@ -16,7 +16,7 @@ class MarketSortSheet extends ConsumerWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+        children: [
           Text('Сортировка', style: theme.textTheme.displaySmall),
           SizedBox(height: size.height * 0.02),
           RadioGroup<SortType>(

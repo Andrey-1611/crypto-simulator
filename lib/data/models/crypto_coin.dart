@@ -182,3 +182,5 @@ class CryptoCoin {
     };
   }
 }
+
+enum SortType { marketCap, price, change24h, volume }

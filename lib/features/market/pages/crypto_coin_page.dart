@@ -3,6 +3,7 @@ import 'package:crypto_simulator/app/widgets/loader.dart';
 import 'package:crypto_simulator/app/widgets/unknown_error.dart';
 import 'package:crypto_simulator/data/models/crypto_coin.dart';
 import 'package:crypto_simulator/features/market/providers/market_provider.dart';
+import 'package:crypto_simulator/features/market/widgets/buy_crypto_coin_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -48,6 +49,7 @@ class CryptoCoinPage extends ConsumerWidget {
                 _PriceCard(coin: newCoin),
                 _MarketDataCard(coin: newCoin),
                 _CoinInfoCard(coin: newCoin),
+                _BuyButton(coin: newCoin),
               ],
             );
           },
@@ -161,6 +163,7 @@ class _CoinInfoCard extends StatelessWidget {
             SizedBox(height: size.height * 0.02),
             _InfoRow(label: 'Символ', value: coin.symbol),
             _InfoRow(label: 'ID', value: coin.id),
+            SizedBox(height: size.height * 0.02),
           ],
         ),
       ),
@@ -178,7 +181,7 @@ class _DataRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const .symmetric(vertical: 8),
       child: Row(
         mainAxisAlignment: .spaceBetween,
         children: [
@@ -207,6 +210,33 @@ class _InfoRow extends StatelessWidget {
           Text(label, style: theme.textTheme.bodyMedium),
           Text(value, style: theme.textTheme.bodyLarge),
         ],
+      ),
+    );
+  }
+}
+
+class _BuyButton extends StatelessWidget {
+  final CryptoCoin coin;
+
+  const _BuyButton({required this.coin});
+
+  void showBuyCoinSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) => BuyCryptoCoinSheet(coin: coin),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+    return Container(
+      margin: const EdgeInsets.all(16),
+      width: double.infinity,
+      height: size.height * 0.05,
+      child: ElevatedButton(
+        onPressed: () => showBuyCoinSheet(context),
+        child: const Text('Купить'),
       ),
     );
   }
