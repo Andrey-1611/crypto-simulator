@@ -1,11 +1,17 @@
 import 'package:crypto_simulator/app/runner/app_dependencies.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:talker_dio_logger/talker_dio_logger_interceptor.dart';
 
+import 'firebase_options.dart';
+
 class AppInitializer {
   static Future<void> init(ProviderContainer container) async {
     WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     final dio = container.read(dioProvider);
     dio.interceptors.add(TalkerDioLogger());
   }

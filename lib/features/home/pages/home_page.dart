@@ -10,26 +10,16 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
-    final tabs = [s.market, s.briefcase, s.favourite, s.rating];
     return AutoTabsRouter(
       routes: const [
         MarketRoute(),
         BriefcaseRoute(),
-        FavouritesRoute(),
+        FavouriteRoute(),
         RatingRoute(),
       ],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
         return Scaffold(
-          appBar: AppBar(
-            title: Text(tabs[tabsRouter.activeIndex]),
-            actions: [
-              IconButton(
-                onPressed: () => context.pushRoute(const SettingsRoute()),
-                icon: const Icon(Icons.settings),
-              ),
-            ],
-          ),
           body: child,
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
@@ -38,19 +28,19 @@ class HomePage extends StatelessWidget {
             items: [
               BottomNavigationBarItem(
                 icon: const Icon(Icons.currency_exchange),
-                label: tabs[0],
+                label: s.market,
               ),
               BottomNavigationBarItem(
                 icon: const Icon(Icons.wallet),
-                label: tabs[1],
+                label: s.briefcase,
               ),
               BottomNavigationBarItem(
                 icon: const Icon(Icons.star),
-                label: tabs[2],
+                label: s.favourite,
               ),
               BottomNavigationBarItem(
                 icon: const Icon(Icons.leaderboard),
-                label: tabs[3],
+                label: s.rating,
               ),
             ],
           ),
