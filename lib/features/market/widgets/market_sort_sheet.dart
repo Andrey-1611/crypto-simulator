@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../data/models/crypto_coin.dart';
-import '../providers/market_provider.dart';
+import '../../../data/models/crypto_coin_details.dart';
+import '../providers/filter_providers.dart';
 
 class MarketSortSheet extends ConsumerWidget {
   const MarketSortSheet({super.key});

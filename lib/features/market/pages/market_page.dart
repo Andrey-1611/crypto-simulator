@@ -1,12 +1,13 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_simulator/data/models/crypto_coin.dart';
+import 'package:crypto_simulator/app/widgets/crypto_coin_card.dart';
+import 'package:crypto_simulator/data/models/crypto_coin_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../app/router/app_router.dart';
 import '../../../app/widgets/loader.dart';
 import '../../../app/widgets/settings_button.dart';
 import '../../../app/widgets/unknown_error.dart';
 import '../../../generated/l10n.dart';
+import '../providers/filter_providers.dart';
 import '../providers/market_provider.dart';
 import '../widgets/market_sort_sheet.dart';
 
@@ -48,12 +49,12 @@ class _MarketPageState extends ConsumerState<MarketPage> {
         size: Size.fromHeight(size.height * 0.13),
         searchController: _searchController,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+      body: Padding(
+        padding: const .all(16.0),
+        child: Center(
           child: cryptoCoinsP.when(
             data: (coins) {
-              final filterCoins = CryptoCoin.filterCryptoCoins(
+              final filterCoins = CryptoCoinDetails.filterCryptoCoins(
                 coins,
                 ref.watch(sortCoinsProvider),
                 ref.watch(searchCoinsProvider),
@@ -83,35 +84,19 @@ class _MarketPageState extends ConsumerState<MarketPage> {
 }
 
 class _CryptoCoinsList extends ConsumerWidget {
-  final List<CryptoCoin> coins;
+  final List<CryptoCoinDetails> coins;
   final ScrollController scrollController;
 
   const _CryptoCoinsList({required this.coins, required this.scrollController});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final size = MediaQuery.sizeOf(context);
     return ListView.builder(
       controller: scrollController,
       itemCount: coins.length,
       itemBuilder: (context, index) {
         final coin = coins[index];
-        return Card(
-          child: ListTile(
-            leading: SizedBox.square(
-              dimension: size.height * 0.06,
-              child: Image.network(coin.fullImageUrl),
-            ),
-            title: Text(coin.name),
-            subtitle: Text(
-              '${coin.currentPrice.toStringAsFixed(3)} \$',
-              style: theme.textTheme.bodyMedium,
-            ),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.pushRoute(CryptoCoinRoute(coin: coin)),
-          ),
-        );
+        return CryptoCoinCard(coin: coin, price: coin.currentPrice);
       },
     );
   }
@@ -165,6 +150,7 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(s.market),
       actions: [const SettingsButton()],
+      automaticallyImplyLeading: false,
       bottom: PreferredSize(
         preferredSize: preferredSize,
         child: Padding(

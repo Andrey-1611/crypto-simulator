@@ -74,22 +74,6 @@ class CryptoCoinRouteArgs {
 }
 
 /// generated route for
-/// [FavouritePage]
-class FavouriteRoute extends PageRouteInfo<void> {
-  const FavouriteRoute({List<PageRouteInfo>? children})
-    : super(FavouriteRoute.name, initialChildren: children);
-
-  static const String name = 'FavouriteRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const FavouritePage();
-    },
-  );
-}
-
-/// generated route for
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})
@@ -151,4 +135,48 @@ class SettingsRoute extends PageRouteInfo<void> {
       return const SettingsPage();
     },
   );
+}
+
+/// generated route for
+/// [TradePage]
+class TradeRoute extends PageRouteInfo<TradeRouteArgs> {
+  TradeRoute({Key? key, required Trade trade, List<PageRouteInfo>? children})
+    : super(
+        TradeRoute.name,
+        args: TradeRouteArgs(key: key, trade: trade),
+        initialChildren: children,
+      );
+
+  static const String name = 'TradeRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<TradeRouteArgs>();
+      return TradePage(key: args.key, trade: args.trade);
+    },
+  );
+}
+
+class TradeRouteArgs {
+  const TradeRouteArgs({this.key, required this.trade});
+
+  final Key? key;
+
+  final Trade trade;
+
+  @override
+  String toString() {
+    return 'TradeRouteArgs{key: $key, trade: $trade}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! TradeRouteArgs) return false;
+    return key == other.key && trade == other.trade;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ trade.hashCode;
 }

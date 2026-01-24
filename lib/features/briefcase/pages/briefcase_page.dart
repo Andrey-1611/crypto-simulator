@@ -1,4 +1,10 @@
 import 'package:auto_route/annotations.dart';
+import 'package:crypto_simulator/app/widgets/settings_button.dart';
+import 'package:crypto_simulator/features/briefcase/pages/balance_page.dart';
+import 'package:crypto_simulator/features/briefcase/pages/crypto_coins_page.dart';
+import 'package:crypto_simulator/features/briefcase/pages/trades_history_page.dart';
+import 'package:crypto_simulator/features/briefcase/widgets/keep_alive.dart';
+import 'package:crypto_simulator/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -7,6 +13,31 @@ class BriefcasePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('BriefcasePage')));
+    final s = S.of(context);
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(s.briefcase),
+          automaticallyImplyLeading: false,
+          actions: [const SettingsButton()],
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: 'Баланс'),
+              Tab(text: 'Монеты'),
+              Tab(text: 'Операции'),
+            ],
+          ),
+        ),
+        body: const Padding(
+          padding: .all(16),
+          child: TabBarView(children: [
+            KeepAliveWrapper(child: BalancePage()),
+            KeepAliveWrapper(child: CryptoCoinsPage()),
+            KeepAliveWrapper(child: TradesHistoryPage()),
+          ]),
+        ),
+      ),
+    );
   }
 }
