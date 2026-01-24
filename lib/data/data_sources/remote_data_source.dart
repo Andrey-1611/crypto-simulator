@@ -16,7 +16,15 @@ class RemoteDataSource implements RemoteRepository {
   }
 
   @override
-  Future<AppUser?> getUserById(String userId) async {
+  Future<AppUser> getUserById(String userId) async {
+    final doc = await _usersCollection().doc(userId).get();
+    final user = AppUser.fromJson(doc.data() as Map<String, dynamic>);
+    user.trades.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    return user;
+  }
+
+  @override
+  Future<AppUser?> getUserOrNullById(String userId) async {
     final doc = await _usersCollection().doc(userId).get();
     if (!doc.exists) return null;
     final user = AppUser.fromJson(doc.data() as Map<String, dynamic>);

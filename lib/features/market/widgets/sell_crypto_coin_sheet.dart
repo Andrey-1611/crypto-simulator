@@ -43,7 +43,7 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
   Future<void> sell(BuildContext context, int userCoinsAmount) async {
     if (coinsAmount <= userCoinsAmount) {
       await ref
-          .read(briefcaseNotifierProvider.notifier)
+          .read(briefcaseNotifierProvider(null).notifier)
           .createTrade(
             coin: coin.info,
             coinPrice: coin.currentPrice,
@@ -60,8 +60,8 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final userP = ref.watch(briefcaseNotifierProvider);
-    ref.listen(briefcaseNotifierProvider, (_, state) {
+    final userP = ref.watch(briefcaseNotifierProvider(null));
+    ref.listen(briefcaseNotifierProvider(null), (_, state) {
       if (state.hasError) ToastHelper.unknownError(theme);
     });
     return Padding(

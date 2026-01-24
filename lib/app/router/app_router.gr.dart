@@ -12,18 +12,48 @@ part of 'app_router.dart';
 
 /// generated route for
 /// [BriefcasePage]
-class BriefcaseRoute extends PageRouteInfo<void> {
-  const BriefcaseRoute({List<PageRouteInfo>? children})
-    : super(BriefcaseRoute.name, initialChildren: children);
+class BriefcaseRoute extends PageRouteInfo<BriefcaseRouteArgs> {
+  BriefcaseRoute({Key? key, AppUser? user, List<PageRouteInfo>? children})
+    : super(
+        BriefcaseRoute.name,
+        args: BriefcaseRouteArgs(key: key, user: user),
+        initialChildren: children,
+      );
 
   static const String name = 'BriefcaseRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const BriefcasePage();
+      final args = data.argsAs<BriefcaseRouteArgs>(
+        orElse: () => const BriefcaseRouteArgs(),
+      );
+      return BriefcasePage(key: args.key, user: args.user);
     },
   );
+}
+
+class BriefcaseRouteArgs {
+  const BriefcaseRouteArgs({this.key, this.user});
+
+  final Key? key;
+
+  final AppUser? user;
+
+  @override
+  String toString() {
+    return 'BriefcaseRouteArgs{key: $key, user: $user}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! BriefcaseRouteArgs) return false;
+    return key == other.key && user == other.user;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ user.hashCode;
 }
 
 /// generated route for

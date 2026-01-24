@@ -1,4 +1,3 @@
-import 'package:crypto_simulator/data/models/app_user.dart';
 import 'package:crypto_simulator/data/repositories/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

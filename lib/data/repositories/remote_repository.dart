@@ -8,7 +8,9 @@ final remoteRepositoryProvider = Provider<RemoteRepository>((ref) {
 });
 
 abstract interface class RemoteRepository {
-  Future<AppUser?> getUserById(String userId);
+  Future<AppUser> getUserById(String userId);
+
+  Future<AppUser?> getUserOrNullById(String userId);
 
   Future<void> createUser(AppUser user);
 

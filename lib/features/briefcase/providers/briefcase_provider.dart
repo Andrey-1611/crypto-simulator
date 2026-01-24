@@ -9,14 +9,23 @@ import 'crypto_coins_balance_provider.dart';
 import 'crypto_coins_details_provider.dart';
 
 final briefcaseNotifierProvider =
-    AsyncNotifierProvider<BriefcaseNotifier, AppUser?>(BriefcaseNotifier.new);
+    AsyncNotifierProvider.family<BriefcaseNotifier, AppUser?, AppUser?>(
+      (user) => BriefcaseNotifier(user: user),
+    );
 
 class BriefcaseNotifier extends AsyncNotifier<AppUser?> {
+  final AppUser? user;
+
+  BriefcaseNotifier({required this.user});
+
   @override
   FutureOr<AppUser?> build() async {
+    if (user != null) return user;
     final userId = await ref.read(authRepositoryProvider).getUserId();
-    final user = await ref.read(remoteRepositoryProvider).getUserById(userId);
-    return user;
+    final newUser = await ref
+        .read(remoteRepositoryProvider)
+        .getUserOrNullById(userId);
+    return newUser;
   }
 
   Future<void> createTrade({
@@ -35,8 +44,8 @@ class BriefcaseNotifier extends AsyncNotifier<AppUser?> {
       final userId = await ref.read(authRepositoryProvider).getUserId();
       final user = await ref.read(remoteRepositoryProvider).getUserById(userId);
       final updatedUser = trade.type == TradeType.buy
-          ? AppUser.buyCoins(user!, trade)
-          : AppUser.sellCoins(user!, trade);
+          ? AppUser.buyCoins(user, trade)
+          : AppUser.sellCoins(user, trade);
       await ref.read(remoteRepositoryProvider).updateUser(updatedUser);
       ref.invalidate(cryptoCoinsDetailsProvider);
       ref.invalidate(cryptoCoinsBalanceProvider);
