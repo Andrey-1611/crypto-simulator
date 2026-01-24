@@ -186,7 +186,7 @@ class _ActionsButtons extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
-    final userP = ref.watch(briefcaseNotifierProvider);
+    final userP = ref.watch(briefcaseNotifierProvider(null));
     return Row(
       children: [
         Flexible(

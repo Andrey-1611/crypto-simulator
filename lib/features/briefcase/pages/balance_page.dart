@@ -1,5 +1,6 @@
 import 'package:crypto_simulator/app/widgets/unknown_error.dart';
 import 'package:crypto_simulator/core/utils/price_formatter.dart';
+import 'package:crypto_simulator/data/models/app_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/widgets/info_bloc.dart';
@@ -9,12 +10,14 @@ import '../providers/briefcase_provider.dart';
 import '../providers/crypto_coins_balance_provider.dart';
 
 class BalancePage extends ConsumerWidget {
-  const BalancePage({super.key});
+  final AppUser? user;
+
+  const BalancePage({super.key, this.user});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userP = ref.watch(briefcaseNotifierProvider);
-    final coinsPriceP = ref.watch(cryptoCoinsBalanceProvider);
+    final userP = ref.watch(briefcaseNotifierProvider(user));
+    final coinsPriceP = ref.watch(cryptoCoinsBalanceProvider(user));
     return userP.when(
       data: (user) => Column(
         children: [
@@ -70,7 +73,8 @@ class BalancePage extends ConsumerWidget {
         ],
       ),
       error: (_, _) => UnknownError(
-        onPressed: () => ref.read(briefcaseNotifierProvider.notifier).build(),
+        onPressed: () =>
+            ref.read(briefcaseNotifierProvider(user).notifier).build(),
       ),
       loading: () => const Loader(),
     );

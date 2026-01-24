@@ -31,7 +31,17 @@ class AppUser {
       trades.map((t) => t.totalPrice).toList().fold(0.0, (sum, p) => sum + p);
 
   int get boughtCoinsLength =>
-      trades.map((t) => t.amount).toList().reduce((a, b) => a + b);
+      trades.map((t) => t.amount).toList().fold(0, (sum, p) => sum + p);
+
+  double coinsBalance(List<({double price, String symbol})> prices) {
+    return coins.fold(0.0, (sum, coin) {
+      final price = prices.firstWhere(
+            (p) => p.symbol == coin.info.symbol,
+        orElse: () => (price: 0, symbol: ''),
+      );
+      return sum + (price.price * coin.amount);
+    });
+  }
 
   AppUser copyWith({
     String? id,
@@ -70,8 +80,8 @@ class AppUser {
     final index = coins.indexWhere((e) => e.info.symbol == trade.coin.symbol);
     if (index != -1) {
       coins[index] = (
-        info: coins[index].info,
-        amount: coins[index].amount + trade.amount,
+      info: coins[index].info,
+      amount: coins[index].amount + trade.amount,
       );
     } else {
       coins.add((info: trade.coin, amount: trade.amount));
@@ -90,8 +100,8 @@ class AppUser {
       coins.removeAt(index);
     } else {
       coins[index] = (
-        info: coins[index].info,
-        amount: coins[index].amount - trade.amount,
+      info: coins[index].info,
+      amount: coins[index].amount - trade.amount,
       );
     }
     return user.copyWith(
@@ -103,7 +113,7 @@ class AppUser {
 
   ({CryptoCoin info, int amount}) findCoin(CryptoCoin coin) {
     final userCoin = coins.firstWhere(
-      (c) => c.info.symbol == coin.symbol,
+          (c) => c.info.symbol == coin.symbol,
       orElse: () => (amount: 0, info: coin),
     );
     return userCoin;

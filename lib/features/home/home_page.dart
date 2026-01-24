@@ -11,11 +11,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = S.of(context);
     return AutoTabsRouter(
-      routes: const [
-        MarketRoute(),
-        BriefcaseRoute(),
-        RatingRoute(),
-      ],
+      routes: [const MarketRoute(), BriefcaseRoute(), const RatingRoute()],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
         return Scaffold(

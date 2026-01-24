@@ -1,9 +1,6 @@
 import 'dart:async';
-import 'package:crypto_simulator/data/models/crypto_coin.dart';
 import 'package:crypto_simulator/data/repositories/crypto_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
-
 import '../../../data/models/crypto_coin_details.dart';
 
 final marketNotifierProvider =

@@ -17,6 +17,6 @@ class AppInitializer {
         container.read(talkerProvider).handle(details.exception, details.stack);
     final dio = container.read(dioProvider);
     dio.interceptors.add(TalkerDioLogger());
-    await container.read(briefcaseNotifierProvider.notifier).build();
+    await container.read(briefcaseNotifierProvider(null).notifier).build();
   }
 }

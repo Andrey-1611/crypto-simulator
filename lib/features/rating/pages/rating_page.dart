@@ -1,4 +1,5 @@
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:crypto_simulator/app/router/app_router.dart';
 import 'package:crypto_simulator/app/widgets/loader.dart';
 import 'package:crypto_simulator/app/widgets/unknown_error.dart';
 import 'package:crypto_simulator/core/utils/price_formatter.dart';
@@ -38,7 +39,7 @@ class RatingPage extends ConsumerWidget {
 }
 
 class _UsersList extends StatelessWidget {
-  final List<AppUser> users;
+  final List<({AppUser user, double fullBalance})> users;
 
   const _UsersList({required this.users});
 
@@ -52,10 +53,10 @@ class _UsersList extends StatelessWidget {
         return Card(
           child: ListTile(
             leading: Text('${index + 1}', style: theme.textTheme.displayMedium),
-            title: Text(user.name),
-            subtitle: Text(user.balance.price),
+            title: Text(user.user.name),
+            subtitle: Text(user.fullBalance.price),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () {},
+            onTap: () => context.pushRoute(BriefcaseRoute(user: user.user)),
           ),
         );
       },

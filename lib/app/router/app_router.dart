@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import '../../data/models/app_user.dart';
 import '../../data/models/crypto_coin.dart';
 import '../../data/models/trade.dart';
 import '../../features/briefcase/pages/briefcase_page.dart';
@@ -27,6 +28,7 @@ class AppRouter extends RootStackRouter {
     ),
     AutoRoute(page: SettingsRoute.page),
     AutoRoute(page: CryptoCoinRoute.page),
-    AutoRoute(page: TradeRoute.page)
+    AutoRoute(page: TradeRoute.page),
+    AutoRoute(page: BriefcaseRoute.page),
   ];
 }
