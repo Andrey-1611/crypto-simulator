@@ -1,12 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypto_simulator/data/models/crypto_coin.dart';
 import 'package:crypto_simulator/data/models/trade.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'app_user.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class AppUser {
   final String id;
   final String name;
   final DateTime createdAt;
   final double balance;
-  final List<({String symbol, int amount})> coins;
+  final List<({CryptoCoin info, int amount})> coins;
   final List<Trade> trades;
 
   const AppUser({
@@ -14,28 +18,27 @@ class AppUser {
     required this.name,
     required this.createdAt,
     required this.balance,
-    required this.coins,
-    required this.trades,
+    this.coins = const [],
+    this.trades = const [],
   });
 
-  @override
-  String toString() {
-    return 'AppUser{'
-        ' id: $id,'
-        ' name: $name,'
-        ' createdAt: $createdAt,'
-        ' balance: $balance,'
-        ' coins: $coins,'
-        ' trades: $trades,'
-        '}';
-  }
+  List<String> get coinsSymbols => coins.map((c) => c.info.symbol).toList();
+
+  int get allCoinsLength =>
+      coins.map((c) => c.amount).toList().fold(0, (sum, c) => sum + c);
+
+  double get tradesTotalPrice =>
+      trades.map((t) => t.totalPrice).toList().fold(0.0, (sum, p) => sum + p);
+
+  int get boughtCoinsLength =>
+      trades.map((t) => t.amount).toList().reduce((a, b) => a + b);
 
   AppUser copyWith({
     String? id,
     String? name,
     DateTime? createdAt,
     double? balance,
-    List<({String symbol, int amount})>? coins,
+    List<({CryptoCoin info, int amount})>? coins,
     List<Trade>? trades,
   }) {
     return AppUser(
@@ -48,27 +51,10 @@ class AppUser {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'name': name,
-      'createdAt': createdAt,
-      'balance': balance,
-      'coins': coins,
-      'trades': trades,
-    };
-  }
+  Map<String, dynamic> toJson() => _$AppUserToJson(this);
 
-  factory AppUser.fromMap(Map<String, dynamic> map) {
-    return AppUser(
-      id: map['id'] as String,
-      name: map['name'] as String,
-      createdAt: (map['createdAt'] as Timestamp).toDate(),
-      balance: map['balance'] as double,
-      coins: List<({String symbol, int amount})>.from(map['coins'] as List),
-      trades: List.from(map['trades'] as List),
-    );
-  }
+  factory AppUser.fromJson(Map<String, dynamic> json) =>
+      _$AppUserFromJson(json);
 
   factory AppUser.create(String id, String name) {
     return AppUser(
@@ -76,29 +62,50 @@ class AppUser {
       name: name,
       createdAt: DateTime.now(),
       balance: 1000,
-      coins: [],
-      trades: [],
     );
   }
 
-  factory AppUser.addTrade(AppUser user, Trade trade) {
+  factory AppUser.buyCoins(AppUser user, Trade trade) {
     final coins = List.of(user.coins);
-    final index = coins.indexWhere((coin) => coin.symbol == trade.coinSymbol);
+    final index = coins.indexWhere((e) => e.info.symbol == trade.coin.symbol);
     if (index != -1) {
       coins[index] = (
-        symbol: coins[index].symbol,
+        info: coins[index].info,
         amount: coins[index].amount + trade.amount,
       );
     } else {
-      coins.add((symbol: trade.coinSymbol, amount: trade.amount));
+      coins.add((info: trade.coin, amount: trade.amount));
     }
-    final balance = trade.type == TradeType.buy
-        ? user.balance - trade.totalPrice
-        : user.balance + trade.totalPrice;
     return user.copyWith(
-      balance: balance,
+      balance: user.balance - trade.totalPrice,
       coins: coins,
-      trades: [...user.trades, trade],
+      trades: [trade, ...user.trades],
     );
+  }
+
+  factory AppUser.sellCoins(AppUser user, Trade trade) {
+    final coins = List.of(user.coins);
+    final index = coins.indexWhere((e) => e.info.symbol == trade.coin.symbol);
+    if (trade.amount == coins[index].amount) {
+      coins.removeAt(index);
+    } else {
+      coins[index] = (
+        info: coins[index].info,
+        amount: coins[index].amount - trade.amount,
+      );
+    }
+    return user.copyWith(
+      balance: user.balance + trade.totalPrice,
+      coins: coins,
+      trades: [trade, ...user.trades],
+    );
+  }
+
+  ({CryptoCoin info, int amount}) findCoin(CryptoCoin coin) {
+    final userCoin = coins.firstWhere(
+      (c) => c.info.symbol == coin.symbol,
+      orElse: () => (amount: 0, info: coin),
+    );
+    return userCoin;
   }
 }

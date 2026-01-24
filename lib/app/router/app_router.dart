@@ -1,9 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import '../../data/models/crypto_coin.dart';
+import '../../data/models/trade.dart';
 import '../../features/briefcase/pages/briefcase_page.dart';
-import '../../features/favourite/pages/favourite_page.dart';
-import '../../features/home/pages/home_page.dart';
+import '../../features/briefcase/pages/trade_page.dart';
+import '../../features/home/home_page.dart';
 import '../../features/market/pages/crypto_coin_page.dart';
 import '../../features/market/pages/market_page.dart';
 import '../../features/rating/pages/rating_page.dart';
@@ -21,11 +22,11 @@ class AppRouter extends RootStackRouter {
       children: [
         AutoRoute(page: MarketRoute.page),
         AutoRoute(page: BriefcaseRoute.page),
-        AutoRoute(page: FavouriteRoute.page),
         AutoRoute(page: RatingRoute.page),
       ],
     ),
     AutoRoute(page: SettingsRoute.page),
     AutoRoute(page: CryptoCoinRoute.page),
+    AutoRoute(page: TradeRoute.page)
   ];
 }

@@ -14,14 +14,31 @@ class HomePage extends StatelessWidget {
       routes: const [
         MarketRoute(),
         BriefcaseRoute(),
-        FavouriteRoute(),
         RatingRoute(),
       ],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
         return Scaffold(
           body: child,
-          bottomNavigationBar: BottomNavigationBar(
+          bottomNavigationBar: NavigationBar(
+            selectedIndex: tabsRouter.activeIndex,
+            onDestinationSelected: tabsRouter.setActiveIndex,
+            destinations: [
+              NavigationDestination(
+                icon: const Icon(Icons.currency_exchange),
+                label: s.market,
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.wallet),
+                label: s.briefcase,
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.leaderboard),
+                label: s.rating,
+              ),
+            ],
+          ),
+          /*bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             currentIndex: tabsRouter.activeIndex,
             onTap: tabsRouter.setActiveIndex,
@@ -35,15 +52,11 @@ class HomePage extends StatelessWidget {
                 label: s.briefcase,
               ),
               BottomNavigationBarItem(
-                icon: const Icon(Icons.star),
-                label: s.favourite,
-              ),
-              BottomNavigationBarItem(
                 icon: const Icon(Icons.leaderboard),
                 label: s.rating,
               ),
             ],
-          ),
+          ),*/
         );
       },
     );

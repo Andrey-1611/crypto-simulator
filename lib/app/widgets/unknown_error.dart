@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class UnknownError extends StatelessWidget {
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
-  const UnknownError({super.key, required this.onPressed});
+  const UnknownError({super.key, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +13,12 @@ class UnknownError extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('Неизвестная ошибка', style: theme.textTheme.displayLarge),
-          TextButton(
-            onPressed: onPressed,
-            child: const Text('Попробовать еще раз'),
-          ),
+          onPressed != null
+              ? TextButton(
+                  onPressed: onPressed,
+                  child: const Text('Попробовать еще раз'),
+                )
+              : const SizedBox.shrink(),
         ],
       ),
     );

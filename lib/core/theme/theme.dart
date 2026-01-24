@@ -20,7 +20,7 @@ final darkTheme = ThemeData(
   cardColor: _darkCard,
   textTheme: _textTheme,
   switchTheme: _switchTheme,
-  bottomNavigationBarTheme: _bottomNavigationBarTheme(_darkCard),
+  navigationBarTheme: _navigationBarTheme(_darkCard),
   textButtonTheme: _textButtonTheme,
   elevatedButtonTheme: _elevatedButtonTheme,
   scaffoldBackgroundColor: _darkBackground,
@@ -39,7 +39,7 @@ final lightTheme = ThemeData(
   cardColor: _darkCard,
   textTheme: _textTheme,
   switchTheme: _switchTheme,
-  bottomNavigationBarTheme: _bottomNavigationBarTheme(Colors.white),
+  navigationBarTheme: _navigationBarTheme(Colors.white),
   textButtonTheme: _textButtonTheme,
   elevatedButtonTheme: _elevatedButtonTheme,
   scaffoldBackgroundColor: _lightBackground,
@@ -75,8 +75,13 @@ InputDecorationTheme _inputDecorationTheme(Color color) => InputDecorationTheme(
   ),
 );
 
-final _listTileTheme = const ListTileThemeData(
-  contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+final _listTileTheme = ListTileThemeData(
+  contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+  subtitleTextStyle: TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 16.sp,
+    color: _hintColor,
+  ),
 );
 
 CardThemeData _cardTheme(Color color) => CardThemeData(
@@ -99,13 +104,13 @@ AppBarTheme _appBarTheme(Color color, Color titleColor) => AppBarTheme(
   surfaceTintColor: Colors.transparent,
 );
 
-BottomNavigationBarThemeData _bottomNavigationBarTheme(Color color) =>
-    BottomNavigationBarThemeData(
+NavigationBarThemeData _navigationBarTheme(Color color) =>
+    NavigationBarThemeData(
       backgroundColor: color,
-      selectedItemColor: _primary,
-      type: BottomNavigationBarType.fixed,
-      showSelectedLabels: true,
-      showUnselectedLabels: false,
+      indicatorColor: _primary,
+      iconTheme: WidgetStateProperty.all(
+        const IconThemeData(color: Colors.white),
+      ),
     );
 
 final _textButtonTheme = TextButtonThemeData(

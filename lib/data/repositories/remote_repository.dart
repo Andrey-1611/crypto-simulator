@@ -13,4 +13,6 @@ abstract interface class RemoteRepository {
   Future<void> createUser(AppUser user);
 
   Future<void> updateUser(AppUser user);
+
+  Future<List<AppUser>> getUsers();
 }

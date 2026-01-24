@@ -1,0 +1,71 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:crypto_simulator/app/widgets/loader.dart';
+import 'package:crypto_simulator/app/widgets/unknown_error.dart';
+import 'package:crypto_simulator/core/utils/price_formatter.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../app/router/app_router.dart';
+import '../providers/crypto_coins_details_provider.dart';
+
+class CryptoCoinsPage extends ConsumerWidget {
+  const CryptoCoinsPage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final size = MediaQuery.sizeOf(context);
+    final coinsP = ref.watch(cryptoCoinsDetailsProvider);
+    return coinsP.when(
+      data: (coins) => coins.isNotEmpty
+          ? ListView.builder(
+              itemCount: coins.length,
+              itemBuilder: (context, index) {
+                final coin = coins[index];
+                return Card(
+                  child: ListTile(
+                    leading: SizedBox.square(
+                      dimension: size.height * 0.06,
+                      child: Image.network(coin.details.fullImageUrl),
+                    ),
+                    title: Text(coin.details.name),
+                    subtitle: Row(
+                      children: [
+                        Text('${coin.details.currentPrice.price}, '),
+                        Text('${coin.amount} монет'),
+                      ],
+                    ),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () =>
+                        context.pushRoute(CryptoCoinRoute(coin: coin.details)),
+                  ),
+                );
+              },
+            )
+          : const _EmptyList(),
+      error: (_, _) => UnknownError(
+        onPressed: () => ref.refresh(cryptoCoinsDetailsProvider),
+      ),
+      loading: () => const Loader(),
+    );
+  }
+}
+
+class _EmptyList extends StatelessWidget {
+  const _EmptyList();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text('У вас еще нет монет', style: theme.textTheme.displayLarge),
+        TextButton(
+          onPressed: () {
+            context.pushRoute(const MarketRoute());
+          },
+          child: const Text('Купить'),
+        ),
+      ],
+    );
+  }
+}
