@@ -9,6 +9,7 @@ part of 'app_user.dart';
 AppUser _$AppUserFromJson(Map<String, dynamic> json) => AppUser(
   id: json['id'] as String,
   name: json['name'] as String,
+  email: json['email'] as String,
   createdAt: DateTime.parse(json['createdAt'] as String),
   balance: (json['balance'] as num).toDouble(),
   coins:
@@ -26,16 +27,12 @@ AppUser _$AppUserFromJson(Map<String, dynamic> json) => AppUser(
           )
           .toList() ??
       const [],
-  trades:
-      (json['trades'] as List<dynamic>?)
-          ?.map((e) => Trade.fromJson(e as Map<String, dynamic>))
-          .toList() ??
-      const [],
 );
 
 Map<String, dynamic> _$AppUserToJson(AppUser instance) => <String, dynamic>{
   'id': instance.id,
   'name': instance.name,
+  'email': instance.email,
   'createdAt': instance.createdAt.toIso8601String(),
   'balance': instance.balance,
   'coins': instance.coins
@@ -43,7 +40,6 @@ Map<String, dynamic> _$AppUserToJson(AppUser instance) => <String, dynamic>{
         (e) => <String, dynamic>{'amount': e.amount, 'info': e.info.toJson()},
       )
       .toList(),
-  'trades': instance.trades.map((e) => e.toJson()).toList(),
 };
 
 $Rec _$recordConvert<$Rec>(Object? value, $Rec Function(Map) convert) =>

@@ -123,7 +123,7 @@ class CryptoCoinDetails extends CryptoCoin {
         SortType.change24h => b.priceChange24h.abs().compareTo(
           a.priceChange24h.abs(),
         ),
-        SortType.volume => b.volume24h.compareTo(a.volume24h),
+        SortType.volume24h => b.volume24h.compareTo(a.volume24h),
       },
     );
     return coins;
@@ -141,4 +141,4 @@ class CryptoCoinDetails extends CryptoCoin {
   }
 }
 
-enum SortType { marketCap, price, change24h, volume }
+enum SortType { marketCap, price, change24h, volume24h }

@@ -4,7 +4,7 @@ import '../../../data/repositories/auth_repository.dart';
 import '../../../data/repositories/crypto_repository.dart';
 import '../../../data/repositories/remote_repository.dart';
 
-final cryptoCoinsBalanceProvider = FutureProvider.family<double, AppUser?>((
+final cryptoBalanceProvider = FutureProvider.family<double, AppUser?>((
   ref,
   user,
 ) async {

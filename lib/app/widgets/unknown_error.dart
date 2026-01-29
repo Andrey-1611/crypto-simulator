@@ -1,3 +1,4 @@
+import 'package:crypto_simulator/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class UnknownError extends StatelessWidget {
@@ -8,16 +9,14 @@ class UnknownError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final s = S.of(context);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Неизвестная ошибка', style: theme.textTheme.displayLarge),
+          Text(s.unknown_error, style: theme.textTheme.displayLarge),
           onPressed != null
-              ? TextButton(
-                  onPressed: onPressed,
-                  child: const Text('Попробовать еще раз'),
-                )
+              ? TextButton(onPressed: onPressed, child: Text(s.try_again))
               : const SizedBox.shrink(),
         ],
       ),

@@ -17,15 +17,15 @@ final darkTheme = ThemeData(
   appBarTheme: _appBarTheme(_darkCard, Colors.white),
   listTileTheme: _listTileTheme,
   cardTheme: _cardTheme(_darkCard),
-  cardColor: _darkCard,
+  cardColor: _hintColor,
   textTheme: _textTheme,
   switchTheme: _switchTheme,
-  navigationBarTheme: _navigationBarTheme(_darkCard),
+  navigationBarTheme: _navigationBarTheme(_darkCard, Colors.white),
   textButtonTheme: _textButtonTheme,
   elevatedButtonTheme: _elevatedButtonTheme,
   scaffoldBackgroundColor: _darkBackground,
   hintColor: _hintColor,
-  iconTheme: _iconTheme,
+  dialogTheme: _dialogTheme,
   colorScheme: const ColorScheme.dark(primary: _primary, error: Colors.red),
 );
 
@@ -39,13 +39,13 @@ final lightTheme = ThemeData(
   cardColor: _darkCard,
   textTheme: _textTheme,
   switchTheme: _switchTheme,
-  navigationBarTheme: _navigationBarTheme(Colors.white),
+  navigationBarTheme: _navigationBarTheme(Colors.white, Colors.black),
   textButtonTheme: _textButtonTheme,
   elevatedButtonTheme: _elevatedButtonTheme,
   scaffoldBackgroundColor: _lightBackground,
   bottomSheetTheme: _bottomSheetTheme(_lightBackground),
   hintColor: _hintColor,
-  iconTheme: _iconTheme,
+  dialogTheme: _dialogTheme,
   colorScheme: const ColorScheme.light(primary: _primary, error: Colors.red),
 );
 
@@ -104,13 +104,11 @@ AppBarTheme _appBarTheme(Color color, Color titleColor) => AppBarTheme(
   surfaceTintColor: Colors.transparent,
 );
 
-NavigationBarThemeData _navigationBarTheme(Color color) =>
+NavigationBarThemeData _navigationBarTheme(Color color, Color iconColor) =>
     NavigationBarThemeData(
       backgroundColor: color,
       indicatorColor: _primary,
-      iconTheme: WidgetStateProperty.all(
-        const IconThemeData(color: Colors.white),
-      ),
+      iconTheme: WidgetStateProperty.all(IconThemeData(color: iconColor)),
     );
 
 final _textButtonTheme = TextButtonThemeData(
@@ -143,4 +141,6 @@ final _switchTheme = SwitchThemeData(
 BottomSheetThemeData _bottomSheetTheme(Color color) =>
     BottomSheetThemeData(backgroundColor: color);
 
-final _iconTheme = const IconThemeData(color: Colors.white);
+final _dialogTheme = DialogThemeData(
+  titleTextStyle: TextStyle(fontSize: 18.sp),
+);

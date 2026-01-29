@@ -3,8 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:talker_dio_logger/talker_dio_logger_interceptor.dart';
-
-import '../../features/briefcase/providers/briefcase_provider.dart';
 import 'firebase_options.dart';
 
 class AppInitializer {
@@ -17,6 +15,5 @@ class AppInitializer {
         container.read(talkerProvider).handle(details.exception, details.stack);
     final dio = container.read(dioProvider);
     dio.interceptors.add(TalkerDioLogger());
-    await container.read(briefcaseNotifierProvider(null).notifier).build();
   }
 }

@@ -34,25 +34,6 @@ class HomePage extends StatelessWidget {
               ),
             ],
           ),
-          /*bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            currentIndex: tabsRouter.activeIndex,
-            onTap: tabsRouter.setActiveIndex,
-            items: [
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.currency_exchange),
-                label: s.market,
-              ),
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.wallet),
-                label: s.briefcase,
-              ),
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.leaderboard),
-                label: s.rating,
-              ),
-            ],
-          ),*/
         );
       },
     );

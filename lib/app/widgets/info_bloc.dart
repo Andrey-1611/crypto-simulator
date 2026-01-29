@@ -1,3 +1,4 @@
+import 'package:crypto_simulator/app/widgets/size_box.dart';
 import 'package:flutter/material.dart';
 
 class InfoBloc extends StatelessWidget {
@@ -8,7 +9,6 @@ class InfoBloc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
     final theme = Theme.of(context);
     return Card(
       child: Padding(
@@ -17,7 +17,7 @@ class InfoBloc extends StatelessWidget {
           crossAxisAlignment: .start,
           children: [
             Text(title, style: theme.textTheme.bodyLarge),
-            SizedBox(height: size.height * 0.02),
+            const SizeBox(height: 0.02),
             ...children,
           ],
         ),

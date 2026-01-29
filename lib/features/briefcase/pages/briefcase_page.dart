@@ -24,11 +24,11 @@ class BriefcasePage extends StatelessWidget {
           title: Text(s.briefcase),
           automaticallyImplyLeading: user != null,
           actions: user == null ? [const SettingsButton()] : [],
-          bottom: const TabBar(
+          bottom: TabBar(
             tabs: [
-              Tab(text: 'Баланс'),
-              Tab(text: 'Монеты'),
-              Tab(text: 'Операции'),
+              Tab(text: s.balance),
+              Tab(text: s.coins),
+              Tab(text: s.trades),
             ],
           ),
         ),
@@ -38,7 +38,7 @@ class BriefcasePage extends StatelessWidget {
             children: [
               KeepAliveWrapper(child: BalancePage(user: user)),
               KeepAliveWrapper(child: CryptoCoinsPage(user: user)),
-              KeepAliveWrapper(child: TradesHistoryPage(userA: user)),
+              KeepAliveWrapper(child: TradesHistoryPage(user: user)),
             ],
           ),
         ),

@@ -1,5 +1,9 @@
 import 'package:crypto_simulator/app/router/app_router.dart';
 import 'package:crypto_simulator/app/runner/app_dependencies.dart';
+import 'package:crypto_simulator/app/widgets/loader.dart';
+import 'package:crypto_simulator/app/widgets/unknown_error.dart';
+import 'package:crypto_simulator/data/repositories/auth_repository.dart';
+import 'package:crypto_simulator/features/settings/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,25 +36,37 @@ class _AppView extends ConsumerStatefulWidget {
 }
 
 class __AppViewState extends ConsumerState<_AppView> {
-  final _router = AppRouter();
+  late final AppRouter router;
+
+  @override
+  void initState() {
+    super.initState();
+    router = AppRouter(authRepository: ref.read(authRepositoryProvider));
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      theme: darkTheme,
-      localizationsDelegates: const [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: S.delegate.supportedLocales,
-      debugShowCheckedModeBanner: false,
-      routerConfig: _router.config(
-        navigatorObservers: () => [
-          TalkerRouteObserver(ref.read(talkerProvider)),
+    final settingsP = ref.watch(settingsNotifierProvider);
+    return settingsP.when(
+      data: (settings) => MaterialApp.router(
+        theme: settings.theme ? darkTheme : lightTheme,
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
         ],
+        supportedLocales: S.delegate.supportedLocales,
+        locale: Locale(settings.language ? 'en' : 'ru'),
+        debugShowCheckedModeBanner: false,
+        routerConfig: router.config(
+          navigatorObservers: () => [
+            TalkerRouteObserver(ref.read(talkerProvider)),
+          ],
+        ),
       ),
+      error: (_, _) => const MaterialApp(home: Scaffold(body: UnknownError())),
+      loading: () => const Loader(),
     );
   }
 }

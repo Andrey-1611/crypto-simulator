@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:crypto_simulator/app/runner/app_dependencies.dart';
 import 'package:crypto_simulator/app/runner/app_initializer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'app/app.dart';

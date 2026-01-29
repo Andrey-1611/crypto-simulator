@@ -43,10 +43,9 @@ class _MarketPageState extends ConsumerState<MarketPage> {
   @override
   Widget build(BuildContext context) {
     final cryptoCoinsP = ref.watch(marketNotifierProvider);
-    final size = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: _AppBar(
-        size: Size.fromHeight(size.height * 0.13),
+        size: Size.fromHeight(MediaQuery.sizeOf(context).height * 0.13),
         searchController: _searchController,
       ),
       body: Padding(
@@ -110,16 +109,17 @@ class _EmptyList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final s = S.of(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('Монет не найдено', style: theme.textTheme.displayLarge),
+        Text(s.coins_not_found, style: theme.textTheme.displayLarge),
         TextButton(
           onPressed: () {
             ref.read(searchCoinsProvider.notifier).update((state) => '');
             searchController.clear();
           },
-          child: const Text('Сбросить поиск'),
+          child: Text(s.reset_search),
         ),
       ],
     );
@@ -164,7 +164,7 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
                   onChanged: (text) => update(text, ref),
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.search),
-                    hintText: 'Поиск...',
+                    hintText: s.search_hint,
                     filled: true,
                     fillColor: theme.scaffoldBackgroundColor,
                     suffixIcon: IconButton(
