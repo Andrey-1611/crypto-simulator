@@ -13,9 +13,9 @@ final authRepositoryProvider = Provider<AuthRepository>(
 abstract interface class AuthRepository {
   Future<String> getUserId();
 
-  Future<bool> isUserAuth();
+  AuthState getAuthState();
 
-  Future<void> signIn(String email, String password);
+  Future<bool> signIn(String email, String password);
 
   Future<AppUser?> signInWithGoogle();
 
@@ -24,4 +24,12 @@ abstract interface class AuthRepository {
   Future<void> signOut();
 
   Future<void> sendEmailVerification();
+
+  Future<bool> checkEmailVerification();
+
+  Future<void> sendPasswordResetEmail(String email);
+
+  Future<void> deleteAccount();
+
+  Stream<AuthState> listenAuthState();
 }

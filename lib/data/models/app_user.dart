@@ -66,7 +66,6 @@ class AppUser {
     return user.copyWith(
       balance: user.balance - trade.totalPrice,
       coins: coins,
-      //trades: [trade, ...user.trades],
     );
   }
 
@@ -84,7 +83,6 @@ class AppUser {
     return user.copyWith(
       balance: user.balance + trade.totalPrice,
       coins: coins,
-      //trades: [trade, ...user.trades],
     );
   }
 
@@ -114,3 +112,5 @@ class AppUser {
     );
   }
 }
+
+enum AuthState { auth, emailNotVerified, notAuth }

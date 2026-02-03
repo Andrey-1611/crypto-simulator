@@ -23,7 +23,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
   bool isObscure = true;
 
   void signUp() async {
@@ -44,11 +43,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     ref.listenManual(authNotifierProvider, (_, state) {
       state.when(
         loading: () => DialogHelper.loading(context),
-        data: (isAuth) {
-          context.pop();
-          context.replaceRoute(const HomeRoute());
-        },
-        error: (e, _) {
+        data: (_) => context.pushRoute(const HomeRoute()),
+        error: (_, _) {
           context.pop();
           ToastHelper.unknownError();
         },

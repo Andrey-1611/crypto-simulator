@@ -39,11 +39,8 @@ class _SignInPageState extends ConsumerState<SignInPage> {
     ref.listenManual(authNotifierProvider, (_, state) {
       state.when(
         loading: () => DialogHelper.loading(context),
-        data: (isAuth) {
-          context.pop();
-          context.replaceRoute(const HomeRoute());
-        },
-        error: (e, _) {
+        data: (_) => context.pushRoute(const HomeRoute()),
+        error: (_, _) {
           context.pop();
           ToastHelper.unknownError();
         },
@@ -92,6 +89,12 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                         onPressed: () => signIn(),
                         child: const Text('Войти'),
                       ),
+                    ),
+                    const SizeBox(height: 0.01),
+                    TextButton(
+                      onPressed: () =>
+                          context.pushRoute(const ResetPasswordRoute()),
+                      child: const Text('Забыли пароль? Сбросить пароль'),
                     ),
                   ],
                 ),

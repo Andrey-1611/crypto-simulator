@@ -1,10 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:crypto_simulator/app/router/auth_guard.dart';
-import 'package:crypto_simulator/data/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/app_user.dart';
 import '../../data/models/crypto_coin.dart';
 import '../../data/models/trade.dart';
+import '../../features/auth/pages/email_verification_page.dart';
+import '../../features/auth/pages/reset_password_page.dart';
 import '../../features/auth/pages/sign_in_page.dart';
 import '../../features/auth/pages/sign_up_page.dart';
 import '../../features/briefcase/pages/briefcase_page.dart';
@@ -17,14 +19,15 @@ import '../../features/settings/pages/settings_page.dart';
 
 part 'app_router.gr.dart';
 
+final appRouterProvider = Provider((ref) => AppRouter(ref: ref));
+
 @AutoRouterConfig()
 class AppRouter extends RootStackRouter {
-  final AuthRepository _authRepository;
+  final Ref _ref;
   late final AuthGuard _authGuard;
 
-  AppRouter({required AuthRepository authRepository})
-    : _authRepository = authRepository {
-    _authGuard = AuthGuard(authRepository: _authRepository);
+  AppRouter({required Ref ref}) : _ref = ref {
+    _authGuard = AuthGuard(ref: _ref);
   }
 
   @override
@@ -45,5 +48,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: BriefcaseRoute.page),
     AutoRoute(page: SignInRoute.page),
     AutoRoute(page: SignUpRoute.page),
+    AutoRoute(page: EmailVerificationRoute.page),
+    AutoRoute(page: ResetPasswordRoute.page),
   ];
 }

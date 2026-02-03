@@ -1,3 +1,5 @@
+import '../../data/models/app_user.dart';
+
 abstract class Validator {
   static String? name(String? value) {
     if (value == null || value.trim().isEmpty) {
@@ -26,3 +28,8 @@ abstract class Validator {
     return null;
   }
 }
+
+typedef UsersWithCurrentUserId = ({
+  List<({AppUser user, double fullBalance})> users,
+  String currentUserId,
+});

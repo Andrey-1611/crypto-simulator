@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:crypto_simulator/app/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../app/router/app_router.dart';
 import '../../../app/widgets/info_bloc.dart';
 import '../../../app/widgets/info_row.dart';
 import '../../../app/widgets/loader.dart';
@@ -35,12 +35,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     ref.listenManual(authNotifierProvider, (_, state) {
       state.when(
         loading: () => DialogHelper.loading(context),
-        data: (isAuth) {
-          if (!isAuth) {
-            context.pop();
-            context.replaceRoute(const HomeRoute());
-          }
-        },
+        data: (_) => context.pushRoute(const HomeRoute()),
         error: (e, _) {
           context.pop();
           ToastHelper.unknownError();

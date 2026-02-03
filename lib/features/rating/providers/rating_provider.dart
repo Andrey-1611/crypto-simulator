@@ -1,11 +1,12 @@
+import 'package:crypto_simulator/core/utils/validator.dart';
 import 'package:crypto_simulator/data/models/app_user.dart';
+import 'package:crypto_simulator/data/repositories/auth_repository.dart';
 import 'package:crypto_simulator/data/repositories/crypto_repository.dart';
 import 'package:crypto_simulator/data/repositories/remote_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final ratingProvider = FutureProvider<List<({AppUser user, double fullBalance})>>((
-  ref,
-) async {
+final ratingProvider = FutureProvider<UsersWithCurrentUserId>((ref) async {
+  final currentUserId = await ref.read(authRepositoryProvider).getUserId();
   final users = await ref.read(remoteRepositoryProvider).getUsers();
   final symbols = users
       .expand((u) => u.coins.map((c) => c.info.symbol))
@@ -17,5 +18,5 @@ final ratingProvider = FutureProvider<List<({AppUser user, double fullBalance})>
     final coinsBalance = u.coinsBalance(prices);
     return (user: u, fullBalance: u.balance + coinsBalance);
   }).toList();
-  return newUsers;
+  return (users: newUsers, currentUserId: currentUserId);
 });

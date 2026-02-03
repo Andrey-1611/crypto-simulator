@@ -10,6 +10,7 @@ void main() {
   final container = ProviderContainer();
   runZonedGuarded(() async {
     await AppInitializer.init(container);
+   //await FirebaseAuth.instance.signOut();
     runApp(const App());
   }, (e, st) => container.read(talkerProvider).handle(e, st));
 }

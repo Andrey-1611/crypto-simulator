@@ -20,4 +20,6 @@ abstract interface class RemoteRepository {
   Future<void> addTrade(AppUser user, Trade trade);
 
   Future<List<Trade>> getTrades(String userId);
+
+  Future<void> deleteUser(String userId);
 }

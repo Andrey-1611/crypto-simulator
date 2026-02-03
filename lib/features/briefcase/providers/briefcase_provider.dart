@@ -17,7 +17,7 @@ final briefcaseNotifierProvider =
 class BriefcaseNotifier extends AsyncNotifier<AppUser> {
   final AppUser? user;
 
-  BriefcaseNotifier({required this.user});
+  BriefcaseNotifier({this.user});
 
   @override
   FutureOr<AppUser> build() async {

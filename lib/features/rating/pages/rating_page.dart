@@ -3,7 +3,7 @@ import 'package:crypto_simulator/app/router/app_router.dart';
 import 'package:crypto_simulator/app/widgets/loader.dart';
 import 'package:crypto_simulator/app/widgets/unknown_error.dart';
 import 'package:crypto_simulator/core/utils/formatter.dart';
-import 'package:crypto_simulator/data/models/app_user.dart';
+import 'package:crypto_simulator/core/utils/validator.dart';
 import 'package:crypto_simulator/features/rating/providers/rating_provider.dart';
 import 'package:crypto_simulator/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +39,7 @@ class RatingPage extends ConsumerWidget {
 }
 
 class _UsersList extends StatelessWidget {
-  final List<({AppUser user, double fullBalance})> users;
+  final UsersWithCurrentUserId users;
 
   const _UsersList({required this.users});
 
@@ -47,16 +47,25 @@ class _UsersList extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ListView.builder(
-      itemCount: users.length,
+      itemCount: users.users.length,
       itemBuilder: (context, index) {
-        final user = users[index];
+        final user = users.users[index];
+        final isCurrentUser = user.user.id == users.currentUserId;
         return Card(
+          shape: RoundedRectangleBorder(
+            side: isCurrentUser
+                ? BorderSide(color: theme.primaryColor, width: 2.0)
+                : BorderSide.none,
+            borderRadius: BorderRadius.circular(8),
+          ),
           child: ListTile(
             leading: Text('${index + 1}', style: theme.textTheme.displayMedium),
             title: Text(user.user.name),
             subtitle: Text(user.fullBalance.price4),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.pushRoute(BriefcaseRoute(user: user.user)),
+            trailing: !isCurrentUser ? const Icon(Icons.chevron_right) : null,
+            onTap: !isCurrentUser
+                ? () => context.pushRoute(BriefcaseRoute(user: user.user))
+                : null,
           ),
         );
       },

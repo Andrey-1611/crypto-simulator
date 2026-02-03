@@ -12,26 +12,29 @@ class GoogleButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    return Padding(
-      padding: const .symmetric(vertical: 32),
-      child: Column(
-        children: [
-          const Row(
-            mainAxisAlignment: .center,
-            children: [
-              Expanded(child: Divider()),
-              Padding(padding: .symmetric(horizontal: 8), child: Text('или')),
-              Expanded(child: Divider()),
-            ],
-          ),
-          GoogleAuthButton(
-            themeMode: theme.brightness == Brightness.dark
-                ? ThemeMode.dark
-                : ThemeMode.light,
-            text: 'Войти с Google',
-            onPressed: () => signInWithGoogle(ref),
-          ),
-        ],
+    return SizedBox(
+      width: double.infinity,
+      child: Padding(
+        padding: const .symmetric(vertical: 32),
+        child: Column(
+          children: [
+            const Row(
+              mainAxisAlignment: .center,
+              children: [
+                Expanded(child: Divider()),
+                Padding(padding: .symmetric(horizontal: 8), child: Text('или')),
+                Expanded(child: Divider()),
+              ],
+            ),
+            GoogleAuthButton(
+              themeMode: theme.brightness == Brightness.dark
+                  ? ThemeMode.dark
+                  : ThemeMode.light,
+              text: 'Войти с Google',
+              onPressed: () => signInWithGoogle(ref),
+            ),
+          ],
+        ),
       ),
     );
   }

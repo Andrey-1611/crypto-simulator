@@ -63,4 +63,9 @@ class RemoteDataSource implements RemoteRepository {
         .toList();
     return trades;
   }
+
+  @override
+  Future<void> deleteUser(String userId) async {
+    await _usersCollection().doc(userId).delete();
+  }
 }

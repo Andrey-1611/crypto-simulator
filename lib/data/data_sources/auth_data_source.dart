@@ -17,13 +17,18 @@ class AuthDataSource implements AuthRepository {
   }
 
   @override
-  Future<bool> isUserAuth() async {
-    return _auth.currentUser != null;
+  AuthState getAuthState() {
+    final user = _auth.currentUser;
+    if (user == null) return .notAuth;
+    final emailVerified = user.emailVerified;
+    return emailVerified ? .auth : .emailNotVerified;
   }
 
   @override
-  Future<void> signIn(String email, String password) async {
+  Future<bool> signIn(String email, String password) async {
     await _auth.signInWithEmailAndPassword(email: email, password: password);
+    await _auth.currentUser?.reload();
+    return _auth.currentUser!.emailVerified;
   }
 
   @override
@@ -68,10 +73,37 @@ class AuthDataSource implements AuthRepository {
   @override
   Future<void> sendEmailVerification() async {
     final actionCodeSettings = ActionCodeSettings(
-      url: '',
+      url: 'https://expense-tracker-d697a.firebaseapp.com',
       handleCodeInApp: true,
       androidPackageName: 'com.example.crypto_simulator',
     );
     await _auth.currentUser!.sendEmailVerification(actionCodeSettings);
+  }
+
+  @override
+  Future<bool> checkEmailVerification() async {
+    await _auth.currentUser?.reload();
+    final emailVerified = _auth.currentUser!.emailVerified;
+    return emailVerified;
+  }
+
+  @override
+  Future<void> sendPasswordResetEmail(String email) async {
+    await _auth.sendPasswordResetEmail(email: email);
+  }
+
+  @override
+  Future<void> deleteAccount() async {
+    await _auth.currentUser?.delete();
+  }
+
+  @override
+  Stream<AuthState> listenAuthState() {
+    final authState = _auth.userChanges().asyncMap((user) async {
+      if (user == null) return AuthState.notAuth;
+      await user.reload();
+      return user.emailVerified ? AuthState.auth : AuthState.emailNotVerified;
+    });
+    return authState;
   }
 }
