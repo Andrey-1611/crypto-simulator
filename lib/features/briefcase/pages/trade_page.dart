@@ -1,13 +1,13 @@
 import 'package:auto_route/annotations.dart';
-import 'package:crypto_simulator/app/widgets/crypto_coin_card.dart';
-import 'package:crypto_simulator/app/widgets/info_row.dart';
-import 'package:crypto_simulator/app/widgets/loader.dart';
-import 'package:crypto_simulator/app/widgets/unknown_error.dart';
-import 'package:crypto_simulator/core/utils/formatter.dart';
-import 'package:crypto_simulator/data/models/trade.dart';
+import 'package:Bitmark/app/widgets/crypto_coin_card.dart';
+import 'package:Bitmark/app/widgets/info_row.dart';
+import 'package:Bitmark/app/widgets/loader.dart';
+import 'package:Bitmark/app/widgets/unknown_error.dart';
+import 'package:Bitmark/data/models/trade.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/widgets/size_box.dart';
+import '../../../core/utils/extensions.dart';
 import '../../../generated/l10n.dart';
 import '../providers/crypto_coin_price_provider.dart';
 
@@ -19,7 +19,7 @@ class TradePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
+    final theme = context.theme;
     final s = S.of(context);
     final coinP = ref.watch(cryptoCoinPriceProvider(trade.coin.symbol));
     return Scaffold(
@@ -61,7 +61,7 @@ class TradePage extends ConsumerWidget {
                         title: s.total_price,
                         value: trade.totalPrice.price4,
                       ),
-                      InfoRow(title: s.date, value: trade.createdAt.date),
+                      InfoRow(title: s.date, value: trade.createdAt.format),
                     ],
                   ),
                 ),

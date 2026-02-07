@@ -1,5 +1,6 @@
+import 'package:Bitmark/app/runner/app_dependencies.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_simulator/app/router/app_router.dart';
+import 'package:Bitmark/app/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/widgets/info_bloc.dart';
@@ -8,7 +9,7 @@ import '../../../app/widgets/loader.dart';
 import '../../../app/widgets/size_box.dart';
 import '../../../app/widgets/unknown_error.dart';
 import '../../../core/utils/dialog_helper.dart';
-import '../../../core/utils/formatter.dart';
+import '../../../core/utils/extensions.dart';
 import '../../../core/utils/toast_helper.dart';
 import '../../../generated/l10n.dart';
 import '../../auth/providers/auth_provider.dart';
@@ -35,7 +36,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     ref.listenManual(authNotifierProvider, (_, state) {
       state.when(
         loading: () => DialogHelper.loading(context),
-        data: (_) => context.pushRoute(const HomeRoute()),
+        data: (authState) => {
+          if (authState == .notAuth) context.pushRoute(const SignInRoute()),
+        },
         error: (e, _) {
           context.pop();
           ToastHelper.unknownError();
@@ -46,10 +49,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = context.theme;
     final userP = ref.watch(briefcaseNotifierProvider(null));
     final settingsP = ref.watch(settingsNotifierProvider);
     final s = S.of(context);
+    final packageInfo = ref.read(packageProvider).requireValue;
     return Scaffold(
       appBar: AppBar(
         title: Text(s.settings),
@@ -72,7 +76,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   children: [
                     InfoRow(title: s.name, value: user.name),
                     InfoRow(title: s.email, value: user.email),
-                    InfoRow(title: s.created, value: user.createdAt.date),
+                    InfoRow(title: s.created, value: user.createdAt.format),
                   ],
                 ),
                 error: (_, _) => const UnknownError(),
@@ -100,6 +104,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               ),
               error: (_, _) => const UnknownError(),
               loading: () => const Loader(),
+            ),
+            const Spacer(),
+            Text(
+              '${packageInfo.appName}, ${packageInfo.version} (${packageInfo.buildNumber})',
             ),
           ],
         ),

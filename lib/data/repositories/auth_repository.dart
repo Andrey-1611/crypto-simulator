@@ -1,6 +1,6 @@
-import 'package:crypto_simulator/app/runner/app_dependencies.dart';
-import 'package:crypto_simulator/data/data_sources/auth_data_source.dart';
-import 'package:crypto_simulator/data/models/app_user.dart';
+import 'package:Bitmark/app/runner/app_dependencies.dart';
+import 'package:Bitmark/data/data_sources/auth_data_source.dart';
+import 'package:Bitmark/data/models/app_user.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final authRepositoryProvider = Provider<AuthRepository>(
@@ -11,7 +11,7 @@ final authRepositoryProvider = Provider<AuthRepository>(
 );
 
 abstract interface class AuthRepository {
-  Future<String> getUserId();
+  AppUser getUser();
 
   AuthState getAuthState();
 
@@ -30,6 +30,6 @@ abstract interface class AuthRepository {
   Future<void> sendPasswordResetEmail(String email);
 
   Future<void> deleteAccount();
-
-  Stream<AuthState> listenAuthState();
 }
+
+enum AuthState { auth, emailNotVerified, notAuth }

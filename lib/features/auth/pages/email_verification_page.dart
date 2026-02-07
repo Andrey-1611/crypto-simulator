@@ -1,12 +1,13 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_simulator/app/router/app_router.dart';
-import 'package:crypto_simulator/app/widgets/loader.dart';
-import 'package:crypto_simulator/core/utils/toast_helper.dart';
-import 'package:crypto_simulator/features/auth/providers/auth_provider.dart';
+import 'package:Bitmark/app/router/app_router.dart';
+import 'package:Bitmark/app/widgets/loader.dart';
+import 'package:Bitmark/core/utils/toast_helper.dart';
+import 'package:Bitmark/features/auth/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/widgets/size_box.dart';
 import '../../../core/utils/dialog_helper.dart';
+import '../../../core/utils/extensions.dart';
 
 @RoutePage()
 class EmailVerificationPage extends ConsumerStatefulWidget {
@@ -20,7 +21,6 @@ class _EmailVerificationPageState extends ConsumerState<EmailVerificationPage> {
   @override
   void initState() {
     super.initState();
-    //sendEmailVerification();
     ref.listenManual(authNotifierProvider, (_, state) {
       state.when(
         data: (_) => context.pushRoute(const HomeRoute()),
@@ -41,7 +41,7 @@ class _EmailVerificationPageState extends ConsumerState<EmailVerificationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = context.theme;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,

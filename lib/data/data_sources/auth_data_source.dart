@@ -1,7 +1,8 @@
-import 'package:crypto_simulator/data/models/app_user.dart';
-import 'package:crypto_simulator/data/repositories/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../models/app_user.dart';
+import '../repositories/auth_repository.dart';
 
 class AuthDataSource implements AuthRepository {
   final FirebaseAuth _auth;
@@ -12,8 +13,9 @@ class AuthDataSource implements AuthRepository {
       _google = google;
 
   @override
-  Future<String> getUserId() async {
-    return _auth.currentUser!.uid;
+  AppUser getUser() {
+    final authUser = _auth.currentUser!;
+    return user(authUser);
   }
 
   @override
@@ -40,15 +42,13 @@ class AuthDataSource implements AuthRepository {
 
   @override
   Future<AppUser> signUp(String name, String email, String password) async {
-    final credential = await _auth.createUserWithEmailAndPassword(
+    await _auth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
-    await credential.user?.reload();
-    await credential.user!.updateDisplayName(name);
-    await credential.user?.reload();
-    final user = AppUser.create(credential.user!.uid, name, email);
-    return user;
+    await _auth.currentUser?.updateDisplayName(name);
+    await _auth.currentUser?.reload();
+    return user(_auth.currentUser!);
   }
 
   @override
@@ -61,11 +61,10 @@ class AuthDataSource implements AuthRepository {
     );
     final userCredential = await _auth.signInWithCredential(credential);
     final isNewUser = userCredential.additionalUserInfo?.isNewUser ?? false;
-    final user = userCredential.user!;
     if (isNewUser) {
-      await user.updateDisplayName(googleUser.displayName);
-      await user.reload();
-      return AppUser.create(user.uid, user.displayName!, user.email!);
+      await userCredential.user!.updateDisplayName(googleUser.displayName);
+      await userCredential.user?.reload();
+      return user(userCredential.user!);
     }
     return null;
   }
@@ -97,13 +96,12 @@ class AuthDataSource implements AuthRepository {
     await _auth.currentUser?.delete();
   }
 
-  @override
-  Stream<AuthState> listenAuthState() {
-    final authState = _auth.userChanges().asyncMap((user) async {
-      if (user == null) return AuthState.notAuth;
-      await user.reload();
-      return user.emailVerified ? AuthState.auth : AuthState.emailNotVerified;
-    });
-    return authState;
+  AppUser user(User authUser) {
+    return AppUser(
+      id: authUser.uid,
+      name: authUser.displayName!,
+      email: authUser.email!,
+      createdAt: authUser.metadata.creationTime!,
+    );
   }
 }

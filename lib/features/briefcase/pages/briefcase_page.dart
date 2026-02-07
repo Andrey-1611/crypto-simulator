@@ -1,16 +1,16 @@
 import 'package:auto_route/annotations.dart';
-import 'package:crypto_simulator/app/widgets/settings_button.dart';
-import 'package:crypto_simulator/data/models/app_user.dart';
-import 'package:crypto_simulator/features/briefcase/pages/balance_page.dart';
-import 'package:crypto_simulator/features/briefcase/pages/crypto_coins_page.dart';
-import 'package:crypto_simulator/features/briefcase/pages/trades_history_page.dart';
-import 'package:crypto_simulator/features/briefcase/widgets/keep_alive.dart';
-import 'package:crypto_simulator/generated/l10n.dart';
+import 'package:Bitmark/app/widgets/settings_button.dart';
+import 'package:Bitmark/data/models/app_user_details.dart';
+import 'package:Bitmark/features/briefcase/pages/balance_page.dart';
+import 'package:Bitmark/features/briefcase/pages/crypto_coins_page.dart';
+import 'package:Bitmark/features/briefcase/pages/trades_history_page.dart';
+import 'package:Bitmark/features/briefcase/widgets/keep_alive.dart';
+import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
 class BriefcasePage extends StatelessWidget {
-  final AppUser? user;
+  final AppUserDetails? user;
 
   const BriefcasePage({super.key, this.user});
 

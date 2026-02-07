@@ -1,4 +1,4 @@
-name: crypto_simulator
+name: Bitmark
 description: "A new Flutter project."
 publish_to: 'none'
 
@@ -33,6 +33,7 @@ dependencies:
   shared_preferences: ^2.5.4
   google_sign_in: ^6.1.2
   auth_buttons: ^3.0.3
+  package_info_plus: ^9.0.0
 
 dev_dependencies:
   flutter_test:
@@ -42,8 +43,18 @@ dev_dependencies:
   build_runner: ^2.10.4
   auto_route_generator: ^10.4.0
   json_serializable: ^6.11.2
+  flutter_launcher_icons: ^0.14.4
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/
+
+
 flutter_intl:
   enabled: true
+
+flutter_launcher_icons:
+  android: false
+  ios: true
+  image_path: 'assets/icon/icon.png'

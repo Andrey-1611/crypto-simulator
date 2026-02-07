@@ -1,16 +1,16 @@
+import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_simulator/app/router/app_router.dart';
-import 'package:crypto_simulator/app/widgets/unknown_error.dart';
-import 'package:crypto_simulator/data/models/app_user.dart';
-import 'package:crypto_simulator/features/briefcase/providers/trades_provider.dart';
-import 'package:crypto_simulator/generated/l10n.dart';
+import 'package:Bitmark/app/router/app_router.dart';
+import 'package:Bitmark/app/widgets/unknown_error.dart';
+import 'package:Bitmark/data/models/app_user_details.dart';
+import 'package:Bitmark/features/briefcase/providers/trades_provider.dart';
+import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/widgets/loader.dart';
-import '../../../core/utils/formatter.dart';
 
 class TradesHistoryPage extends ConsumerWidget {
-  final AppUser? user;
+  final AppUserDetails? user;
 
   const TradesHistoryPage({super.key, this.user});
 
@@ -34,14 +34,14 @@ class TradesHistoryPage extends ConsumerWidget {
                       '${trade.type.type} ${trade.amount} ${trade.coin.name}',
                       overflow: TextOverflow.ellipsis,
                     ),
-                    subtitle: Text(trade.createdAt.date),
+                    subtitle: Text(trade.createdAt.format),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () => context.pushRoute(TradeRoute(trade: trade)),
                   ),
                 );
               },
             )
-          : _EmptyList(this.user),
+          : _EmptyList(user),
       error: (_, _) => const UnknownError(),
       loading: () => const Loader(),
     );
@@ -49,13 +49,13 @@ class TradesHistoryPage extends ConsumerWidget {
 }
 
 class _EmptyList extends StatelessWidget {
-  final AppUser? user;
+  final AppUserDetails? user;
 
   const _EmptyList(this.user);
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = context.theme;
     final s = S.of(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,

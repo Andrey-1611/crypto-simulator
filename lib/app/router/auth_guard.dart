@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_simulator/app/router/app_router.dart';
-import 'package:crypto_simulator/data/repositories/auth_repository.dart';
-import 'package:crypto_simulator/features/auth/providers/auth_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../data/repositories/auth_repository.dart';
+import 'app_router.dart';
 
 class AuthGuard extends AutoRouteGuard {
   final Ref _ref;

@@ -1,12 +1,12 @@
+import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:auto_route/annotations.dart';
-import 'package:crypto_simulator/app/widgets/info_bloc.dart';
-import 'package:crypto_simulator/app/widgets/loader.dart';
-import 'package:crypto_simulator/app/widgets/unknown_error.dart';
-import 'package:crypto_simulator/core/utils/formatter.dart';
-import 'package:crypto_simulator/data/models/crypto_coin_details.dart';
-import 'package:crypto_simulator/features/market/widgets/buy_crypto_coin_sheet.dart';
-import 'package:crypto_simulator/features/market/widgets/sell_crypto_coin_sheet.dart';
-import 'package:crypto_simulator/generated/l10n.dart';
+import 'package:Bitmark/app/widgets/info_bloc.dart';
+import 'package:Bitmark/app/widgets/loader.dart';
+import 'package:Bitmark/app/widgets/unknown_error.dart';
+import 'package:Bitmark/data/models/crypto_coin_details.dart';
+import 'package:Bitmark/features/market/widgets/buy_crypto_coin_sheet.dart';
+import 'package:Bitmark/features/market/widgets/sell_crypto_coin_sheet.dart';
+import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/widgets/info_row.dart';
@@ -71,7 +71,7 @@ class _PriceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isUp = coin.changePercent24h >= 0;
     final color = isUp ? Colors.green : Colors.red;
-    final theme = Theme.of(context);
+    final theme = context.theme;
     return Card(
       child: Padding(
         padding: const .all(8),

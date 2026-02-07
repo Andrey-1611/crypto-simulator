@@ -1,14 +1,14 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_simulator/app/router/app_router.dart';
-import 'package:crypto_simulator/app/widgets/loader.dart';
-import 'package:crypto_simulator/app/widgets/unknown_error.dart';
-import 'package:crypto_simulator/core/utils/formatter.dart';
-import 'package:crypto_simulator/core/utils/validator.dart';
-import 'package:crypto_simulator/features/rating/providers/rating_provider.dart';
-import 'package:crypto_simulator/generated/l10n.dart';
+import 'package:Bitmark/app/router/app_router.dart';
+import 'package:Bitmark/app/widgets/loader.dart';
+import 'package:Bitmark/app/widgets/unknown_error.dart';
+import 'package:Bitmark/core/utils/validator.dart';
+import 'package:Bitmark/features/rating/providers/rating_provider.dart';
+import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/widgets/settings_button.dart';
+import '../../../core/utils/extensions.dart';
 
 @RoutePage()
 class RatingPage extends ConsumerWidget {
@@ -45,7 +45,7 @@ class _UsersList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = context.theme;
     return ListView.builder(
       itemCount: users.users.length,
       itemBuilder: (context, index) {

@@ -1,8 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_simulator/app/router/auth_guard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../data/models/app_user.dart';
+import '../../data/models/app_user_details.dart';
 import '../../data/models/crypto_coin.dart';
 import '../../data/models/trade.dart';
 import '../../features/auth/pages/email_verification_page.dart';
@@ -16,6 +15,7 @@ import '../../features/market/pages/crypto_coin_page.dart';
 import '../../features/market/pages/market_page.dart';
 import '../../features/rating/pages/rating_page.dart';
 import '../../features/settings/pages/settings_page.dart';
+import 'auth_guard.dart';
 
 part 'app_router.gr.dart';
 

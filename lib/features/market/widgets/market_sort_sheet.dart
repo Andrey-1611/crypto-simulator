@@ -1,7 +1,8 @@
-import 'package:crypto_simulator/generated/l10n.dart';
+import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/widgets/size_box.dart';
+import '../../../core/utils/extensions.dart';
 import '../../../data/models/crypto_coin_details.dart';
 import '../providers/filter_providers.dart';
 
@@ -11,7 +12,7 @@ class MarketSortSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sort = ref.watch(sortCoinsProvider);
-    final theme = Theme.of(context);
+    final theme = context.theme;
     final s = S.of(context);
     return Padding(
       padding: const .all(16),

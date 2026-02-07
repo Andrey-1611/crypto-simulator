@@ -1,4 +1,37 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+extension StringCheck on String? {
+  bool get isNullOrEmpty => this == null || this!.trim().isEmpty;
+}
+
+extension EmailValidator on String {
+  bool get isValidEmail =>
+      RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(this);
+}
+
+extension DateFormatter on DateTime {
+  String get format => DateFormat('dd.MM.yyyy HH:mm').format(this);
+}
+
+extension BoolToggle on bool {
+  bool toggle() => !this;
+}
+
+extension StringCase on String {
+  String get capitalize =>
+      isEmpty ? this : this[0].toUpperCase() + substring(1).toLowerCase();
+}
+
+extension ContextX on BuildContext {
+  ThemeData get theme => Theme.of(this);
+
+  Size get size => MediaQuery.of(this).size;
+
+  double get height => size.height;
+
+  double get width => size.width;
+}
 
 extension PriceFormatter on double {
   String get price4 => '${toStringAsFixed(4)} \$';
@@ -25,11 +58,7 @@ extension AmountFormatter on int {
       >= 1e10 => '${(this / 1e9).toStringAsFixed(2)}B',
       >= 1e7 => '${(this / 1e6).toStringAsFixed(2)}M',
       >= 1e4 => '${(this / 1e3).toStringAsFixed(2)}K',
-      _ => '${toStringAsFixed(2)}',
+      _ => toStringAsFixed(2),
     };
   }
-}
-
-extension DateFormatter on DateTime {
-  String get date => DateFormat('dd.MM.yyyy HH:mm').format(this);
 }

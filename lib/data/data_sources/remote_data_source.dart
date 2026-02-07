@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crypto_simulator/data/models/app_user.dart';
-import 'package:crypto_simulator/data/models/trade.dart';
-import 'package:crypto_simulator/data/repositories/remote_repository.dart';
 import '../../core/constants/databases_constants.dart';
+import '../models/app_user_details.dart';
+import '../models/trade.dart';
+import '../repositories/remote_repository.dart';
 
 class RemoteDataSource implements RemoteRepository {
   final FirebaseFirestore _firestore;
@@ -11,48 +11,38 @@ class RemoteDataSource implements RemoteRepository {
     : _firestore = firestore;
 
   CollectionReference _usersCollection() =>
-      _firestore.collection(DatabasesConstants.userCollection);
+      _firestore.collection(DatabasesConstants.users);
 
   CollectionReference _tradesCollection(String userId) =>
-      _usersCollection().doc(userId).collection('trades');
+      _usersCollection().doc(userId).collection(DatabasesConstants.trades);
 
   @override
-  Future<void> createUser(AppUser user) async {
+  Future<void> createUser(AppUserDetails user) async {
     await _usersCollection().doc(user.id).set(user.toJson());
   }
 
   @override
-  Future<AppUser> getUserById(String userId) async {
+  Future<AppUserDetails> getUserById(String userId) async {
     final doc = await _usersCollection().doc(userId).get();
-    final user = AppUser.fromJson(doc.data() as Map<String, dynamic>);
+    final user = AppUserDetails.fromJson(doc.data() as Map<String, dynamic>);
     return user;
   }
 
   @override
-  Future<AppUser?> getUserOrNullById(String userId) async {
-    final doc = await _usersCollection().doc(userId).get();
-    if (!doc.exists) return null;
-    final user = AppUser.fromJson(doc.data() as Map<String, dynamic>);
-    return user;
-  }
-
-  @override
-  Future<List<AppUser>> getUsers() async {
+  Future<List<AppUserDetails>> getUsers() async {
     final data = await _usersCollection().limit(100).get();
     final users = data.docs
-        .map((doc) => AppUser.fromJson(doc.data() as Map<String, dynamic>))
+        .map(
+          (doc) => AppUserDetails.fromJson(doc.data() as Map<String, dynamic>),
+        )
         .toList();
     return users;
   }
 
   @override
-  Future<void> addTrade(AppUser user, Trade trade) async {
-    final batch = _firestore.batch();
-    final userDoc = _usersCollection().doc(user.id);
-    final tradeDoc = _tradesCollection(user.id).doc(trade.id);
-    batch.update(userDoc, user.toJson());
-    batch.set(tradeDoc, trade.toJson());
-    await batch.commit();
+  Future<void> addTrade(AppUserDetails user, Trade trade) async {
+    await _usersCollection().doc(user.id).update(user.toJson());
+    await _tradesCollection(user.id).doc(trade.id).set(trade.toJson());
   }
 
   @override

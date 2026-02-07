@@ -1,5 +1,6 @@
+import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:auth_buttons/auth_buttons.dart';
-import 'package:crypto_simulator/features/auth/providers/auth_provider.dart';
+import 'package:Bitmark/features/auth/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,7 +12,7 @@ class GoogleButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
+    final theme = context.theme;
     return SizedBox(
       width: double.infinity,
       child: Padding(

@@ -1,11 +1,12 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_simulator/app/widgets/crypto_coin_card.dart';
-import 'package:crypto_simulator/data/models/crypto_coin_details.dart';
+import 'package:Bitmark/app/widgets/crypto_coin_card.dart';
+import 'package:Bitmark/data/models/crypto_coin_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/widgets/loader.dart';
 import '../../../app/widgets/settings_button.dart';
 import '../../../app/widgets/unknown_error.dart';
+import '../../../core/utils/extensions.dart';
 import '../../../generated/l10n.dart';
 import '../providers/filter_providers.dart';
 import '../providers/market_provider.dart';
@@ -108,7 +109,7 @@ class _EmptyList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
+    final theme = context.theme;
     final s = S.of(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -146,7 +147,7 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final s = S.of(context);
-    final theme = Theme.of(context);
+    final theme = context.theme;
     return AppBar(
       title: Text(s.market),
       actions: [const SettingsButton()],

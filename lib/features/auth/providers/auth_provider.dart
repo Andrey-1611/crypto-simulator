@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'package:crypto_simulator/data/models/app_user.dart';
-import 'package:crypto_simulator/data/repositories/auth_repository.dart';
-import 'package:crypto_simulator/data/repositories/remote_repository.dart';
+import 'package:Bitmark/data/models/app_user_details.dart';
+import 'package:Bitmark/data/repositories/auth_repository.dart';
+import 'package:Bitmark/data/repositories/remote_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final authNotifierProvider = AsyncNotifierProvider<AuthNotifier, AuthState>(
@@ -11,7 +11,11 @@ final authNotifierProvider = AsyncNotifierProvider<AuthNotifier, AuthState>(
 class AuthNotifier extends AsyncNotifier<AuthState> {
   @override
   FutureOr<AuthState> build() async {
-    return ref.read(authRepositoryProvider).getAuthState();
+    final authState = ref.read(authRepositoryProvider).getAuthState();
+    if (authState == .emailNotVerified) {
+      await ref.read(authRepositoryProvider).sendEmailVerification();
+    }
+    return authState;
   }
 
   Future<void> signIn(String email, String password) async {
@@ -31,7 +35,8 @@ class AuthNotifier extends AsyncNotifier<AuthState> {
     state = await .guard(() async {
       final user = await ref.read(authRepositoryProvider).signInWithGoogle();
       if (user != null) {
-        await ref.read(remoteRepositoryProvider).createUser(user);
+        final newUser = AppUserDetails.create(user);
+        await ref.read(remoteRepositoryProvider).createUser(newUser);
       }
       return .auth;
     });
@@ -43,7 +48,8 @@ class AuthNotifier extends AsyncNotifier<AuthState> {
       final user = await ref
           .read(authRepositoryProvider)
           .signUp(name, email, password);
-      await ref.read(remoteRepositoryProvider).createUser(user);
+      final newUser = AppUserDetails.create(user);
+      await ref.read(remoteRepositoryProvider).createUser(newUser);
       await ref.read(authRepositoryProvider).sendEmailVerification();
       return .emailNotVerified;
     });
@@ -82,8 +88,8 @@ class AuthNotifier extends AsyncNotifier<AuthState> {
 
   Future<void> deleteAccount() async {
     state = await .guard(() async {
-      final userId = await ref.read(authRepositoryProvider).getUserId();
-      await ref.read(remoteRepositoryProvider).deleteUser(userId);
+      final user = ref.read(authRepositoryProvider).getUser();
+      await ref.read(remoteRepositoryProvider).deleteUser(user.id);
       await ref.read(authRepositoryProvider).deleteAccount();
       return .notAuth;
     });

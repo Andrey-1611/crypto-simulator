@@ -1,14 +1,14 @@
+import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_simulator/app/widgets/loader.dart';
-import 'package:crypto_simulator/app/widgets/unknown_error.dart';
-import 'package:crypto_simulator/core/utils/toast_helper.dart';
-import 'package:crypto_simulator/data/models/trade.dart';
-import 'package:crypto_simulator/features/market/widgets/coins_text_field.dart';
+import 'package:Bitmark/app/widgets/loader.dart';
+import 'package:Bitmark/app/widgets/unknown_error.dart';
+import 'package:Bitmark/core/utils/toast_helper.dart';
+import 'package:Bitmark/data/models/trade.dart';
+import 'package:Bitmark/features/market/widgets/coins_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/widgets/info_card.dart';
 import '../../../core/utils/dialog_helper.dart';
-import '../../../core/utils/formatter.dart';
 import '../../../data/models/crypto_coin_details.dart';
 import '../../../generated/l10n.dart';
 import '../../briefcase/providers/briefcase_provider.dart';
@@ -71,7 +71,7 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = context.theme;
     final userP = ref.watch(briefcaseNotifierProvider(null));
     final s = S.of(context);
     return Padding(

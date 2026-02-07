@@ -1,4 +1,4 @@
-import 'package:crypto_simulator/generated/l10n.dart';
+import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

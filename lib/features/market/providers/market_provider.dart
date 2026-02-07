@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:crypto_simulator/data/repositories/crypto_repository.dart';
+import 'package:Bitmark/data/repositories/crypto_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../data/models/crypto_coin_details.dart';
 

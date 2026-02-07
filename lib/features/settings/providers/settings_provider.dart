@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:crypto_simulator/data/repositories/settings_repository.dart';
+import 'package:Bitmark/data/repositories/settings_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final settingsNotifierProvider = AsyncNotifierProvider(SettingsNotifier.new);

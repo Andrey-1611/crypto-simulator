@@ -1,19 +1,19 @@
-import 'package:crypto_simulator/app/widgets/unknown_error.dart';
-import 'package:crypto_simulator/core/utils/formatter.dart';
-import 'package:crypto_simulator/data/models/app_user.dart';
-import 'package:crypto_simulator/features/briefcase/providers/trades_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/widgets/info_bloc.dart';
 import '../../../app/widgets/info_row.dart';
 import '../../../app/widgets/loader.dart';
+import '../../../app/widgets/unknown_error.dart';
+import '../../../core/utils/extensions.dart';
+import '../../../data/models/app_user_details.dart';
 import '../../../data/models/trade.dart';
 import '../../../generated/l10n.dart';
 import '../providers/briefcase_provider.dart';
 import '../providers/crypto_balance_provider.dart';
+import '../providers/trades_provider.dart';
 
 class BalancePage extends ConsumerWidget {
-  final AppUser? user;
+  final AppUserDetails? user;
 
   const BalancePage({super.key, this.user});
 

@@ -13,12 +13,15 @@ part of 'app_router.dart';
 /// generated route for
 /// [BriefcasePage]
 class BriefcaseRoute extends PageRouteInfo<BriefcaseRouteArgs> {
-  BriefcaseRoute({Key? key, AppUser? user, List<PageRouteInfo>? children})
-    : super(
-        BriefcaseRoute.name,
-        args: BriefcaseRouteArgs(key: key, user: user),
-        initialChildren: children,
-      );
+  BriefcaseRoute({
+    Key? key,
+    AppUserDetails? user,
+    List<PageRouteInfo>? children,
+  }) : super(
+         BriefcaseRoute.name,
+         args: BriefcaseRouteArgs(key: key, user: user),
+         initialChildren: children,
+       );
 
   static const String name = 'BriefcaseRoute';
 
@@ -38,7 +41,7 @@ class BriefcaseRouteArgs {
 
   final Key? key;
 
-  final AppUser? user;
+  final AppUserDetails? user;
 
   @override
   String toString() {

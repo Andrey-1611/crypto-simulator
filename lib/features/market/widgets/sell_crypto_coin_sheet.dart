@@ -1,15 +1,16 @@
-import 'package:crypto_simulator/core/utils/formatter.dart';
-import 'package:crypto_simulator/data/models/crypto_coin_details.dart';
-import 'package:crypto_simulator/generated/l10n.dart';
+import 'package:Bitmark/data/models/crypto_coin_details.dart';
+import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_simulator/app/widgets/loader.dart';
-import 'package:crypto_simulator/app/widgets/unknown_error.dart';
-import 'package:crypto_simulator/core/utils/toast_helper.dart';
-import 'package:crypto_simulator/data/models/trade.dart';
+import 'package:Bitmark/app/widgets/loader.dart';
+import 'package:Bitmark/app/widgets/unknown_error.dart';
+import 'package:Bitmark/core/utils/toast_helper.dart';
+import 'package:Bitmark/data/models/trade.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/widgets/info_card.dart';
 import '../../../core/utils/dialog_helper.dart';
+import '../../../core/utils/extensions.dart';
+import '../../../data/models/coin_amount.dart';
 import '../../briefcase/providers/briefcase_provider.dart';
 import 'coins_text_field.dart';
 
@@ -73,7 +74,7 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = context.theme;
     final userP = ref.watch(briefcaseNotifierProvider(null));
     final s = S.of(context);
     return Padding(
@@ -82,8 +83,8 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
         data: (user) {
           final userCoinsAmount = user.coins
               .firstWhere(
-                (c) => c.info.symbol == coin.symbol,
-                orElse: () => (amount: 0, info: coin),
+                (c) => c.coin.symbol == coin.symbol,
+                orElse: () => CoinAmount.empty(),
               )
               .amount;
           return Column(

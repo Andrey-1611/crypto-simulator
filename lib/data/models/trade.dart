@@ -1,4 +1,4 @@
-import 'package:crypto_simulator/data/models/crypto_coin.dart';
+import 'package:Bitmark/data/models/crypto_coin.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uuid/uuid.dart';
 

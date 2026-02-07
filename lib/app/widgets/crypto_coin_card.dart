@@ -1,7 +1,7 @@
+import 'package:Bitmark/app/widgets/size_box.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_simulator/app/widgets/size_box.dart';
-import 'package:crypto_simulator/core/utils/formatter.dart';
 import 'package:flutter/material.dart';
+import '../../core/utils/extensions.dart';
 import '../../data/models/crypto_coin.dart';
 import '../router/app_router.dart';
 

@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_simulator/app/widgets/size_box.dart';
-import 'package:crypto_simulator/features/auth/widgets/google_button.dart';
+import 'package:Bitmark/app/widgets/size_box.dart';
+import 'package:Bitmark/features/auth/widgets/google_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/router/app_router.dart';

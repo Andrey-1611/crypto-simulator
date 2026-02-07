@@ -1,7 +1,5 @@
-import 'package:crypto_simulator/core/constants/api_constants.dart';
+import 'package:Bitmark/core/constants/api_constants.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-part 'crypto_coin.g.dart';
 
 @JsonSerializable()
 class CryptoCoin {
@@ -19,8 +17,19 @@ class CryptoCoin {
     required this.imageUrl,
   });
 
-  Map<String, dynamic> toJson() => _$CryptoCoinToJson(this);
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'symbol': symbol, 'name': name, 'imageUrl': imageUrl};
+  }
 
-  factory CryptoCoin.fromJson(Map<String, dynamic> json) =>
-      _$CryptoCoinFromJson(json);
+  factory CryptoCoin.fromJson(Map<String, dynamic> map) {
+    return CryptoCoin(
+      id: map['id'] as String,
+      symbol: map['symbol'] as String,
+      name: map['name'] as String,
+      imageUrl: map['imageUrl'] as String,
+    );
+  }
+
+  factory CryptoCoin.empty() =>
+      const CryptoCoin(id: '', symbol: '', name: '', imageUrl: '');
 }

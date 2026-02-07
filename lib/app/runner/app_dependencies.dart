@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
@@ -14,3 +15,6 @@ final prefsProvider = FutureProvider(
   (ref) async => await SharedPreferences.getInstance(),
 );
 final googleProvider = Provider((ref) => GoogleSignIn());
+final packageProvider = FutureProvider(
+  (ref) async => await PackageInfo.fromPlatform(),
+);

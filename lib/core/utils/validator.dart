@@ -1,4 +1,4 @@
-import '../../data/models/app_user.dart';
+import '../../data/models/app_user_details.dart';
 
 abstract class Validator {
   static String? name(String? value) {
@@ -30,6 +30,6 @@ abstract class Validator {
 }
 
 typedef UsersWithCurrentUserId = ({
-  List<({AppUser user, double fullBalance})> users,
+  List<({AppUserDetails user, double fullBalance})> users,
   String currentUserId,
 });

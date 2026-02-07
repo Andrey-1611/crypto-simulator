@@ -1,4 +1,4 @@
-import 'package:crypto_simulator/app/widgets/size_box.dart';
+import 'package:Bitmark/app/widgets/size_box.dart';
 import 'package:flutter/material.dart';
 
 class InfoBloc extends StatelessWidget {

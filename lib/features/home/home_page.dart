@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_simulator/app/router/app_router.dart';
-import 'package:crypto_simulator/generated/l10n.dart';
+import 'package:Bitmark/app/router/app_router.dart';
+import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
