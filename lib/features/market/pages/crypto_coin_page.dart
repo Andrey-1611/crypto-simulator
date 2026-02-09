@@ -1,14 +1,17 @@
+import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:auto_route/annotations.dart';
-import 'package:crypto_simulator/app/widgets/info_bloc.dart';
-import 'package:crypto_simulator/app/widgets/loader.dart';
-import 'package:crypto_simulator/app/widgets/unknown_error.dart';
-import 'package:crypto_simulator/core/utils/price_formatter.dart';
-import 'package:crypto_simulator/data/models/crypto_coin_details.dart';
-import 'package:crypto_simulator/features/market/widgets/buy_crypto_coin_sheet.dart';
-import 'package:crypto_simulator/features/market/widgets/sell_crypto_coin_sheet.dart';
+import 'package:Bitmark/app/widgets/info_bloc.dart';
+import 'package:Bitmark/app/widgets/loader.dart';
+import 'package:Bitmark/app/widgets/unknown_error.dart';
+import 'package:Bitmark/data/models/crypto_coin_details.dart';
+import 'package:Bitmark/features/market/widgets/buy_crypto_coin_sheet.dart';
+import 'package:Bitmark/features/market/widgets/sell_crypto_coin_sheet.dart';
+import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/widgets/info_row.dart';
+import '../../../app/widgets/size_box.dart';
 import '../../../data/models/crypto_coin.dart';
 import '../../briefcase/providers/briefcase_provider.dart';
 import '../providers/crypto_coin_details_provider.dart';
@@ -23,17 +26,13 @@ class CryptoCoinPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final size = MediaQuery.sizeOf(context);
     final coinP = ref.watch(cryptoCoinDetailsProvider(coin));
     return Scaffold(
       appBar: AppBar(
         title: Row(
           children: [
-            SizedBox.square(
-              dimension: size.height * 0.05,
-              child: Image.network(coin.fullImageUrl),
-            ),
-            SizedBox(width: size.width * 0.01),
+            SizeBox.square(size: 0.11, child: Image.network(coin.fullImageUrl)),
+            const SizeBox(width: 0.01),
             Expanded(child: Text(coin.name, overflow: TextOverflow.ellipsis)),
           ],
         ),
@@ -45,7 +44,7 @@ class CryptoCoinPage extends ConsumerWidget {
         ],
       ),
       body: Padding(
-        padding: const .all(16.0),
+        padding: .all(16.0.sp),
         child: coinP.when(
           data: (coin) {
             return Column(
@@ -73,24 +72,23 @@ class _PriceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isUp = coin.changePercent24h >= 0;
     final color = isUp ? Colors.green : Colors.red;
-    final size = MediaQuery.sizeOf(context);
-    final theme = Theme.of(context);
+    final theme = context.theme;
     return Card(
       child: Padding(
-        padding: const .all(8),
+        padding: .all(8.sp),
         child: ListTile(
           title: Row(
             mainAxisAlignment: .spaceBetween,
             children: [
               Text(
-                coin.currentPrice.price,
+                coin.currentPrice.price4,
                 style: theme.textTheme.displayLarge,
               ),
               Container(
-                padding: const .symmetric(horizontal: 12, vertical: 8),
+                padding: .symmetric(horizontal: 12.sp, vertical: 8.sp),
                 decoration: BoxDecoration(
                   color: color.withValues(alpha: 0.1),
-                  borderRadius: .circular(8),
+                  borderRadius: .circular(8.sp),
                 ),
                 child: Row(
                   children: [
@@ -98,7 +96,7 @@ class _PriceCard extends StatelessWidget {
                       isUp ? Icons.trending_up : Icons.trending_down,
                       color: color,
                     ),
-                    SizedBox(width: size.width * 0.01),
+                    const SizeBox(width: 0.01),
                     Text(
                       coin.changePercent24h.percent,
                       style: theme.textTheme.bodyMedium?.copyWith(color: color),
@@ -125,38 +123,27 @@ class _DataBlocs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return Column(
       children: [
         InfoBloc(
-          title: 'Рыночные данные',
+          title: s.market_data,
           children: [
+            InfoRow(title: s.market_cap, value: coin.marketCap.toCryptoPrice),
+            InfoRow(title: s.volume_24h, value: coin.volume24h.toCryptoPrice),
             InfoRow(
-              title: 'Капитализация',
-              value: CryptoCoinDetails.formatValue(coin.marketCap),
+              title: s.circulating_supply,
+              value: coin.circulatingSupply.toInt().toCrypto,
             ),
-            InfoRow(
-              title: 'Объем (24ч)',
-              value: CryptoCoinDetails.formatValue(coin.volume24h),
-            ),
-            InfoRow(
-              title: 'В обращении',
-              value: CryptoCoinDetails.formatValue(coin.circulatingSupply),
-            ),
-            InfoRow(
-              title: 'Максимум (24ч)',
-              value: CryptoCoinDetails.formatValue(coin.high24h),
-            ),
-            InfoRow(
-              title: 'Минимум (24ч)',
-              value: CryptoCoinDetails.formatValue(coin.low24h),
-            ),
+            InfoRow(title: s.high_24h, value: coin.high24h.toCryptoPrice),
+            InfoRow(title: s.low_24h, value: coin.low24h.toCryptoPrice),
           ],
         ),
         InfoBloc(
-          title: 'Информация',
+          title: s.information,
           children: [
-            InfoRow(title: 'Символ', value: coin.symbol),
-            InfoRow(title: 'ID', value: coin.id),
+            InfoRow(title: s.symbol, value: coin.symbol),
+            InfoRow(title: s.id, value: coin.id),
           ],
         ),
       ],
@@ -187,6 +174,7 @@ class _ActionsButtons extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
     final userP = ref.watch(briefcaseNotifierProvider(null));
+    final s = S.of(context);
     return Row(
       children: [
         Flexible(
@@ -197,14 +185,14 @@ class _ActionsButtons extends ConsumerWidget {
             height: size.height * 0.05,
             child: ElevatedButton(
               onPressed: () => showBuyCoinSheet(context),
-              child: const Text('Купить'),
+              child: Text(s.buy),
             ),
           ),
         ),
         userP.when(
           data: (user) {
-            final userCoin = user?.findCoin(coin);
-            return userCoin?.amount != 0
+            final userCoin = user.findCoin(coin);
+            return userCoin.amount != 0
                 ? Flexible(
                     flex: 1,
                     child: Container(
@@ -213,7 +201,7 @@ class _ActionsButtons extends ConsumerWidget {
                       height: size.height * 0.05,
                       child: ElevatedButton(
                         onPressed: () => showSellCoinSheet(context),
-                        child: const Text('Продать'),
+                        child: Text(s.sell),
                       ),
                     ),
                   )

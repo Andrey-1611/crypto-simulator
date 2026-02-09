@@ -1,14 +1,17 @@
+import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_simulator/app/widgets/loader.dart';
-import 'package:crypto_simulator/app/widgets/unknown_error.dart';
-import 'package:crypto_simulator/core/utils/toast_helper.dart';
-import 'package:crypto_simulator/data/models/trade.dart';
-import 'package:crypto_simulator/features/market/widgets/coins_text_field.dart';
+import 'package:Bitmark/app/widgets/loader.dart';
+import 'package:Bitmark/app/widgets/unknown_error.dart';
+import 'package:Bitmark/core/utils/toast_helper.dart';
+import 'package:Bitmark/data/models/trade.dart';
+import 'package:Bitmark/features/market/widgets/coins_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/widgets/info_card.dart';
-import '../../../core/utils/price_formatter.dart';
+import '../../../core/utils/dialog_helper.dart';
 import '../../../data/models/crypto_coin_details.dart';
+import '../../../generated/l10n.dart';
 import '../../briefcase/providers/briefcase_provider.dart';
 
 class BuyCryptoCoinSheet extends ConsumerStatefulWidget {
@@ -36,6 +39,20 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
         _totalPrice = coins * coin.currentPrice;
       });
     });
+    ref.listenManual(briefcaseNotifierProvider(null), (_, state) {
+      state.when(
+        loading: () => DialogHelper.loading(context),
+        data: (user) {
+          ToastHelper.success();
+          context.pop();
+          context.pop();
+        },
+        error: (_, _) {
+          context.pop();
+          ToastHelper.unknownError();
+        },
+      );
+    });
   }
 
   Future<void> createTrade(BuildContext context, double balance) async {
@@ -48,35 +65,31 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
             amount: int.tryParse(_coinsController.text) ?? 0,
             type: TradeType.buy,
           );
-      ToastHelper.success(Theme.of(context));
-      if (mounted) context.pop();
     } else {
-      ToastHelper.balanceError(Theme.of(context));
+      ToastHelper.balanceError();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = context.theme;
     final userP = ref.watch(briefcaseNotifierProvider(null));
-    ref.listen(briefcaseNotifierProvider(null), (_, state) {
-      if (state.hasError) ToastHelper.unknownError(theme);
-    });
+    final s = S.of(context);
     return Padding(
-      padding: const .all(32),
+      padding: .all(32.sp),
       child: userP.when(
         data: (user) => Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Покупка ${coin.name}', style: theme.textTheme.displayMedium),
+            Text(s.buy_coin(coin.name), style: theme.textTheme.displayMedium),
             const Spacer(),
             CoinsTextField(coinsController: _coinsController),
-            InfoCard(title: 'Баланс', value: user!.balance.price),
-            InfoCard(title: 'Сделка', value: _totalPrice.price),
+            InfoCard(title: s.balance, value: user.balance.price4),
+            InfoCard(title: S.of(context).trade, value: _totalPrice.price4),
             ElevatedButton(
               onPressed: () =>
                   _totalPrice != 0 ? createTrade(context, user.balance) : null,
-              child: const Text('Подтвердить'),
+              child: Text(s.confirm),
             ),
             const Spacer(),
           ],

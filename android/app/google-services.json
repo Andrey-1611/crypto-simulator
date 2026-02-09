@@ -14,47 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "376465477965-om3sdik4g88ooge703m6fis3d8hvdra1.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAuqK301Isq71pGVQfblNpRZKjqqSYbI54"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "376465477965-om3sdik4g88ooge703m6fis3d8hvdra1.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "376465477965-jtdus4hm1bfgiv994d5ujhtdk7j0neu0.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.redditRiverpoodApp"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:376465477965:android:cba4a73a53d60492ce2704",
-        "android_client_info": {
-          "package_name": "com.example.reddit_riverpood_app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "376465477965-sc7me7t57574621gfn75iduo4ql2hevh.apps.googleusercontent.com",
+          "client_id": "376465477965-a46un864t6kuthjpgkl5csoj0b6rginl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.reddit_riverpood_app",
-            "certificate_hash": "559ae4c75fa7cf06109ad0701e54097b45cdb4ed"
+            "package_name": "com.example.crypto_simulator",
+            "certificate_hash": "be63a29e5e665198d9d96ab4cb7b2b3023beb7da"
           }
         },
         {
@@ -75,10 +39,10 @@
               "client_type": 3
             },
             {
-              "client_id": "376465477965-jtdus4hm1bfgiv994d5ujhtdk7j0neu0.apps.googleusercontent.com",
+              "client_id": "376465477965-hq1ikrpsv315210ru507r921sj91uppc.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.redditRiverpoodApp"
+                "bundle_id": "com.example.cryptoSimulator"
               }
             }
           ]

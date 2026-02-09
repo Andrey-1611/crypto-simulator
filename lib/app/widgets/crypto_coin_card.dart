@@ -1,6 +1,7 @@
+import 'package:Bitmark/app/widgets/size_box.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_simulator/core/utils/price_formatter.dart';
 import 'package:flutter/material.dart';
+import '../../core/utils/extensions.dart';
 import '../../data/models/crypto_coin.dart';
 import '../router/app_router.dart';
 
@@ -12,15 +13,14 @@ class CryptoCoinCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
     return Card(
       child: ListTile(
-        leading: SizedBox.square(
-          dimension: size.height * 0.06,
+        leading: SizeBox.square(
+          size: 0.14,
           child: Image.network(coin.fullImageUrl),
         ),
         title: Text(coin.name),
-        subtitle: Text(price.price),
+        subtitle: Text(price.price4),
         trailing: const Icon(Icons.chevron_right),
         onTap: () => context.pushRoute(CryptoCoinRoute(coin: coin)),
       ),

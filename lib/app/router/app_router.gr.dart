@@ -13,12 +13,15 @@ part of 'app_router.dart';
 /// generated route for
 /// [BriefcasePage]
 class BriefcaseRoute extends PageRouteInfo<BriefcaseRouteArgs> {
-  BriefcaseRoute({Key? key, AppUser? user, List<PageRouteInfo>? children})
-    : super(
-        BriefcaseRoute.name,
-        args: BriefcaseRouteArgs(key: key, user: user),
-        initialChildren: children,
-      );
+  BriefcaseRoute({
+    Key? key,
+    AppUserDetails? user,
+    List<PageRouteInfo>? children,
+  }) : super(
+         BriefcaseRoute.name,
+         args: BriefcaseRouteArgs(key: key, user: user),
+         initialChildren: children,
+       );
 
   static const String name = 'BriefcaseRoute';
 
@@ -38,7 +41,7 @@ class BriefcaseRouteArgs {
 
   final Key? key;
 
-  final AppUser? user;
+  final AppUserDetails? user;
 
   @override
   String toString() {
@@ -104,6 +107,22 @@ class CryptoCoinRouteArgs {
 }
 
 /// generated route for
+/// [EmailVerificationPage]
+class EmailVerificationRoute extends PageRouteInfo<void> {
+  const EmailVerificationRoute({List<PageRouteInfo>? children})
+    : super(EmailVerificationRoute.name, initialChildren: children);
+
+  static const String name = 'EmailVerificationRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const EmailVerificationPage();
+    },
+  );
+}
+
+/// generated route for
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})
@@ -152,6 +171,22 @@ class RatingRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ResetPasswordPage]
+class ResetPasswordRoute extends PageRouteInfo<void> {
+  const ResetPasswordRoute({List<PageRouteInfo>? children})
+    : super(ResetPasswordRoute.name, initialChildren: children);
+
+  static const String name = 'ResetPasswordRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ResetPasswordPage();
+    },
+  );
+}
+
+/// generated route for
 /// [SettingsPage]
 class SettingsRoute extends PageRouteInfo<void> {
   const SettingsRoute({List<PageRouteInfo>? children})
@@ -163,6 +198,38 @@ class SettingsRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const SettingsPage();
+    },
+  );
+}
+
+/// generated route for
+/// [SignInPage]
+class SignInRoute extends PageRouteInfo<void> {
+  const SignInRoute({List<PageRouteInfo>? children})
+    : super(SignInRoute.name, initialChildren: children);
+
+  static const String name = 'SignInRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SignInPage();
+    },
+  );
+}
+
+/// generated route for
+/// [SignUpPage]
+class SignUpRoute extends PageRouteInfo<void> {
+  const SignUpRoute({List<PageRouteInfo>? children})
+    : super(SignUpRoute.name, initialChildren: children);
+
+  static const String name = 'SignUpRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SignUpPage();
     },
   );
 }

@@ -1,11 +1,13 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_simulator/app/widgets/crypto_coin_card.dart';
-import 'package:crypto_simulator/data/models/crypto_coin_details.dart';
+import 'package:Bitmark/app/widgets/crypto_coin_card.dart';
+import 'package:Bitmark/data/models/crypto_coin_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/widgets/loader.dart';
 import '../../../app/widgets/settings_button.dart';
 import '../../../app/widgets/unknown_error.dart';
+import '../../../core/utils/extensions.dart';
 import '../../../generated/l10n.dart';
 import '../providers/filter_providers.dart';
 import '../providers/market_provider.dart';
@@ -43,14 +45,13 @@ class _MarketPageState extends ConsumerState<MarketPage> {
   @override
   Widget build(BuildContext context) {
     final cryptoCoinsP = ref.watch(marketNotifierProvider);
-    final size = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: _AppBar(
-        size: Size.fromHeight(size.height * 0.13),
+        size: Size.fromHeight(MediaQuery.sizeOf(context).height * 0.13),
         searchController: _searchController,
       ),
       body: Padding(
-        padding: const .all(16.0),
+        padding: .all(16.0.sp),
         child: Center(
           child: cryptoCoinsP.when(
             data: (coins) {
@@ -109,17 +110,18 @@ class _EmptyList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
+    final theme = context.theme;
+    final s = S.of(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('Монет не найдено', style: theme.textTheme.displayLarge),
+        Text(s.coins_not_found, style: theme.textTheme.displayLarge),
         TextButton(
           onPressed: () {
             ref.read(searchCoinsProvider.notifier).update((state) => '');
             searchController.clear();
           },
-          child: const Text('Сбросить поиск'),
+          child: Text(s.reset_search),
         ),
       ],
     );
@@ -146,7 +148,7 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final s = S.of(context);
-    final theme = Theme.of(context);
+    final theme = context.theme;
     return AppBar(
       title: Text(s.market),
       actions: [const SettingsButton()],
@@ -154,7 +156,7 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
       bottom: PreferredSize(
         preferredSize: preferredSize,
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding:  EdgeInsets.all(12.sp),
           child: Row(
             children: [
               Expanded(
@@ -164,7 +166,7 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
                   onChanged: (text) => update(text, ref),
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.search),
-                    hintText: 'Поиск...',
+                    hintText: s.search_hint,
                     filled: true,
                     fillColor: theme.scaffoldBackgroundColor,
                     suffixIcon: IconButton(

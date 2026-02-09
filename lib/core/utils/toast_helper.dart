@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../../generated/l10n.dart';
 
 class ToastHelper {
-  static void _showToast(String msg, ThemeData theme) {
-    Fluttertoast.showToast(
-      msg: msg,
-      backgroundColor: theme.hintColor,
-      textColor: theme.cardColor,
-    );
+   static final s = S.current;
+
+  static void _toast(String msg) {
+    Fluttertoast.showToast(msg: msg, backgroundColor: Colors.red);
   }
 
-  static void unknownError(ThemeData theme) {
-    _showToast('Неизвестная ошибка, попробуйте похже', theme);
+  static void unknownError() {
+    _toast(s.unknown_error);
   }
 
-  static void success(ThemeData theme) {
-    _showToast('Успешно!', theme);
+  static void success() {
+    _toast(s.success);
   }
 
-  static void balanceError(ThemeData theme) {
-    _showToast('На балансе недостаточно средств!', theme);
+  static void balanceError() {
+    _toast(s.balance_error);
   }
 
-  static void coinsAmountError(ThemeData theme) {
-    _showToast('У вас нет необходимого количества монет!', theme);
+  static void coinsAmountError() {
+    _toast(s.coins_amount_error);
   }
 }

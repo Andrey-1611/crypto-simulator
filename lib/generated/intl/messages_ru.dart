@@ -20,11 +20,130 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
 
+  static String m0(coinName) => "Покупка ${coinName}";
+
+  static String m1(amount) =>
+      "${Intl.plural(amount, one: '1 монета', few: '${amount} монеты', other: '${amount} монет')}";
+
+  static String m2(userExists) =>
+      "${Intl.select(userExists, {'true': 'Нет операций', 'other': 'У вас еще нет операций'})}";
+
+  static String m3(userExists) =>
+      "${Intl.select(userExists, {'true': 'Нет монет', 'other': 'У вас еще нет монет'})}";
+
+  static String m4(coinName) => "Продажа ${coinName}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "alreadyHaveAccount": MessageLookupByLibrary.simpleMessage(
+      "Уже есть аккаунт?  Войти в аккаунт",
+    ),
+    "amount": MessageLookupByLibrary.simpleMessage("Количество"),
+    "balance": MessageLookupByLibrary.simpleMessage("Баланс"),
+    "balance_error": MessageLookupByLibrary.simpleMessage(
+      "На балансе недостаточно средств!",
+    ),
+    "balance_info": MessageLookupByLibrary.simpleMessage("Данные о балансе"),
     "briefcase": MessageLookupByLibrary.simpleMessage("Портфель"),
+    "buy": MessageLookupByLibrary.simpleMessage("Купить"),
+    "buy_coin": m0,
+    "by_change_24h": MessageLookupByLibrary.simpleMessage("Изменение за 24ч"),
+    "by_market_cap": MessageLookupByLibrary.simpleMessage("По капитализации"),
+    "by_price": MessageLookupByLibrary.simpleMessage("По цене"),
+    "by_volume": MessageLookupByLibrary.simpleMessage("По объёму"),
+    "cancel": MessageLookupByLibrary.simpleMessage("Отмена"),
+    "check": MessageLookupByLibrary.simpleMessage("Проверить"),
+    "circulating_supply": MessageLookupByLibrary.simpleMessage("В обращении"),
+    "coin": MessageLookupByLibrary.simpleMessage("Монета"),
+    "coin_balance": MessageLookupByLibrary.simpleMessage("Баланс в монетах"),
+    "coin_id": MessageLookupByLibrary.simpleMessage("ID монеты"),
+    "coin_info": MessageLookupByLibrary.simpleMessage("Данные о монетах"),
+    "coin_price": MessageLookupByLibrary.simpleMessage("Цена монеты"),
+    "coins": MessageLookupByLibrary.simpleMessage("Монеты"),
+    "coins_a": m1,
+    "coins_amount_error": MessageLookupByLibrary.simpleMessage(
+      "У вас нет необходимого количества монет!",
+    ),
+    "coins_balance": MessageLookupByLibrary.simpleMessage(
+      "Количество монет на балансе",
+    ),
+    "coins_not_found": MessageLookupByLibrary.simpleMessage("Монет не найдено"),
+    "confirm": MessageLookupByLibrary.simpleMessage("Подтвердить"),
+    "created": MessageLookupByLibrary.simpleMessage("Создан"),
+    "dark_theme": MessageLookupByLibrary.simpleMessage("Темная тема"),
+    "data": MessageLookupByLibrary.simpleMessage("Данные"),
+    "date": MessageLookupByLibrary.simpleMessage("Дата"),
+    "email": MessageLookupByLibrary.simpleMessage("Почта"),
+    "emailSent": MessageLookupByLibrary.simpleMessage(
+      "Пиcьмо отправлено на вашу почту",
+    ),
+    "emailVerification": MessageLookupByLibrary.simpleMessage(
+      "Подтверждение почты",
+    ),
+    "empty_trades": m2,
+    "english_language": MessageLookupByLibrary.simpleMessage("Английский язык"),
     "favourite": MessageLookupByLibrary.simpleMessage("Избранное"),
+    "forgotPassword": MessageLookupByLibrary.simpleMessage(
+      "Забыли пароль? Сбросить пароль",
+    ),
+    "high_24h": MessageLookupByLibrary.simpleMessage("Максимум (24ч)"),
+    "id": MessageLookupByLibrary.simpleMessage("ID"),
+    "information": MessageLookupByLibrary.simpleMessage("Информация"),
+    "loading": MessageLookupByLibrary.simpleMessage("Загрузка..."),
+    "low_24h": MessageLookupByLibrary.simpleMessage("Минимум (24ч)"),
     "market": MessageLookupByLibrary.simpleMessage("Биржа"),
+    "market_cap": MessageLookupByLibrary.simpleMessage("Капитализация"),
+    "market_data": MessageLookupByLibrary.simpleMessage("Рыночные данные"),
+    "name": MessageLookupByLibrary.simpleMessage("Имя"),
+    "noAccount": MessageLookupByLibrary.simpleMessage(
+      "Еще нет аккаунта?  Создать аккаунт",
+    ),
+    "no_coins": m3,
+    "num_coin_types": MessageLookupByLibrary.simpleMessage(
+      "Количество типов монет",
+    ),
+    "num_coins": MessageLookupByLibrary.simpleMessage("Количество монет"),
+    "num_coins_purchased": MessageLookupByLibrary.simpleMessage(
+      "Количество купленых монет",
+    ),
+    "num_transactions": MessageLookupByLibrary.simpleMessage(
+      "Количество операций",
+    ),
+    "password": MessageLookupByLibrary.simpleMessage("Пароль"),
+    "perform": MessageLookupByLibrary.simpleMessage("Совершить"),
     "rating": MessageLookupByLibrary.simpleMessage("Рейтинг"),
+    "resend": MessageLookupByLibrary.simpleMessage("Отправить повторно"),
+    "resetPassword": MessageLookupByLibrary.simpleMessage("Сброс пароля"),
+    "reset_search": MessageLookupByLibrary.simpleMessage("Сбросить поиск"),
+    "search_hint": MessageLookupByLibrary.simpleMessage("Поиск..."),
+    "sell": MessageLookupByLibrary.simpleMessage("Продать"),
+    "sell_coin_a": m4,
+    "settings": MessageLookupByLibrary.simpleMessage("Настройки"),
+    "signIn": MessageLookupByLibrary.simpleMessage("Войти"),
+    "signOutConfirm": MessageLookupByLibrary.simpleMessage(
+      "Вы уверены, что хотите выйти из акканта?",
+    ),
+    "signUp": MessageLookupByLibrary.simpleMessage("Зарегистрироваться"),
+    "sort": MessageLookupByLibrary.simpleMessage("Сортировка"),
+    "success": MessageLookupByLibrary.simpleMessage("Успешно!"),
+    "symbol": MessageLookupByLibrary.simpleMessage("Символ"),
+    "test": MessageLookupByLibrary.simpleMessage(""),
+    "total_balance": MessageLookupByLibrary.simpleMessage("Общий баланс"),
+    "total_price": MessageLookupByLibrary.simpleMessage("Общая цена"),
+    "total_spent": MessageLookupByLibrary.simpleMessage("Всего потрачено"),
+    "trade": MessageLookupByLibrary.simpleMessage("Сделка"),
+    "trade_details": MessageLookupByLibrary.simpleMessage("Детали сделаки"),
+    "trades": MessageLookupByLibrary.simpleMessage("Операции"),
+    "transaction_info": MessageLookupByLibrary.simpleMessage(
+      "Данных об операциях",
+    ),
+    "try_again": MessageLookupByLibrary.simpleMessage("Попробовать еще раз"),
+    "type": MessageLookupByLibrary.simpleMessage("Тип"),
+    "unknown_error": MessageLookupByLibrary.simpleMessage("Неизвестная ошибка"),
+    "unknown_error_try_again": MessageLookupByLibrary.simpleMessage(
+      "Неизвестная ошибка, попробуйте еще раз",
+    ),
+    "user_data": MessageLookupByLibrary.simpleMessage("Данные о пользователе"),
+    "volume_24h": MessageLookupByLibrary.simpleMessage("Объем (24ч)"),
   };
 }

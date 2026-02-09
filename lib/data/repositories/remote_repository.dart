@@ -1,6 +1,7 @@
-import 'package:crypto_simulator/app/runner/app_dependencies.dart';
-import 'package:crypto_simulator/data/data_sources/remote_data_source.dart';
-import 'package:crypto_simulator/data/models/app_user.dart';
+import 'package:Bitmark/app/runner/app_dependencies.dart';
+import 'package:Bitmark/data/data_sources/remote_data_source.dart';
+import 'package:Bitmark/data/models/app_user_details.dart';
+import 'package:Bitmark/data/models/trade.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final remoteRepositoryProvider = Provider<RemoteRepository>((ref) {
@@ -8,13 +9,15 @@ final remoteRepositoryProvider = Provider<RemoteRepository>((ref) {
 });
 
 abstract interface class RemoteRepository {
-  Future<AppUser> getUserById(String userId);
+  Future<AppUserDetails> getUserById(String userId);
 
-  Future<AppUser?> getUserOrNullById(String userId);
+  Future<void> createUser(AppUserDetails user);
 
-  Future<void> createUser(AppUser user);
+  Future<List<AppUserDetails>> getUsers();
 
-  Future<void> updateUser(AppUser user);
+  Future<void> addTrade(AppUserDetails user, Trade trade);
 
-  Future<List<AppUser>> getUsers();
+  Future<List<Trade>> getTrades(String userId);
+
+  Future<void> deleteUser(String userId);
 }

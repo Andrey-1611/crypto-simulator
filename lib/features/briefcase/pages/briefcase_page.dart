@@ -1,16 +1,17 @@
 import 'package:auto_route/annotations.dart';
-import 'package:crypto_simulator/app/widgets/settings_button.dart';
-import 'package:crypto_simulator/data/models/app_user.dart';
-import 'package:crypto_simulator/features/briefcase/pages/balance_page.dart';
-import 'package:crypto_simulator/features/briefcase/pages/crypto_coins_page.dart';
-import 'package:crypto_simulator/features/briefcase/pages/trades_history_page.dart';
-import 'package:crypto_simulator/features/briefcase/widgets/keep_alive.dart';
-import 'package:crypto_simulator/generated/l10n.dart';
+import 'package:Bitmark/app/widgets/settings_button.dart';
+import 'package:Bitmark/data/models/app_user_details.dart';
+import 'package:Bitmark/features/briefcase/pages/balance_page.dart';
+import 'package:Bitmark/features/briefcase/pages/crypto_coins_page.dart';
+import 'package:Bitmark/features/briefcase/pages/trades_history_page.dart';
+import 'package:Bitmark/features/briefcase/widgets/keep_alive.dart';
+import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
 class BriefcasePage extends StatelessWidget {
-  final AppUser? user;
+  final AppUserDetails? user;
 
   const BriefcasePage({super.key, this.user});
 
@@ -24,21 +25,21 @@ class BriefcasePage extends StatelessWidget {
           title: Text(s.briefcase),
           automaticallyImplyLeading: user != null,
           actions: user == null ? [const SettingsButton()] : [],
-          bottom: const TabBar(
+          bottom: TabBar(
             tabs: [
-              Tab(text: 'Баланс'),
-              Tab(text: 'Монеты'),
-              Tab(text: 'Операции'),
+              Tab(text: s.balance),
+              Tab(text: s.coins),
+              Tab(text: s.trades),
             ],
           ),
         ),
         body: Padding(
-          padding: const .all(16),
+          padding:  .all(16.sp),
           child: TabBarView(
             children: [
               KeepAliveWrapper(child: BalancePage(user: user)),
               KeepAliveWrapper(child: CryptoCoinsPage(user: user)),
-              KeepAliveWrapper(child: TradesHistoryPage(userA: user)),
+              KeepAliveWrapper(child: TradesHistoryPage(user: user)),
             ],
           ),
         ),

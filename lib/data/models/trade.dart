@@ -1,5 +1,4 @@
-import 'package:crypto_simulator/data/models/crypto_coin.dart';
-import 'package:intl/intl.dart';
+import 'package:Bitmark/data/models/crypto_coin.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uuid/uuid.dart';
 
@@ -24,9 +23,6 @@ class Trade {
   });
 
   double get totalPrice => coinPrice * amount;
-
-  String get createdAtFormat =>
-      DateFormat('dd.MM.yyyy HH:mm').format(createdAt);
 
   Map<String, dynamic> toJson() => _$TradeToJson(this);
 
@@ -56,4 +52,12 @@ enum TradeType {
   final String type;
 
   const TradeType(this.type);
+}
+
+extension DataPrices on List<Trade> {
+  double get tradesTotalPrice =>
+      map((t) => t.totalPrice).toList().fold(0.0, (sum, p) => sum + p);
+
+  int get boughtCoinsLength =>
+      map((t) => t.amount).toList().fold(0, (sum, p) => sum + p);
 }

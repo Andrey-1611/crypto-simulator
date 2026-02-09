@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InfoCard extends StatelessWidget {
   final String title;
@@ -11,7 +12,7 @@ class InfoCard extends StatelessWidget {
     final theme = Theme.of(context);
     return Card(
       child: Padding(
-        padding: const .all(8),
+        padding: .all(8.sp),
         child: Row(
           mainAxisAlignment: .spaceBetween,
           children: [

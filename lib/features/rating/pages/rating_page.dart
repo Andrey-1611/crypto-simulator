@@ -1,14 +1,15 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_simulator/app/router/app_router.dart';
-import 'package:crypto_simulator/app/widgets/loader.dart';
-import 'package:crypto_simulator/app/widgets/unknown_error.dart';
-import 'package:crypto_simulator/core/utils/price_formatter.dart';
-import 'package:crypto_simulator/data/models/app_user.dart';
-import 'package:crypto_simulator/features/rating/providers/rating_provider.dart';
-import 'package:crypto_simulator/generated/l10n.dart';
+import 'package:Bitmark/app/router/app_router.dart';
+import 'package:Bitmark/app/widgets/loader.dart';
+import 'package:Bitmark/app/widgets/unknown_error.dart';
+import 'package:Bitmark/core/utils/validator.dart';
+import 'package:Bitmark/features/rating/providers/rating_provider.dart';
+import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/widgets/settings_button.dart';
+import '../../../core/utils/extensions.dart';
 
 @RoutePage()
 class RatingPage extends ConsumerWidget {
@@ -25,10 +26,13 @@ class RatingPage extends ConsumerWidget {
         actions: [const SettingsButton()],
       ),
       body: Padding(
-        padding: const .all(16),
+        padding: .all(16.sp),
         child: Center(
           child: usersP.when(
-            data: (users) => _UsersList(users: users),
+            data: (users) => RefreshIndicator(
+              onRefresh: () async => ref.refresh(ratingProvider),
+              child: _UsersList(users: users),
+            ),
             error: (_, _) => const UnknownError(),
             loading: () => const Loader(),
           ),
@@ -39,24 +43,33 @@ class RatingPage extends ConsumerWidget {
 }
 
 class _UsersList extends StatelessWidget {
-  final List<({AppUser user, double fullBalance})> users;
+  final UsersWithCurrentUserId users;
 
   const _UsersList({required this.users});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = context.theme;
     return ListView.builder(
-      itemCount: users.length,
+      itemCount: users.users.length,
       itemBuilder: (context, index) {
-        final user = users[index];
+        final user = users.users[index];
+        final isCurrentUser = user.user.id == users.currentUserId;
         return Card(
+          shape: RoundedRectangleBorder(
+            side: isCurrentUser
+                ? BorderSide(color: theme.primaryColor, width: 2.0)
+                : BorderSide.none,
+            borderRadius: BorderRadius.circular(8),
+          ),
           child: ListTile(
             leading: Text('${index + 1}', style: theme.textTheme.displayMedium),
             title: Text(user.user.name),
-            subtitle: Text(user.fullBalance.price),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.pushRoute(BriefcaseRoute(user: user.user)),
+            subtitle: Text(user.fullBalance.price4),
+            trailing: !isCurrentUser ? const Icon(Icons.chevron_right) : null,
+            onTap: !isCurrentUser
+                ? () => context.pushRoute(BriefcaseRoute(user: user.user))
+                : null,
           ),
         );
       },

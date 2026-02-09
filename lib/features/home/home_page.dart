@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_simulator/app/router/app_router.dart';
-import 'package:crypto_simulator/generated/l10n.dart';
+import 'package:Bitmark/app/router/app_router.dart';
+import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -34,25 +34,6 @@ class HomePage extends StatelessWidget {
               ),
             ],
           ),
-          /*bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            currentIndex: tabsRouter.activeIndex,
-            onTap: tabsRouter.setActiveIndex,
-            items: [
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.currency_exchange),
-                label: s.market,
-              ),
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.wallet),
-                label: s.briefcase,
-              ),
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.leaderboard),
-                label: s.rating,
-              ),
-            ],
-          ),*/
         );
       },
     );

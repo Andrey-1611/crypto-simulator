@@ -1,8 +1,9 @@
-import 'package:crypto_simulator/core/constants/api_constants.dart';
-import 'package:crypto_simulator/data/models/crypto_coin.dart';
-import 'package:crypto_simulator/data/models/crypto_coin_details.dart';
-import 'package:crypto_simulator/data/repositories/crypto_repository.dart';
 import 'package:dio/dio.dart';
+
+import '../../core/constants/api_constants.dart';
+import '../models/crypto_coin.dart';
+import '../models/crypto_coin_details.dart';
+import '../repositories/crypto_repository.dart';
 
 class CryptoDataSource implements CryptoRepository {
   final Dio _dio;

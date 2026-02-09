@@ -1,0 +1,60 @@
+import 'package:Bitmark/generated/l10n.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+extension StringCheck on String? {
+  bool get isNullOrEmpty => this == null || this!.trim().isEmpty;
+}
+
+extension EmailValidator on String {
+  bool get isValidEmail =>
+      RegExp(r"^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(this);
+}
+
+extension DateFormatter on DateTime {
+  String get format => DateFormat('dd.MM.yyyy HH:mm').format(this);
+}
+
+extension BoolToggle on bool {
+  bool toggle() => !this;
+}
+
+extension StringCase on String {
+  String get capitalize =>
+      isEmpty ? this : this[0].toUpperCase() + substring(1).toLowerCase();
+}
+
+extension ContextX on BuildContext {
+  ThemeData get theme => Theme.of(this);
+  S get s => S.of(this);
+}
+
+extension PriceFormatter on double {
+  String get price4 => '${toStringAsFixed(4)} \$';
+
+  String get price2 => '${toStringAsFixed(2)} \$';
+
+  String get price => '${toStringAsFixed(0)} \$';
+
+  String get percent => '${toStringAsFixed(2)} %';
+
+  String get toCryptoPrice {
+    return switch (this) {
+      >= 1e10 => '${(this / 1e9).toStringAsFixed(2)}B \$',
+      >= 1e7 => '${(this / 1e6).toStringAsFixed(2)}M \$',
+      >= 1e4 => '${(this / 1e3).toStringAsFixed(2)}K \$',
+      _ => '${toStringAsFixed(2)} \$',
+    };
+  }
+}
+
+extension AmountFormatter on int {
+  String get toCrypto {
+    return switch (this) {
+      >= 1e10 => '${(this / 1e9).toStringAsFixed(2)}B',
+      >= 1e7 => '${(this / 1e6).toStringAsFixed(2)}M',
+      >= 1e4 => '${(this / 1e3).toStringAsFixed(2)}K',
+      _ => toStringAsFixed(2),
+    };
+  }
+}
