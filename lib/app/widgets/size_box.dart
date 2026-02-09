@@ -13,7 +13,7 @@ class SizeBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = context.size!;
+    final screenSize = MediaQuery.sizeOf(context);
     return SizedBox(
       height: height != null ? screenSize.height * height! : null,
       width: width != null ? screenSize.width * width! : null,

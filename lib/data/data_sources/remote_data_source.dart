@@ -47,7 +47,9 @@ class RemoteDataSource implements RemoteRepository {
 
   @override
   Future<List<Trade>> getTrades(String userId) async {
-    final data = await _tradesCollection(userId).get();
+    final data = await _tradesCollection(
+      userId,
+    ).orderBy('createdAt', descending: true).get();
     final trades = data.docs
         .map((doc) => Trade.fromJson(doc.data() as Map<String, dynamic>))
         .toList();

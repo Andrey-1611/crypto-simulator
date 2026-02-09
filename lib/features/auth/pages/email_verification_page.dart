@@ -1,3 +1,5 @@
+import 'package:Bitmark/features/auth/providers/email_verified_provider.dart';
+import 'package:Bitmark/generated/l10n.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:Bitmark/app/router/app_router.dart';
 import 'package:Bitmark/app/widgets/loader.dart';
@@ -21,9 +23,13 @@ class _EmailVerificationPageState extends ConsumerState<EmailVerificationPage> {
   @override
   void initState() {
     super.initState();
-    ref.listenManual(authNotifierProvider, (_, state) {
+    ref.listenManual(emailVerifiedProvider, (_, state) {
       state.when(
-        data: (_) => context.pushRoute(const HomeRoute()),
+        data: (emailVerified) {
+          if (emailVerified) {
+            context.pushRoute(const HomeRoute());
+          }
+        },
         error: (_, _) => ToastHelper.unknownError(),
         loading: () {},
       );
@@ -42,10 +48,11 @@ class _EmailVerificationPageState extends ConsumerState<EmailVerificationPage> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    final s = S.of(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Подтверждение почты'),
+        title: Text(s.emailVerification),
         actions: [
           IconButton(
             onPressed: () =>
@@ -54,27 +61,21 @@ class _EmailVerificationPageState extends ConsumerState<EmailVerificationPage> {
           ),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: .center,
-        children: [
-          const SizeBox(height: 0.18),
-          Text(
-            'Пиcьмо отправлено на вашу почту',
-            style: theme.textTheme.displayMedium,
-          ),
-          const SizeBox(height: 0.03),
-          ElevatedButton(
-            onPressed: () => sendEmailVerification(),
-            child: const Text('Отправить повторно'),
-          ),
-          const SizeBox(height: 0.01),
-          ElevatedButton(
-            onPressed: () => checkEmailVerification(),
-            child: const Text('Проверить'),
-          ),
-          const SizeBox(height: 0.2),
-          const Loader(),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: .center,
+          children: [
+            const SizeBox(height: 0.1),
+            Text(s.emailSent, style: theme.textTheme.displayMedium),
+            const SizeBox(height: 0.03),
+            ElevatedButton(
+              onPressed: () => sendEmailVerification(),
+              child: Text(s.resend),
+            ),
+            const SizeBox(height: 0.1),
+            const Loader(),
+          ],
+        ),
       ),
     );
   }

@@ -3,10 +3,12 @@ import 'package:Bitmark/app/widgets/size_box.dart';
 import 'package:Bitmark/features/auth/widgets/google_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/router/app_router.dart';
 import '../../../core/utils/dialog_helper.dart';
 import '../../../core/utils/toast_helper.dart';
 import '../../../core/utils/validator.dart';
+import '../../../generated/l10n.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/form_text_field.dart';
 
@@ -54,9 +56,10 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return Scaffold(
       body: Padding(
-        padding: const .all(32),
+        padding: .all(32.sp),
         child: Center(
           child: Column(
             children: [
@@ -69,19 +72,19 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     FormTextField(
                       controller: nameController,
                       validator: Validator.name,
-                      hintText: 'Имя',
+                      hintText: s.name,
                       icon: const Icon(Icons.person),
                     ),
                     FormTextField(
                       controller: emailController,
                       validator: Validator.email,
-                      hintText: 'Почта',
+                      hintText: s.email,
                       icon: const Icon(Icons.email),
                     ),
                     FormTextField(
                       controller: passwordController,
                       validator: Validator.password,
-                      hintText: 'Пароль',
+                      hintText: s.password,
                       icon: const Icon(Icons.key),
                       isObscure: isObscure,
                       suffixIcon: IconButton(
@@ -97,7 +100,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       height: 0.05,
                       child: ElevatedButton(
                         onPressed: () => signUp(),
-                        child: const Text('Зарегистрироваться'),
+                        child: Text(s.signUp),
                       ),
                     ),
                   ],
@@ -107,7 +110,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
               const Spacer(),
               TextButton(
                 onPressed: () => context.pushRoute(const SignInRoute()),
-                child: const Text('Уже есть аккаунт?  Войти в аккаунт'),
+                child: Text(s.alreadyHaveAccount),
               ),
             ],
           ),

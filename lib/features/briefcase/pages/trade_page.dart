@@ -6,6 +6,7 @@ import 'package:Bitmark/app/widgets/unknown_error.dart';
 import 'package:Bitmark/data/models/trade.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/widgets/size_box.dart';
 import '../../../core/utils/extensions.dart';
 import '../../../generated/l10n.dart';
@@ -25,7 +26,7 @@ class TradePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(s.trade_details)),
       body: Padding(
-        padding: const .all(16),
+        padding: .all(16.sp),
         child: Center(
           child: Column(
             children: [
@@ -40,7 +41,7 @@ class TradePage extends ConsumerWidget {
               ),
               Card(
                 child: Padding(
-                  padding: const .all(16),
+                  padding: .all(16.sp),
                   child: Column(
                     crossAxisAlignment: .start,
                     children: [

@@ -2,7 +2,7 @@ name: Bitmark
 description: "A new Flutter project."
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.1+2
 
 environment:
   sdk: ^3.10.0-290.4.beta
@@ -34,6 +34,7 @@ dependencies:
   google_sign_in: ^6.1.2
   auth_buttons: ^3.0.3
   package_info_plus: ^9.0.0
+  flutter_native_splash: ^2.4.7
 
 dev_dependencies:
   flutter_test:
@@ -58,3 +59,12 @@ flutter_launcher_icons:
   android: false
   ios: true
   image_path: 'assets/icon/icon.png'
+
+flutter_native_splash:
+  ios: true
+  android: true
+  color: "#141722"
+  image: assets/icon/icon.png
+  android_12:
+    color: "#141722"
+    image: assets/icon/icon.png

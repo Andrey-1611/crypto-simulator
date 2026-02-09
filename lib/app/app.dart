@@ -2,6 +2,7 @@ import 'package:Bitmark/app/router/app_router.dart';
 import 'package:Bitmark/app/runner/app_dependencies.dart';
 import 'package:Bitmark/app/widgets/loader.dart';
 import 'package:Bitmark/app/widgets/unknown_error.dart';
+import 'package:Bitmark/core/constants/locales_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,7 +31,9 @@ class App extends ConsumerWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: S.delegate.supportedLocales,
-          locale: Locale(settings.language ? 'en' : 'ru'),
+          locale: Locale(
+            settings.language ? LocalesConstants.en : LocalesConstants.ru,
+          ),
           routerConfig: ref
               .read(appRouterProvider)
               .config(

@@ -7,6 +7,7 @@ import 'package:Bitmark/data/models/trade.dart';
 import 'package:Bitmark/features/market/widgets/coins_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/widgets/info_card.dart';
 import '../../../core/utils/dialog_helper.dart';
 import '../../../data/models/crypto_coin_details.dart';
@@ -46,7 +47,7 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
           context.pop();
           context.pop();
         },
-        error: (e, _) {
+        error: (_, _) {
           context.pop();
           ToastHelper.unknownError();
         },
@@ -75,7 +76,7 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
     final userP = ref.watch(briefcaseNotifierProvider(null));
     final s = S.of(context);
     return Padding(
-      padding: const .all(32),
+      padding: .all(32.sp),
       child: userP.when(
         data: (user) => Column(
           mainAxisAlignment: MainAxisAlignment.center,

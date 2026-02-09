@@ -1,3 +1,4 @@
+import 'package:Bitmark/app/widgets/size_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/widgets/info_bloc.dart';
@@ -24,24 +25,27 @@ class BalancePage extends ConsumerWidget {
     final coinsPriceP = ref.watch(cryptoBalanceProvider(user));
     final s = S.of(context);
     return userP.when(
-      data: (user) => Column(
+      data: (user) => ListView(
         children: [
           InfoBloc(
             title: s.balance_info,
             children: [
               InfoRow(title: s.balance, value: user.balance.price4),
-              coinsPriceP.when(
-                data: (price) => Column(
-                  children: [
-                    InfoRow(title: s.coin_balance, value: price.price4),
-                    InfoRow(
-                      title: s.total_balance,
-                      value: (user.balance + price).price4,
-                    ),
-                  ],
+              SizeBox(
+                height: 0.087,
+                child: coinsPriceP.when(
+                  data: (price) => Column(
+                    children: [
+                      InfoRow(title: s.coin_balance, value: price.price4),
+                      InfoRow(
+                        title: s.total_balance,
+                        value: (user.balance + price).price4,
+                      ),
+                    ],
+                  ),
+                  error: (_, _) => const _EmptyBalance(),
+                  loading: () => const _EmptyBalance(),
                 ),
-                error: (_, _) => const SizedBox(),
-                loading: () => const SizedBox(),
               ),
             ],
           ),
@@ -93,3 +97,22 @@ class BalancePage extends ConsumerWidget {
     );
   }
 }
+
+class _EmptyBalance extends StatelessWidget {
+  const _EmptyBalance();
+
+  @override
+  Widget build(BuildContext context) {
+    final s = S.of(context);
+    return Column(
+      children: [
+        InfoRow(title: s.coin_balance, value: 1000.0000.price4),
+        InfoRow(
+          title: s.total_balance,
+          value: 1000.0000.price4,
+        ),
+      ],
+    );
+  }
+}
+

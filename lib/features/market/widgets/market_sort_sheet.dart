@@ -1,6 +1,7 @@
 import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/widgets/size_box.dart';
 import '../../../core/utils/extensions.dart';
 import '../../../data/models/crypto_coin_details.dart';
@@ -15,7 +16,7 @@ class MarketSortSheet extends ConsumerWidget {
     final theme = context.theme;
     final s = S.of(context);
     return Padding(
-      padding: const .all(16),
+      padding: .all(16.sp),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

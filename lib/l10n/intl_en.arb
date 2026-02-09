@@ -66,5 +66,20 @@
   "balance_error": "Insufficient balance!",
   "coins_amount_error": "You don't have enough coins!",
   "unknown_error_try_again": "Unknown error, try again",
-  "email": "Email"
+  "email": "Email",
+  "loading": "Loading...",
+  "cancel": "Cancel",
+  "signOutConfirm": "Are you sure you want to sign out?",
+  "password": "Password",
+  "signUp": "Sign Up",
+  "signIn": "Sign In",
+  "forgotPassword": "Forgot password? Reset password",
+  "noAccount": "Don’t have an account? Create one",
+  "resetPassword": "Reset password",
+  "alreadyHaveAccount": "Already have an account? Sign in",
+  "emailVerification": "Email Verification",
+  "check": "Check",
+  "emailSent": "Email sent to your inbox",
+  "resend": "Resend",
+  "market_data": "Market Data"
 }

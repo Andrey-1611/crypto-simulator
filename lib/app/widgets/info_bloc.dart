@@ -1,5 +1,6 @@
 import 'package:Bitmark/app/widgets/size_box.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InfoBloc extends StatelessWidget {
   final String title;
@@ -12,7 +13,7 @@ class InfoBloc extends StatelessWidget {
     final theme = Theme.of(context);
     return Card(
       child: Padding(
-        padding: const .all(16),
+        padding: .all(16.sp),
         child: Column(
           crossAxisAlignment: .start,
           children: [

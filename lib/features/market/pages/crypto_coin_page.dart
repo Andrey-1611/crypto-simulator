@@ -9,6 +9,7 @@ import 'package:Bitmark/features/market/widgets/sell_crypto_coin_sheet.dart';
 import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/widgets/info_row.dart';
 import '../../../app/widgets/size_box.dart';
 import '../../../data/models/crypto_coin.dart';
@@ -43,7 +44,7 @@ class CryptoCoinPage extends ConsumerWidget {
         ],
       ),
       body: Padding(
-        padding: const .all(16.0),
+        padding: .all(16.0.sp),
         child: coinP.when(
           data: (coin) {
             return Column(
@@ -74,7 +75,7 @@ class _PriceCard extends StatelessWidget {
     final theme = context.theme;
     return Card(
       child: Padding(
-        padding: const .all(8),
+        padding: .all(8.sp),
         child: ListTile(
           title: Row(
             mainAxisAlignment: .spaceBetween,
@@ -84,10 +85,10 @@ class _PriceCard extends StatelessWidget {
                 style: theme.textTheme.displayLarge,
               ),
               Container(
-                padding: const .symmetric(horizontal: 12, vertical: 8),
+                padding: .symmetric(horizontal: 12.sp, vertical: 8.sp),
                 decoration: BoxDecoration(
                   color: color.withValues(alpha: 0.1),
-                  borderRadius: .circular(8),
+                  borderRadius: .circular(8.sp),
                 ),
                 child: Row(
                   children: [
@@ -126,7 +127,7 @@ class _DataBlocs extends StatelessWidget {
     return Column(
       children: [
         InfoBloc(
-          title: s.trade_details,
+          title: s.market_data,
           children: [
             InfoRow(title: s.market_cap, value: coin.marketCap.toCryptoPrice),
             InfoRow(title: s.volume_24h, value: coin.volume24h.toCryptoPrice),

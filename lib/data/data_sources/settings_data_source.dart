@@ -12,7 +12,8 @@ class SettingsDataSource implements SettingsRepository {
   bool get theme => _preferences.getBool(DatabasesConstants.themeKey) ?? true;
 
   @override
-  bool get language => _preferences.getBool(DatabasesConstants.languageKey) ?? true;
+  bool get language =>
+      _preferences.getBool(DatabasesConstants.languageKey) ?? false;
 
   @override
   Future<void> setLanguage(bool language) async {

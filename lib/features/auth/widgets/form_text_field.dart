@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FormTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -21,7 +22,7 @@ class FormTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.symmetric(vertical: 8.0.sp),
       child: TextFormField(
         controller: controller,
         validator: validator,

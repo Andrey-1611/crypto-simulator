@@ -7,6 +7,7 @@ import 'package:Bitmark/features/rating/providers/rating_provider.dart';
 import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/widgets/settings_button.dart';
 import '../../../core/utils/extensions.dart';
 
@@ -25,10 +26,13 @@ class RatingPage extends ConsumerWidget {
         actions: [const SettingsButton()],
       ),
       body: Padding(
-        padding: const .all(16),
+        padding: .all(16.sp),
         child: Center(
           child: usersP.when(
-            data: (users) => _UsersList(users: users),
+            data: (users) => RefreshIndicator(
+              onRefresh: () async => ref.refresh(ratingProvider),
+              child: _UsersList(users: users),
+            ),
             error: (_, _) => const UnknownError(),
             loading: () => const Loader(),
           ),

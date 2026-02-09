@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:Bitmark/app/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/widgets/info_bloc.dart';
 import '../../../app/widgets/info_row.dart';
 import '../../../app/widgets/loader.dart';
@@ -65,7 +66,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
         ],
       ),
       body: Padding(
-        padding: const .all(16),
+        padding: .all(16.sp),
         child: Column(
           children: [
             SizeBox(

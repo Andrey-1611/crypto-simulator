@@ -2,8 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:Bitmark/app/widgets/size_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/utils/toast_helper.dart';
 import '../../../core/utils/validator.dart';
+import '../../../generated/l10n.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/form_text_field.dart';
 
@@ -48,10 +50,11 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Сброс пароля')),
+      appBar: AppBar(title: Text(s.resetPassword)),
       body: Padding(
-        padding: const .all(32),
+        padding: .all(32.sp),
         child: Center(
           child: Form(
             key: formKey,
@@ -61,7 +64,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
                 FormTextField(
                   controller: emailController,
                   validator: Validator.email,
-                  hintText: 'Почта',
+                  hintText: s.email,
                   icon: const Icon(Icons.email),
                 ),
                 const SizeBox(height: 0.01),
@@ -69,7 +72,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () => resetPassword(),
-                    child: const Text('Подтвердить'),
+                    child: Text(s.confirm),
                   ),
                 ),
               ],

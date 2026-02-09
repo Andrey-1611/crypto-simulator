@@ -1,3 +1,4 @@
+import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -7,7 +8,7 @@ extension StringCheck on String? {
 
 extension EmailValidator on String {
   bool get isValidEmail =>
-      RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(this);
+      RegExp(r"^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(this);
 }
 
 extension DateFormatter on DateTime {
@@ -25,12 +26,7 @@ extension StringCase on String {
 
 extension ContextX on BuildContext {
   ThemeData get theme => Theme.of(this);
-
-  Size get size => MediaQuery.of(this).size;
-
-  double get height => size.height;
-
-  double get width => size.width;
+  S get s => S.of(this);
 }
 
 extension PriceFormatter on double {

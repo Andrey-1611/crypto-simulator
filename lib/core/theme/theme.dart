@@ -68,15 +68,15 @@ InputDecorationTheme _inputDecorationTheme(Color color) => InputDecorationTheme(
   filled: true,
   fillColor: color,
   hintStyle: TextStyle(fontSize: 15.sp, color: _hintColor),
-  contentPadding: const EdgeInsets.all(12),
+  contentPadding: EdgeInsets.all(12.sp),
   border: OutlineInputBorder(
     borderSide: BorderSide.none,
-    borderRadius: BorderRadius.circular(8.0),
+    borderRadius: BorderRadius.circular(8.sp),
   ),
 );
 
 final _listTileTheme = ListTileThemeData(
-  contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+  contentPadding: EdgeInsets.symmetric(vertical: 8.sp, horizontal: 12.sp),
   subtitleTextStyle: TextStyle(
     fontWeight: FontWeight.w400,
     fontSize: 16.sp,
@@ -86,9 +86,9 @@ final _listTileTheme = ListTileThemeData(
 
 CardThemeData _cardTheme(Color color) => CardThemeData(
   color: color,
-  margin: const EdgeInsets.all(8.0),
+  margin: EdgeInsets.all(8.sp),
   shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(8.0),
+    borderRadius: BorderRadius.circular(8.sp),
     side: BorderSide.none,
   ),
 );

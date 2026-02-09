@@ -7,6 +7,7 @@ import 'package:Bitmark/features/briefcase/pages/trades_history_page.dart';
 import 'package:Bitmark/features/briefcase/widgets/keep_alive.dart';
 import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
 class BriefcasePage extends StatelessWidget {
@@ -33,7 +34,7 @@ class BriefcasePage extends StatelessWidget {
           ),
         ),
         body: Padding(
-          padding: const .all(16),
+          padding:  .all(16.sp),
           child: TabBarView(
             children: [
               KeepAliveWrapper(child: BalancePage(user: user)),

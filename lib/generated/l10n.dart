@@ -543,6 +543,116 @@ class S {
   String get email {
     return Intl.message('Email', name: 'email', desc: '', args: []);
   }
+
+  /// `Loading...`
+  String get loading {
+    return Intl.message('Loading...', name: 'loading', desc: '', args: []);
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
+  }
+
+  /// `Are you sure you want to sign out?`
+  String get signOutConfirm {
+    return Intl.message(
+      'Are you sure you want to sign out?',
+      name: 'signOutConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get password {
+    return Intl.message('Password', name: 'password', desc: '', args: []);
+  }
+
+  /// `Sign Up`
+  String get signUp {
+    return Intl.message('Sign Up', name: 'signUp', desc: '', args: []);
+  }
+
+  /// `Sign In`
+  String get signIn {
+    return Intl.message('Sign In', name: 'signIn', desc: '', args: []);
+  }
+
+  /// `Forgot password? Reset password`
+  String get forgotPassword {
+    return Intl.message(
+      'Forgot password? Reset password',
+      name: 'forgotPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Don’t have an account? Create one`
+  String get noAccount {
+    return Intl.message(
+      'Don’t have an account? Create one',
+      name: 'noAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset password`
+  String get resetPassword {
+    return Intl.message(
+      'Reset password',
+      name: 'resetPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already have an account? Sign in`
+  String get alreadyHaveAccount {
+    return Intl.message(
+      'Already have an account? Sign in',
+      name: 'alreadyHaveAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email Verification`
+  String get emailVerification {
+    return Intl.message(
+      'Email Verification',
+      name: 'emailVerification',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check`
+  String get check {
+    return Intl.message('Check', name: 'check', desc: '', args: []);
+  }
+
+  /// `Email sent to your inbox`
+  String get emailSent {
+    return Intl.message(
+      'Email sent to your inbox',
+      name: 'emailSent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resend`
+  String get resend {
+    return Intl.message('Resend', name: 'resend', desc: '', args: []);
+  }
+
+  /// `Market Data`
+  String get market_data {
+    return Intl.message('Market Data', name: 'market_data', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

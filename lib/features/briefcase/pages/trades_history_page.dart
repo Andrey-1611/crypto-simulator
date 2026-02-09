@@ -8,6 +8,7 @@ import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/widgets/loader.dart';
+import '../../../app/widgets/size_box.dart';
 
 class TradesHistoryPage extends ConsumerWidget {
   final AppUserDetails? user;
@@ -28,7 +29,10 @@ class TradesHistoryPage extends ConsumerWidget {
                     leading: GestureDetector(
                       onTap: () =>
                           context.pushRoute(CryptoCoinRoute(coin: trade.coin)),
-                      child: Image.network(trade.coin.fullImageUrl),
+                      child: SizeBox.square(
+                        size: 0.14,
+                        child: Image.network(trade.coin.fullImageUrl),
+                      ),
                     ),
                     title: Text(
                       '${trade.type.type} ${trade.amount} ${trade.coin.name}',

@@ -3,6 +3,7 @@ import 'package:Bitmark/app/widgets/crypto_coin_card.dart';
 import 'package:Bitmark/data/models/crypto_coin_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/widgets/loader.dart';
 import '../../../app/widgets/settings_button.dart';
 import '../../../app/widgets/unknown_error.dart';
@@ -50,7 +51,7 @@ class _MarketPageState extends ConsumerState<MarketPage> {
         searchController: _searchController,
       ),
       body: Padding(
-        padding: const .all(16.0),
+        padding: .all(16.0.sp),
         child: Center(
           child: cryptoCoinsP.when(
             data: (coins) {
@@ -155,7 +156,7 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
       bottom: PreferredSize(
         preferredSize: preferredSize,
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding:  EdgeInsets.all(12.sp),
           child: Row(
             children: [
               Expanded(

@@ -24,9 +24,12 @@ class AuthNotifier extends AsyncNotifier<AuthState> {
       final emailVerified = await ref
           .read(authRepositoryProvider)
           .signIn(email, password);
-      if (emailVerified) return .auth;
-      await ref.read(authRepositoryProvider).sendEmailVerification();
-      return .emailNotVerified;
+      if (emailVerified) {
+        return .auth;
+      } else {
+        await ref.read(authRepositoryProvider).sendEmailVerification();
+        return .emailNotVerified;
+      }
     });
   }
 
@@ -90,7 +93,7 @@ class AuthNotifier extends AsyncNotifier<AuthState> {
     state = await .guard(() async {
       final user = ref.read(authRepositoryProvider).getUser();
       await ref.read(remoteRepositoryProvider).deleteUser(user.id);
-      await ref.read(authRepositoryProvider).deleteAccount();
+      await ref.read(authRepositoryProvider).signOut();
       return .notAuth;
     });
   }

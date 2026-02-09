@@ -7,6 +7,7 @@ import 'package:Bitmark/app/widgets/unknown_error.dart';
 import 'package:Bitmark/core/utils/toast_helper.dart';
 import 'package:Bitmark/data/models/trade.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/widgets/info_card.dart';
 import '../../../core/utils/dialog_helper.dart';
 import '../../../core/utils/extensions.dart';
@@ -78,7 +79,7 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
     final userP = ref.watch(briefcaseNotifierProvider(null));
     final s = S.of(context);
     return Padding(
-      padding: const .all(32),
+      padding: .all(32.sp),
       child: userP.when(
         data: (user) {
           final userCoinsAmount = user.coins

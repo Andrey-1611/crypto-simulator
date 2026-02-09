@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../generated/l10n.dart';
 
@@ -5,11 +6,11 @@ class ToastHelper {
    static final s = S.current;
 
   static void _toast(String msg) {
-    Fluttertoast.showToast(toastLength: Toast.LENGTH_LONG, msg: msg);
+    Fluttertoast.showToast(msg: msg, backgroundColor: Colors.red);
   }
 
   static void unknownError() {
-    _toast(s.unknown_error_try_again);
+    _toast(s.unknown_error);
   }
 
   static void success() {

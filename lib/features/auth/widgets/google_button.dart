@@ -3,6 +3,7 @@ import 'package:auth_buttons/auth_buttons.dart';
 import 'package:Bitmark/features/auth/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GoogleButton extends ConsumerWidget {
   const GoogleButton({super.key});
@@ -16,7 +17,7 @@ class GoogleButton extends ConsumerWidget {
     return SizedBox(
       width: double.infinity,
       child: Padding(
-        padding: const .symmetric(vertical: 32),
+        padding: .symmetric(vertical: 32.sp),
         child: Column(
           children: [
             const Row(
