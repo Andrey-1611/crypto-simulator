@@ -34,7 +34,7 @@ class BriefcasePage extends StatelessWidget {
           ),
         ),
         body: Padding(
-          padding:  .all(16.sp),
+          padding: .all(16.sp),
           child: TabBarView(
             children: [
               KeepAliveWrapper(child: BalancePage(user: user)),

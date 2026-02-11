@@ -130,11 +130,11 @@ class _DataBlocs extends StatelessWidget {
           title: s.market_data,
           children: [
             InfoRow(title: s.market_cap, value: coin.marketCap.toCryptoPrice),
-            InfoRow(title: s.volume_24h, value: coin.volume24h.toCryptoPrice),
             InfoRow(
               title: s.circulating_supply,
               value: coin.circulatingSupply.toInt().toCrypto,
             ),
+            InfoRow(title: s.volume_24h, value: coin.volume24h.toCryptoPrice),
             InfoRow(title: s.high_24h, value: coin.high24h.toCryptoPrice),
             InfoRow(title: s.low_24h, value: coin.low24h.toCryptoPrice),
           ],
