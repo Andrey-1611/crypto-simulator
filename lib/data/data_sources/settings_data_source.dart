@@ -24,4 +24,5 @@ class SettingsDataSource implements SettingsRepository {
   Future<void> setTheme(bool theme) async {
     await _preferences.setBool(DatabasesConstants.themeKey, theme);
   }
+
 }

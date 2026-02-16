@@ -72,14 +72,17 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
             SizeBox(
               height: 0.23,
               child: userP.when(
-                data: (user) => InfoBloc(
-                  title: s.user_data,
-                  children: [
-                    InfoRow(title: s.name, value: user.name),
-                    InfoRow(title: s.email, value: user.email),
-                    InfoRow(title: s.created, value: user.createdAt.format),
-                  ],
-                ),
+                data: (data) {
+                  final user = data.user;
+                  return InfoBloc(
+                    title: s.user_data,
+                    children: [
+                      InfoRow(title: s.name, value: user.name),
+                      InfoRow(title: s.email, value: user.email),
+                      InfoRow(title: s.created, value: user.createdAt.format),
+                    ],
+                  );
+                },
                 error: (_, _) => const UnknownError(),
                 loading: () => const Loader(),
               ),

@@ -123,6 +123,52 @@ class EmailVerificationRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [HistoryPage]
+class HistoryRoute extends PageRouteInfo<HistoryRouteArgs> {
+  HistoryRoute({Key? key, AppUserDetails? user, List<PageRouteInfo>? children})
+    : super(
+        HistoryRoute.name,
+        args: HistoryRouteArgs(key: key, user: user),
+        initialChildren: children,
+      );
+
+  static const String name = 'HistoryRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<HistoryRouteArgs>(
+        orElse: () => const HistoryRouteArgs(),
+      );
+      return HistoryPage(key: args.key, user: args.user);
+    },
+  );
+}
+
+class HistoryRouteArgs {
+  const HistoryRouteArgs({this.key, this.user});
+
+  final Key? key;
+
+  final AppUserDetails? user;
+
+  @override
+  String toString() {
+    return 'HistoryRouteArgs{key: $key, user: $user}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! HistoryRouteArgs) return false;
+    return key == other.key && user == other.user;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ user.hashCode;
+}
+
+/// generated route for
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})

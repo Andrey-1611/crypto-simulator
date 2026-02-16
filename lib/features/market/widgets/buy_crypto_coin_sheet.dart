@@ -78,17 +78,18 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
     return Padding(
       padding: .all(32.sp),
       child: userP.when(
-        data: (user) => Column(
+        data: (data) => Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(s.buy_coin(coin.name), style: theme.textTheme.displayMedium),
             const Spacer(),
             CoinsTextField(coinsController: _coinsController),
-            InfoCard(title: s.balance, value: user.balance.price4),
+            InfoCard(title: s.balance, value: data.user.balance.price4),
             InfoCard(title: S.of(context).trade, value: _totalPrice.price4),
             ElevatedButton(
-              onPressed: () =>
-                  _totalPrice != 0 ? createTrade(context, user.balance) : null,
+              onPressed: () => _totalPrice != 0
+                  ? createTrade(context, data.user.balance)
+                  : null,
               child: Text(s.confirm),
             ),
             const Spacer(),

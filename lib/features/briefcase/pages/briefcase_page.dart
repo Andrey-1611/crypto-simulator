@@ -1,11 +1,12 @@
-import 'package:auto_route/annotations.dart';
+import 'package:Bitmark/app/router/app_router.dart';
+import 'package:Bitmark/features/briefcase/pages/favourite_coins_page.dart';
 import 'package:Bitmark/app/widgets/settings_button.dart';
 import 'package:Bitmark/data/models/app_user_details.dart';
 import 'package:Bitmark/features/briefcase/pages/balance_page.dart';
 import 'package:Bitmark/features/briefcase/pages/crypto_coins_page.dart';
-import 'package:Bitmark/features/briefcase/pages/trades_history_page.dart';
 import 'package:Bitmark/features/briefcase/widgets/keep_alive.dart';
 import 'package:Bitmark/generated/l10n.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -15,21 +16,31 @@ class BriefcasePage extends StatelessWidget {
 
   const BriefcasePage({super.key, this.user});
 
+  bool get userIsNull => user == null;
+
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
     return DefaultTabController(
-      length: 3,
+      length: userIsNull ? 3 : 2,
       child: Scaffold(
         appBar: AppBar(
           title: Text(s.briefcase),
-          automaticallyImplyLeading: user != null,
-          actions: user == null ? [const SettingsButton()] : [],
+          automaticallyImplyLeading: !userIsNull,
+          actions: [
+            userIsNull
+                ? const SettingsButton()
+                : IconButton(
+                    onPressed: () =>
+                        context.pushRoute(HistoryRoute(user: user)),
+                    icon: const Icon(Icons.receipt_long),
+                  ),
+          ],
           bottom: TabBar(
             tabs: [
               Tab(text: s.balance),
               Tab(text: s.coins),
-              Tab(text: s.trades),
+              if (userIsNull) const Tab(text: 'Избранное'),
             ],
           ),
         ),
@@ -39,7 +50,8 @@ class BriefcasePage extends StatelessWidget {
             children: [
               KeepAliveWrapper(child: BalancePage(user: user)),
               KeepAliveWrapper(child: CryptoCoinsPage(user: user)),
-              KeepAliveWrapper(child: TradesHistoryPage(user: user)),
+              if (userIsNull)
+                const KeepAliveWrapper(child: FavouriteCoinsPage()),
             ],
           ),
         ),

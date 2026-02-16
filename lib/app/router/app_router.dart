@@ -9,7 +9,8 @@ import '../../features/auth/pages/reset_password_page.dart';
 import '../../features/auth/pages/sign_in_page.dart';
 import '../../features/auth/pages/sign_up_page.dart';
 import '../../features/briefcase/pages/briefcase_page.dart';
-import '../../features/briefcase/pages/trade_page.dart';
+import '../../features/history/pages/history_page.dart';
+import '../../features/history/pages/trade_page.dart';
 import '../../features/home/home_page.dart';
 import '../../features/market/pages/crypto_coin_page.dart';
 import '../../features/market/pages/market_page.dart';
@@ -39,6 +40,7 @@ class AppRouter extends RootStackRouter {
       children: [
         AutoRoute(page: MarketRoute.page),
         AutoRoute(page: BriefcaseRoute.page),
+        AutoRoute(page: HistoryRoute.page),
         AutoRoute(page: RatingRoute.page),
       ],
     ),
@@ -46,6 +48,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: CryptoCoinRoute.page),
     AutoRoute(page: TradeRoute.page),
     AutoRoute(page: BriefcaseRoute.page),
+    AutoRoute(page: HistoryRoute.page),
     AutoRoute(page: SignInRoute.page),
     AutoRoute(page: SignUpRoute.page),
     AutoRoute(page: EmailVerificationRoute.page),

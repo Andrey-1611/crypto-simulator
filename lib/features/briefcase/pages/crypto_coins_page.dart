@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/router/app_router.dart';
 import '../../../core/utils/extensions.dart';
-import '../providers/crypto_coins_details_provider.dart';
+import '../providers/crypto_coins_provider.dart';
 
 class CryptoCoinsPage extends ConsumerWidget {
   final AppUserDetails? user;
@@ -17,35 +17,33 @@ class CryptoCoinsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
-    final coinsP = ref.watch(cryptoCoinsDetailsProvider(user));
+    final coinsP = ref.watch(cryptoCoinsProvider(user));
     final s = S.of(context);
     return coinsP.when(
       data: (coins) => coins.isNotEmpty
           ? ListView.builder(
               itemCount: coins.length,
               itemBuilder: (context, index) {
-                final coin = coins[index];
+                final coin = coins[index].coin.coin;
+                final amount = coins[index].coin.amount;
+                final price = coins[index].price;
                 return Card(
                   child: ListTile(
                     leading: SizedBox.square(
                       dimension: size.height * 0.06,
-                      child: Image.network(coin.details.fullImageUrl),
+                      child: Image.network(coin.fullImageUrl),
                     ),
-                    title: Text(coin.details.name),
-                    subtitle: Text(
-                      '${coin.details.currentPrice.price4}, ${s.coins_a(coin.amount)}',
-                    ),
+                    title: Text(coin.name),
+                    subtitle: Text('${price.price4}, ${s.coins_a(amount)}'),
                     trailing: const Icon(Icons.chevron_right),
-                    onTap: () =>
-                        context.pushRoute(CryptoCoinRoute(coin: coin.details)),
+                    onTap: () => context.pushRoute(CryptoCoinRoute(coin: coin)),
                   ),
                 );
               },
             )
           : _EmptyList(user),
-      error: (_, _) => UnknownError(
-        onPressed: () => ref.refresh(cryptoCoinsDetailsProvider(user)),
-      ),
+      error: (_, _) =>
+          UnknownError(onPressed: () => ref.refresh(cryptoCoinsProvider(user))),
       loading: () => const Loader(),
     );
   }

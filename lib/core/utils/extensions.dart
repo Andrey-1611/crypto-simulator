@@ -13,6 +13,8 @@ extension EmailValidator on String {
 
 extension DateFormatter on DateTime {
   String get format => DateFormat('dd.MM.yyyy HH:mm').format(this);
+
+  String get dayFormat => DateFormat('dd.MM.yyyy').format(this);
 }
 
 extension BoolToggle on bool {

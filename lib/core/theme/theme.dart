@@ -24,6 +24,7 @@ final darkTheme = ThemeData(
   textButtonTheme: _textButtonTheme,
   elevatedButtonTheme: _elevatedButtonTheme,
   scaffoldBackgroundColor: _darkBackground,
+  outlinedButtonTheme: _outlineButtonTheme,
   hintColor: _hintColor,
   dialogTheme: _dialogTheme,
   colorScheme: const ColorScheme.dark(primary: _primary, error: Colors.red),
@@ -37,6 +38,7 @@ final lightTheme = ThemeData(
   listTileTheme: _listTileTheme,
   cardTheme: _cardTheme(Colors.white),
   cardColor: _darkCard,
+  outlinedButtonTheme: _outlineButtonTheme,
   textTheme: _textTheme,
   switchTheme: _switchTheme,
   navigationBarTheme: _navigationBarTheme(Colors.white, Colors.black),
@@ -50,12 +52,12 @@ final lightTheme = ThemeData(
 );
 
 final _textTheme = TextTheme(
-  titleLarge: TextStyle(fontWeight: FontWeight.bold, fontSize: 60.sp),
-  titleMedium: TextStyle(fontWeight: FontWeight.w800, fontSize: 45.sp),
-  displayLarge: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),
-  displayMedium: TextStyle(fontWeight: FontWeight.w800, fontSize: 22.sp),
-  displaySmall: TextStyle(fontWeight: FontWeight.w600, fontSize: 18.sp),
-  bodyLarge: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.sp),
+  titleLarge: TextStyle(fontWeight: FontWeight.bold, fontSize: 56.sp),
+  titleMedium: TextStyle(fontWeight: FontWeight.w800, fontSize: 42.sp),
+  displayLarge: TextStyle(fontWeight: FontWeight.bold, fontSize: 28.sp),
+  displayMedium: TextStyle(fontWeight: FontWeight.w800, fontSize: 20.sp),
+  displaySmall: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.sp),
+  bodyLarge: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),
   bodyMedium: TextStyle(
     fontWeight: FontWeight.w400,
     fontSize: 16.sp,
@@ -128,6 +130,19 @@ final _elevatedButtonTheme = ElevatedButtonThemeData(
       fontWeight: FontWeight.w500,
       fontSize: 20.sp,
     ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+  ),
+);
+
+final _outlineButtonTheme = OutlinedButtonThemeData(
+  style: ElevatedButton.styleFrom(
+    //foregroundColor: Colors.white,
+    //backgroundColor: _primary,
+    /*textStyle: TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.w500,
+      fontSize: 20.sp,
+    ),*/
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
   ),
 );

@@ -81,7 +81,8 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
     return Padding(
       padding: .all(32.sp),
       child: userP.when(
-        data: (user) {
+        data: (data) {
+          final user = data.user;
           final userCoinsAmount = user.coins
               .firstWhere(
                 (c) => c.coin.symbol == coin.symbol,
