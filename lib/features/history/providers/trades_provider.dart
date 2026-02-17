@@ -10,7 +10,7 @@ final tradesProvider =
       ({List<Trade> trades, bool isFilterd}),
       AppUserDetails?
     >((ref, user) async {
-      final data = await ref.read(briefcaseNotifierProvider(user).future);
+      final data = await ref.watch(briefcaseNotifierProvider(user).future);
       final filter = ref.watch(filterTradesProvider);
       final sort = ref.watch(sortTradesProvider);
       final filtered = Trade.filterTrades(data.trades, filter);

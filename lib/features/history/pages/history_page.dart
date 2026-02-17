@@ -62,9 +62,8 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
   );
 
   void reset(WidgetRef ref) {
-    ref.read(filterTradesProvider.notifier).state = FilterTradesState.initial();
-    ref.read(filterTradesOnSheetProvider.notifier).state =
-        FilterTradesState.initial();
+    ref.read(filterTradesProvider.notifier).state = .initial();
+    ref.read(filterTradesOnSheetProvider.notifier).state = .initial();
   }
 
   @override
@@ -136,8 +135,8 @@ class _EmptyList extends ConsumerWidget {
   const _EmptyList({required this.user, required this.isFiltered});
 
   void reset(WidgetRef ref) {
-    ref.invalidate(filterTradesProvider);
-    ref.invalidate(filterTradesOnSheetProvider);
+    ref.read(filterTradesProvider.notifier).state = .initial();
+    ref.read(filterTradesOnSheetProvider.notifier).state = .initial();
   }
 
   @override

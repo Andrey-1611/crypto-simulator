@@ -48,38 +48,41 @@ class Trade {
   }
 
   static List<Trade> filterTrades(
-    List<Trade> trades,
-    FilterTradesState filter,
-  ) {
+      List<Trade> trades,
+      FilterTradesState filter,
+      ) {
     return trades.where((trade) {
-      if (filter.coinName.isNotEmpty &&
-          !trade.coin.name.toLowerCase().contains(
-            filter.coinName.toLowerCase(),
-          )) {
-        return false;
-      } else if (filter.tradeType != TradeType.all &&
+      if (filter.coinName.isNotEmpty) {
+        final query = filter.coinName.toLowerCase();
+        final matchesName =
+        trade.coin.name.toLowerCase().contains(query);
+        final matchesSymbol =
+        trade.coin.symbol.toLowerCase().contains(query);
+        if (!matchesName && !matchesSymbol) return false;
+      }
+
+      if (filter.tradeType != TradeType.all &&
           trade.type != filter.tradeType) {
         return false;
       }
 
-      if (filter.dateRange != null) {
-        final start = filter.dateRange!.start;
-        final end = filter.dateRange!.end;
-        if (trade.createdAt.isBefore(start) || trade.createdAt.isAfter(end)) {
+      if (filter.dateRange case final range?) {
+        if (trade.createdAt.isBefore(range.start) ||
+            trade.createdAt.isAfter(range.end)) {
           return false;
         }
       }
 
-      if (filter.totalPriceRange != null) {
-        final range = filter.totalPriceRange!;
-        if (trade.totalPrice < range.start || trade.totalPrice > range.end) {
+      if (filter.totalPriceRange case final range?) {
+        if (trade.totalPrice < range.start ||
+            trade.totalPrice > range.end) {
           return false;
         }
       }
 
-      if (filter.amountRange != null) {
-        final range = filter.amountRange!;
-        if (trade.amount < range.start || trade.amount > range.end) {
+      if (filter.amountRange case final range?) {
+        if (trade.amount < range.start ||
+            trade.amount > range.end) {
           return false;
         }
       }
@@ -89,8 +92,7 @@ class Trade {
   }
 
   static List<Trade> sortTrades(List<Trade> trades, TradeSortType sort) {
-    final sorted = List<Trade>.from(trades);
-    sorted.sort(switch (sort) {
+    trades.sort(switch (sort) {
       TradeSortType.newestFirst => (a, b) => b.createdAt.compareTo(a.createdAt),
       TradeSortType.oldestFirst => (a, b) => a.createdAt.compareTo(b.createdAt),
       TradeSortType.highestTotal => (a, b) => b.totalPrice.compareTo(
@@ -102,8 +104,7 @@ class Trade {
       TradeSortType.highestAmount => (a, b) => b.amount.compareTo(a.amount),
       TradeSortType.lowestAmount => (a, b) => a.amount.compareTo(b.amount),
     });
-
-    return sorted;
+    return trades;
   }
 }
 

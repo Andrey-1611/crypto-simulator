@@ -57,7 +57,7 @@ class _MarketPageState extends ConsumerState<MarketPage> {
             data: (coins) {
               final filterCoins = CryptoCoinDetails.filterCryptoCoins(
                 coins,
-                ref.watch(sortCoinsProvider),
+                ref.watch(sortCryptoCoinsProvider),
                 ref.watch(searchCoinsProvider),
               );
               return filterCoins.isNotEmpty

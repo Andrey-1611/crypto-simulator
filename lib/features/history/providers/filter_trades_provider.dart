@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import '../../../data/models/trade.dart';
 
-final filterTradesProvider = StateProvider((_) => const FilterTradesState());
+final filterTradesProvider = StateProvider<FilterTradesState>(
+  (_) => .initial(),
+);
 
-final filterTradesOnSheetProvider = StateProvider(
-  (_) => const FilterTradesState(),
+final filterTradesOnSheetProvider = StateProvider<FilterTradesState>(
+  (_) => .initial(),
 );
 
 class FilterTradesState {
@@ -43,5 +45,4 @@ class FilterTradesState {
   }
 
   factory FilterTradesState.initial() => const FilterTradesState();
-
 }

@@ -24,8 +24,8 @@ class CryptoCoinsPage extends ConsumerWidget {
           ? ListView.builder(
               itemCount: coins.length,
               itemBuilder: (context, index) {
-                final coin = coins[index].coin.coin;
-                final amount = coins[index].coin.amount;
+                final coin = coins[index].coinAmount.coin;
+                final amount = coins[index].coinAmount.amount;
                 final price = coins[index].price;
                 return Card(
                   child: ListTile(

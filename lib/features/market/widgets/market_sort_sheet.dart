@@ -12,7 +12,7 @@ class MarketSortSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sort = ref.watch(sortCoinsProvider);
+    final sort = ref.watch(sortCryptoCoinsProvider);
     final theme = context.theme;
     final s = S.of(context);
     return Padding(
@@ -25,7 +25,7 @@ class MarketSortSheet extends ConsumerWidget {
           const SizeBox(height: 0.02),
           RadioGroup<SortType>(
             groupValue: sort,
-            onChanged: (v) => ref.read(sortCoinsProvider.notifier).state = v!,
+            onChanged: (v) => ref.read(sortCryptoCoinsProvider.notifier).state = v!,
             child: Column(
               children: [
                 RadioListTile(
