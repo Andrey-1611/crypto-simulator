@@ -58,9 +58,9 @@ class BriefcasePage extends ConsumerWidget {
                 .reset => reset(ref),
               },
               itemBuilder: (context) => [
-                const PopupMenuItem(value: .filter, child: Text('Фильтры')),
-                const PopupMenuItem(value: .sort, child: Text('Сортировка')),
-                const PopupMenuItem(value: .reset, child: Text('Сбросить')),
+                PopupMenuItem(value: .filter, child: Text(s.filters)),
+                PopupMenuItem(value: .sort, child: Text(s.sorting)),
+                PopupMenuItem(value: .reset, child: Text(s.reset)),
               ],
             ),
             userIsNull
@@ -75,7 +75,7 @@ class BriefcasePage extends ConsumerWidget {
             tabs: [
               Tab(text: s.balance),
               Tab(text: s.coins),
-              if (userIsNull) const Tab(text: 'Избранное'),
+              if (userIsNull) Tab(text: s.favourite),
             ],
           ),
         ),

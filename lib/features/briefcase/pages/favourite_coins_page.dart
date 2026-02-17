@@ -1,5 +1,6 @@
 import 'package:Bitmark/app/widgets/crypto_coin_card.dart';
 import 'package:Bitmark/features/briefcase/providers/favourite_provider.dart';
+import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/widgets/loader.dart';
@@ -32,11 +33,12 @@ class _EmptyList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     final theme = Theme.of(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('У вас нет избранных монет', style: theme.textTheme.displayLarge),
+        Text(s.no_favourite_coins, style: theme.textTheme.displayLarge),
       ],
     );
   }

@@ -68,9 +68,10 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final s = S.of(context);
     return AppBar(
       automaticallyImplyLeading: user != null,
-      title: const Text('История'),
+      title: Text(s.history),
       actions: [
         PopupMenuButton<PopupMenuType>(
           icon: const Icon(Icons.more_vert),
@@ -80,9 +81,9 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
             .reset => reset(ref),
           },
           itemBuilder: (context) => [
-            const PopupMenuItem(value: .filter, child: Text('Фильтры')),
-            const PopupMenuItem(value: .sort, child: Text('Сортировка')),
-            const PopupMenuItem(value: .reset, child: Text('Сбросить')),
+            PopupMenuItem(value: .filter, child: Text(s.filters)),
+            PopupMenuItem(value: .sort, child: Text(s.sorting)),
+            PopupMenuItem(value: .reset, child: Text(s.reset)),
           ],
         ),
         const SettingsButton(),
@@ -147,14 +148,11 @@ class _EmptyList extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          isFiltered ? 'Операций не найдено' : s.empty_trades(user != null),
+          isFiltered ? s.no_operations_found : s.empty_trades(user != null),
           style: theme.textTheme.displayLarge,
         ),
         isFiltered
-            ? TextButton(
-                onPressed: () => reset(ref),
-                child: const Text('Сбросить'),
-              )
+            ? TextButton(onPressed: () => reset(ref), child: Text(s.reset))
             : user == null
             ? TextButton(
                 onPressed: () => AutoTabsRouter.of(context).setActiveIndex(0),

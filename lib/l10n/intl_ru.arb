@@ -80,5 +80,21 @@
   "unknown_error_try_again": "Неизвестная ошибка, попробуйте еще раз",
   "cancel": "Отмена",
   "symbol": "Символ",
-  "market_data": "Рыночные данные"
+  "market_data": "Рыночные данные",
+  "history": "История",
+  "reset": "Сбросить",
+  "filters": "Фильтры",
+  "sorting": "Сортировка",
+  "no_operations_found": "Операций не найдено",
+  "search_coin": "Поиск монеты",
+  "select_period": "Выбрать период",
+  "coin_amount": "Количество монет",
+  "apply": "Применить",
+  "newest_first": "Сначала новые",
+  "oldest_first": "Сначала старые",
+  "lowest_total": "Сначала маленькие суммы",
+  "highest_amount": "Сначала больше монет",
+  "lowest_amount": "Сначала меньше монет",
+  "no_favourite_coins": "У вас нет избранных монет",
+  "no_coins_found": "Монет не найдено"
 }

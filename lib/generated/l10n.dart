@@ -653,6 +653,141 @@ class S {
   String get market_data {
     return Intl.message('Market Data', name: 'market_data', desc: '', args: []);
   }
+
+  /// `No operations found`
+  String get no_operations_found {
+    return Intl.message(
+      'No operations found',
+      name: 'no_operations_found',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `History`
+  String get history {
+    return Intl.message('History', name: 'history', desc: '', args: []);
+  }
+
+  /// `Reset`
+  String get reset {
+    return Intl.message('Reset', name: 'reset', desc: '', args: []);
+  }
+
+  /// `Filters`
+  String get filters {
+    return Intl.message('Filters', name: 'filters', desc: '', args: []);
+  }
+
+  /// `Sorting`
+  String get sorting {
+    return Intl.message('Sorting', name: 'sorting', desc: '', args: []);
+  }
+
+  /// `Search coin`
+  String get search_coin {
+    return Intl.message('Search coin', name: 'search_coin', desc: '', args: []);
+  }
+
+  /// `Select period`
+  String get select_period {
+    return Intl.message(
+      'Select period',
+      name: 'select_period',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Coin amount`
+  String get coin_amount {
+    return Intl.message('Coin amount', name: 'coin_amount', desc: '', args: []);
+  }
+
+  /// `Apply`
+  String get apply {
+    return Intl.message('Apply', name: 'apply', desc: '', args: []);
+  }
+
+  /// `Newest first`
+  String get newest_first {
+    return Intl.message(
+      'Newest first',
+      name: 'newest_first',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Oldest first`
+  String get oldest_first {
+    return Intl.message(
+      'Oldest first',
+      name: 'oldest_first',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Highest total first`
+  String get highest_total {
+    return Intl.message(
+      'Highest total first',
+      name: 'highest_total',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Lowest total first`
+  String get lowest_total {
+    return Intl.message(
+      'Lowest total first',
+      name: 'lowest_total',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Highest amount first`
+  String get highest_amount {
+    return Intl.message(
+      'Highest amount first',
+      name: 'highest_amount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Lowest amount first`
+  String get lowest_amount {
+    return Intl.message(
+      'Lowest amount first',
+      name: 'lowest_amount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have no favourite coins`
+  String get no_favourite_coins {
+    return Intl.message(
+      'You have no favourite coins',
+      name: 'no_favourite_coins',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No coins found`
+  String get no_coins_found {
+    return Intl.message(
+      'No coins found',
+      name: 'no_coins_found',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

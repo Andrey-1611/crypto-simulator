@@ -78,10 +78,10 @@ InputDecorationTheme _inputDecorationTheme(Color color) => InputDecorationTheme(
 );
 
 final _listTileTheme = ListTileThemeData(
-  contentPadding: EdgeInsets.symmetric(vertical: 8.sp, horizontal: 12.sp),
+  contentPadding: EdgeInsets.symmetric(vertical: 4.sp, horizontal: 8.sp),
   subtitleTextStyle: TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: 16.sp,
+    fontSize: 14.sp,
     color: _hintColor,
   ),
 );

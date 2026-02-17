@@ -24,31 +24,31 @@ class SortTradesSheet extends ConsumerWidget {
           RadioGroup<TradeSortType>(
             groupValue: sort,
             onChanged: (v) => ref.read(sortTradesProvider.notifier).state = v!,
-            child: const Column(
+            child: Column(
               children: [
                 RadioListTile(
                   value: TradeSortType.newestFirst,
-                  title: Text('Сначала новые'),
+                  title: Text(s.newest_first),
                 ),
                 RadioListTile(
                   value: TradeSortType.oldestFirst,
-                  title: Text('Сначала старые'),
+                  title: Text(s.oldest_first),
                 ),
                 RadioListTile(
                   value: TradeSortType.highestTotal,
-                  title: Text('Сначала большие суммы'),
+                  title: Text(s.highest_total),
                 ),
                 RadioListTile(
                   value: TradeSortType.lowestTotal,
-                  title: Text('Сначала маленькие суммы'),
+                  title: Text(s.lowest_total),
                 ),
                 RadioListTile(
                   value: TradeSortType.highestAmount,
-                  title: Text('Сначала больше монет'),
+                  title: Text(s.highest_amount),
                 ),
                 RadioListTile(
                   value: TradeSortType.lowestAmount,
-                  title: Text('Сначала меньше монет'),
+                  title: Text(s.lowest_amount),
                 ),
               ],
             ),

@@ -2,6 +2,7 @@ import 'package:Bitmark/app/widgets/size_box.dart';
 import 'package:Bitmark/data/models/app_user_details.dart';
 import 'package:Bitmark/data/models/trade.dart';
 import 'package:Bitmark/features/history/providers/filter_trades_provider.dart';
+import 'package:Bitmark/generated/l10n.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -77,6 +78,7 @@ class _FilterTradesSheetState extends ConsumerState<FilterTradesSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final s = S.of(context);
     final filter = ref.watch(filterTradesOnSheetProvider);
     final notifier = ref.read(filterTradesOnSheetProvider.notifier);
     coinController.value = coinController.value.copyWith(text: filter.coinName);
@@ -88,7 +90,7 @@ class _FilterTradesSheetState extends ConsumerState<FilterTradesSheet> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Фильтры', style: theme.textTheme.displayMedium),
+              Text(s.filters, style: theme.textTheme.displayMedium),
               IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: () => context.pop(context),
@@ -103,7 +105,7 @@ class _FilterTradesSheetState extends ConsumerState<FilterTradesSheet> {
                 notifier.state = notifier.state.copyWith(coinName: value),
             decoration: InputDecoration(
               prefixIcon: const Icon(Icons.search),
-              hintText: 'Поиск монеты',
+              hintText: s.search_coin,
               suffixIcon: IconButton(
                 onPressed: () {
                   coinController.clear();
@@ -135,13 +137,13 @@ class _FilterTradesSheetState extends ConsumerState<FilterTradesSheet> {
             onPressed: pickDateRange,
             child: Text(
               filter.dateRange == null
-                  ? 'Выбрать период'
+                  ? s.select_period
                   : '${filter.dateRange!.start.dayFormat} - '
                         '${filter.dateRange!.end.dayFormat}',
             ),
           ),
           const SizeBox(height: 0.02),
-          const Text('Общая цена'),
+          Text(s.total_price),
           RangeSlider(
             values: filter.totalPriceRange ?? const RangeValues(0, 2000),
             min: 0,
@@ -156,7 +158,7 @@ class _FilterTradesSheetState extends ConsumerState<FilterTradesSheet> {
             },
           ),
           const SizeBox(height: 0.02),
-          const Text('Количество монет'),
+          Text(s.coin_amount),
           RangeSlider(
             values: filter.amountRange ?? const RangeValues(0, 10000),
             min: 0,
@@ -176,14 +178,14 @@ class _FilterTradesSheetState extends ConsumerState<FilterTradesSheet> {
               Expanded(
                 child: OutlinedButton(
                   onPressed: () => reset(),
-                  child: const Text('Сбросить'),
+                  child: Text(s.reset),
                 ),
               ),
               const SizeBox(width: 0.05),
               Expanded(
                 child: ElevatedButton(
                   onPressed: () => apply(),
-                  child: const Text('Применить'),
+                  child: Text(s.apply),
                 ),
               ),
             ],

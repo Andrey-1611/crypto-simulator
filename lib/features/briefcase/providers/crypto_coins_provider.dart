@@ -28,13 +28,17 @@ final _cryptoCoinsProvider =
     });
 
 final cryptoCoinsProvider =
-    FutureProvider.family<List<CoinAmountPrice>, AppUserDetails?>((
-      ref,
-      user,
-    ) async {
+    FutureProvider.family<
+      ({List<CoinAmountPrice> coins, bool isFiltered}),
+      AppUserDetails?
+    >((ref, user) async {
       final coins = await ref.watch(_cryptoCoinsProvider(user).future);
       final filter = ref.watch(filterCoinsProvider);
       final filtered = CoinAmountPrice.filterCoins(coins, filter);
       final sort = ref.watch(sortCoinsProvider);
-      return CoinAmountPrice.sortCoins(filtered, sort);
+      final isFiltered = filtered.length != coins.length;
+      return (
+        coins: CoinAmountPrice.sortCoins(filtered, sort),
+        isFiltered: isFiltered,
+      );
     });

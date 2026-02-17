@@ -33,9 +33,9 @@ class HomePage extends StatelessWidget {
                 icon: const Icon(Icons.wallet),
                 label: s.briefcase,
               ),
-              const NavigationDestination(
-                icon: Icon(Icons.receipt_long),
-                label: 'История',
+              NavigationDestination(
+                icon: const Icon(Icons.receipt_long),
+                label: s.history,
               ),
               NavigationDestination(
                 icon: const Icon(Icons.leaderboard),
