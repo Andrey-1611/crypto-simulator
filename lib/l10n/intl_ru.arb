@@ -92,6 +92,7 @@
   "apply": "Применить",
   "newest_first": "Сначала новые",
   "oldest_first": "Сначала старые",
+  "highest_total": "Сначала большие суммы",
   "lowest_total": "Сначала маленькие суммы",
   "highest_amount": "Сначала больше монет",
   "lowest_amount": "Сначала меньше монет",

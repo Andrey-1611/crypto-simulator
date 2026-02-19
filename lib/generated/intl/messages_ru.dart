@@ -93,6 +93,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "highest_amount": MessageLookupByLibrary.simpleMessage(
       "Сначала больше монет",
     ),
+    "highest_total": MessageLookupByLibrary.simpleMessage(
+      "Сначала большие суммы",
+    ),
     "history": MessageLookupByLibrary.simpleMessage("История"),
     "id": MessageLookupByLibrary.simpleMessage("ID"),
     "information": MessageLookupByLibrary.simpleMessage("Информация"),
