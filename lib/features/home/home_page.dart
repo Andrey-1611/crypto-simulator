@@ -11,7 +11,12 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = S.of(context);
     return AutoTabsRouter(
-      routes: [const MarketRoute(), BriefcaseRoute(), const RatingRoute()],
+      routes: [
+        const MarketRoute(),
+        BriefcaseRoute(),
+        HistoryRoute(),
+        const RatingRoute(),
+      ],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
         return Scaffold(
@@ -27,6 +32,10 @@ class HomePage extends StatelessWidget {
               NavigationDestination(
                 icon: const Icon(Icons.wallet),
                 label: s.briefcase,
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.receipt_long),
+                label: s.history,
               ),
               NavigationDestination(
                 icon: const Icon(Icons.leaderboard),

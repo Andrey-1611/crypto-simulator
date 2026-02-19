@@ -81,5 +81,22 @@
   "check": "Check",
   "emailSent": "Email sent to your inbox",
   "resend": "Resend",
-  "market_data": "Market Data"
+  "market_data": "Market Data",
+  "no_operations_found": "No operations found",
+  "history": "History",
+  "reset": "Reset",
+  "filters": "Filters",
+  "sorting": "Sorting",
+  "search_coin": "Search coin",
+  "select_period": "Select period",
+  "coin_amount": "Coin amount",
+  "apply": "Apply",
+  "newest_first": "Newest first",
+  "oldest_first": "Oldest first",
+  "highest_total": "Highest total first",
+  "lowest_total": "Lowest total first",
+  "highest_amount": "Highest amount first",
+  "lowest_amount": "Lowest amount first",
+  "no_favourite_coins": "You have no favourite coins",
+  "no_coins_found": "No coins found"
 }

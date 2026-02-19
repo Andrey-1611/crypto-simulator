@@ -38,6 +38,7 @@ class CryptoCoinDetails extends CryptoCoin {
     String? symbol,
     String? name,
     String? imageUrl,
+    bool? isFavourite,
     double? currentPrice,
     double? changePercent24h,
     double? priceChange24h,
@@ -127,17 +128,6 @@ class CryptoCoinDetails extends CryptoCoin {
       },
     );
     return coins;
-  }
-
-  static String formatValue(double value) {
-    return switch (value) {
-      >= 1000000000000 =>
-        '\$${(value / 1000000000000).toStringAsFixed(2)} трлн',
-      >= 1000000000 => '\$${(value / 1000000000).toStringAsFixed(2)} млрд',
-      >= 1000000 => '\$${(value / 1000000).toStringAsFixed(2)} млн',
-      >= 1000 => '\$${(value / 1000).toStringAsFixed(2)} тыс',
-      _ => '\$${value.toStringAsFixed(2)}',
-    };
   }
 }
 

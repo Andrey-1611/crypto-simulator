@@ -17,8 +17,7 @@ class CryptoDataSource implements CryptoRepository {
     final response = await _dio.get(ApiConstants.coinsUrlBySimbol(coin.symbol));
     final data =
         response.data['RAW'][coin.symbol]['USD'] as Map<String, dynamic>;
-    final coinDetails = CryptoCoinDetails.fromCoinAPI(data, coin);
-    return coinDetails;
+    return CryptoCoinDetails.fromCoinAPI(data, coin);
   }
 
   @override
@@ -42,11 +41,10 @@ class CryptoDataSource implements CryptoRepository {
     if (symbols.isEmpty) return [];
     final response = await _dio.get(ApiConstants.coinsUrlBySimbol(symbols));
     final data = response.data['RAW'] as Map<String, dynamic>;
-    final coinsDetails = coins.map((coin) {
+    return coins.map((coin) {
       final map = data[coin.symbol]['USD'] as Map<String, dynamic>;
       return CryptoCoinDetails.fromCoinAPI(map, coin);
     }).toList();
-    return coinsDetails;
   }
 
   @override
@@ -64,9 +62,8 @@ class CryptoDataSource implements CryptoRepository {
       ApiConstants.coinPricesUrlBySimbol(allSymbols),
     );
     final data = response.data as Map<String, dynamic>;
-    final prices = symbols
+    return symbols
         .map((symbol) => (symbol: symbol, price: data[symbol]['USD'] as double))
         .toList();
-    return prices;
   }
 }

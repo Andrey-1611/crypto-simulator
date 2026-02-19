@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:Bitmark/data/repositories/crypto_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/utils/toast_helper.dart';
+import '../../../app/runner/app_dependencies.dart';
 import '../../../data/models/crypto_coin_details.dart';
 
 final marketNotifierProvider =
@@ -16,6 +16,7 @@ class MarketNotifier extends AsyncNotifier<List<CryptoCoinDetails>> {
 
   @override
   FutureOr<List<CryptoCoinDetails>> build() async {
+    await ref.read(packageProvider.future);
     return await ref.read(cryptoRepositoryProvider).getCoins(0);
   }
 

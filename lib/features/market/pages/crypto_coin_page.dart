@@ -1,4 +1,5 @@
 import 'package:Bitmark/core/utils/extensions.dart';
+import 'package:Bitmark/features/briefcase/providers/favourite_provider.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:Bitmark/app/widgets/info_bloc.dart';
 import 'package:Bitmark/app/widgets/loader.dart';
@@ -24,19 +25,48 @@ class CryptoCoinPage extends ConsumerWidget {
 
   void refresh(WidgetRef ref) => ref.refresh(cryptoCoinDetailsProvider(coin));
 
+  void toggle(WidgetRef ref, CryptoCoin coin, double price) => ref
+      .read(favouriteNotifierProvider.notifier)
+      .toggleIsFavourite(coin, price);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final coinP = ref.watch(cryptoCoinDetailsProvider(coin));
+    final favouriteP = ref.watch(favouriteNotifierProvider);
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Row(
           children: [
-            SizeBox.square(size: 0.11, child: Image.network(coin.fullImageUrl)),
+            SizeBox.square(size: 0.1, child: Image.network(coin.fullImageUrl)),
             const SizeBox(width: 0.01),
             Expanded(child: Text(coin.name, overflow: TextOverflow.ellipsis)),
           ],
         ),
         actions: [
+          coinP.when(
+            data: (coin) => favouriteP.when(
+              data: (coins) {
+                final ids = coins.map((c) => c.coin.id);
+                final isFavourite = ids.contains(coin.id);
+                return IconButton(
+                  onPressed: () => toggle(
+                    ref,
+                    CryptoCoin.fromDetails(coin),
+                    coin.currentPrice,
+                  ),
+                  icon: Icon(
+                    isFavourite ? Icons.favorite : Icons.favorite_border,
+                    color: isFavourite ? theme.colorScheme.error : null,
+                  ),
+                );
+              },
+              loading: () => const SizedBox.shrink(),
+              error: (_, _) => const SizedBox.shrink(),
+            ),
+            loading: () => const SizedBox.shrink(),
+            error: (_, _) => const SizedBox.shrink(),
+          ),
           IconButton(
             onPressed: () => refresh(ref),
             icon: const Icon(Icons.refresh),
@@ -130,11 +160,11 @@ class _DataBlocs extends StatelessWidget {
           title: s.market_data,
           children: [
             InfoRow(title: s.market_cap, value: coin.marketCap.toCryptoPrice),
-            InfoRow(title: s.volume_24h, value: coin.volume24h.toCryptoPrice),
             InfoRow(
               title: s.circulating_supply,
               value: coin.circulatingSupply.toInt().toCrypto,
             ),
+            InfoRow(title: s.volume_24h, value: coin.volume24h.toCryptoPrice),
             InfoRow(title: s.high_24h, value: coin.high24h.toCryptoPrice),
             InfoRow(title: s.low_24h, value: coin.low24h.toCryptoPrice),
           ],
@@ -190,8 +220,8 @@ class _ActionsButtons extends ConsumerWidget {
           ),
         ),
         userP.when(
-          data: (user) {
-            final userCoin = user.findCoin(coin);
+          data: (data) {
+            final userCoin = data.user.findCoin(coin);
             return userCoin.amount != 0
                 ? Flexible(
                     flex: 1,

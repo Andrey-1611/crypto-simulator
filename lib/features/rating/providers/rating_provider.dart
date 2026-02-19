@@ -20,5 +20,6 @@ final ratingProvider = FutureProvider<UsersWithCurrentUserId>((ref) async {
     final coinsBalance = u.coinsBalance(prices);
     return (user: u, fullBalance: u.balance + coinsBalance);
   }).toList();
+  newUsers.sort((a, b) => b.fullBalance.compareTo(a.fullBalance));
   return (users: newUsers, currentUserId: currentUser.id);
 });

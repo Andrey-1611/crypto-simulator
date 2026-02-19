@@ -1,7 +1,6 @@
 import 'package:Bitmark/core/constants/api_constants.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:Bitmark/data/models/crypto_coin_details.dart';
 
-@JsonSerializable()
 class CryptoCoin {
   final String id;
   final String symbol;
@@ -27,6 +26,15 @@ class CryptoCoin {
       symbol: map['symbol'] as String,
       name: map['name'] as String,
       imageUrl: map['imageUrl'] as String,
+    );
+  }
+
+  factory CryptoCoin.fromDetails(CryptoCoinDetails details) {
+    return CryptoCoin(
+      id: details.id,
+      symbol: details.symbol,
+      name: details.name,
+      imageUrl: details.imageUrl,
     );
   }
 
