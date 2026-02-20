@@ -1,3 +1,4 @@
+import 'package:Bitmark/data/models/crypto_coin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../core/constants/databases_constants.dart';
 import '../models/app_user_details.dart';
@@ -15,6 +16,11 @@ class RemoteDataSource implements RemoteRepository {
 
   CollectionReference _tradesCollection(String userId) =>
       _usersCollection().doc(userId).collection(DatabasesConstants.trades);
+
+  CollectionReference _favouriteCoinsCollection(String userId) =>
+      _usersCollection()
+          .doc(userId)
+          .collection(DatabasesConstants.favouriteCoins);
 
   @override
   Future<void> createUser(AppUserDetails user) async {
@@ -50,14 +56,33 @@ class RemoteDataSource implements RemoteRepository {
     final data = await _tradesCollection(
       userId,
     ).orderBy('createdAt', descending: true).get();
-    final trades = data.docs
+    return data.docs
         .map((doc) => Trade.fromJson(doc.data() as Map<String, dynamic>))
         .toList();
-    return trades;
   }
 
   @override
   Future<void> deleteUser(String userId) async {
     await _usersCollection().doc(userId).delete();
+  }
+
+  @override
+  Future<List<CryptoCoin>> getFavouriteCoins(String userId) async {
+    final data = await _favouriteCoinsCollection(userId).get();
+    return data.docs
+        .map((doc) => CryptoCoin.fromJson(doc.data() as Map<String, dynamic>))
+        .toList();
+  }
+
+  @override
+  Future<void> setFavouriteCoins(String userId, List<CryptoCoin> coins) async {
+    final batch = _firestore.batch();
+    coins.map(
+      (coin) => batch.set(
+        _favouriteCoinsCollection(userId).doc(coin.id),
+        coin.toJson(),
+      ),
+    );
+    await batch.commit();
   }
 }

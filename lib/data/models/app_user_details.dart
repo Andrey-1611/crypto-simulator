@@ -79,6 +79,14 @@ class AppUserDetails {
     );
   }
 
+  double updateCoinsBalance(Trade trade, double balance) {
+    return switch (trade.type) {
+      .sell => balance - trade.totalPrice,
+      .buy => balance + trade.totalPrice,
+      .all => balance,
+    };
+  }
+
   CoinAmount findCoin(CryptoCoin coin) {
     final userCoin = coins.firstWhere(
       (c) => c.coin.symbol == coin.symbol,

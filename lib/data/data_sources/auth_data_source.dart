@@ -1,3 +1,4 @@
+import 'package:Bitmark/core/constants/api_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../models/app_user.dart';
@@ -71,9 +72,9 @@ class AuthDataSource implements AuthRepository {
   @override
   Future<void> sendEmailVerification() async {
     final actionCodeSettings = ActionCodeSettings(
-      url: 'https://expense-tracker-d697a.firebaseapp.com',
+      url: ApiConstants.appUrl,
       handleCodeInApp: true,
-      androidPackageName: 'com.example.crypto_simulator',
+      androidPackageName: ApiConstants.packageName,
     );
     await _auth.currentUser!.sendEmailVerification(actionCodeSettings);
   }

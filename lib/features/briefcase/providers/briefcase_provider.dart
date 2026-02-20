@@ -63,10 +63,15 @@ class BriefcaseNotifier extends AsyncNotifier<BriefcaseState> {
       final updatedUser = trade.type == TradeType.buy
           ? AppUserDetails.buyCoins(user, trade)
           : AppUserDetails.sellCoins(user, trade);
+      final balance = updatedUser.updateCoinsBalance(
+        trade,
+        previous.coinsBalance,
+      );
       await ref.read(remoteRepositoryProvider).addTrade(updatedUser, trade);
       ref.invalidate(cryptoCoinsProvider);
       return previous.copyWith(
         user: updatedUser,
+        coinsBalance: balance,
         trades: [trade, ...previous.trades],
       );
     });

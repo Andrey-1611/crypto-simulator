@@ -10,4 +10,8 @@ abstract interface class LocalRepository {
   Future<void> removeFavouriteCoin(String coinId);
 
   Future<List<CryptoCoin>> getFavouriteCoins();
+
+  Future<void> clear();
+
+  Future<void> setFavouriteCoins(List<CryptoCoin> coins);
 }

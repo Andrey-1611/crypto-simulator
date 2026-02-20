@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:Bitmark/data/models/app_user_details.dart';
 import 'package:Bitmark/data/repositories/auth_repository.dart';
+import 'package:Bitmark/data/repositories/local_repository.dart';
 import 'package:Bitmark/data/repositories/remote_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -25,6 +26,11 @@ class AuthNotifier extends AsyncNotifier<AuthState> {
           .read(authRepositoryProvider)
           .signIn(email, password);
       if (emailVerified) {
+        final user = ref.read(authRepositoryProvider).getUser();
+        final coins = await ref
+            .read(remoteRepositoryProvider)
+            .getFavouriteCoins(user.id);
+        await ref.read(localRepositoryProvider).setFavouriteCoins(coins);
         return .auth;
       } else {
         await ref.read(authRepositoryProvider).sendEmailVerification();
@@ -40,6 +46,12 @@ class AuthNotifier extends AsyncNotifier<AuthState> {
       if (user != null) {
         final newUser = AppUserDetails.create(user);
         await ref.read(remoteRepositoryProvider).createUser(newUser);
+      } else {
+        final newUser = ref.read(authRepositoryProvider).getUser();
+        final coins = await ref
+            .read(remoteRepositoryProvider)
+            .getFavouriteCoins(newUser.id);
+        await ref.read(localRepositoryProvider).setFavouriteCoins(coins);
       }
       return .auth;
     });
@@ -60,7 +72,12 @@ class AuthNotifier extends AsyncNotifier<AuthState> {
 
   Future<void> signOut() async {
     state = await .guard(() async {
+      final user = ref.read(authRepositoryProvider).getUser();
       await ref.read(authRepositoryProvider).signOut();
+      final coins = await ref.read(localRepositoryProvider).getFavouriteCoins();
+      await ref
+          .read(remoteRepositoryProvider)
+          .setFavouriteCoins(user.id, coins);
       return .notAuth;
     });
   }

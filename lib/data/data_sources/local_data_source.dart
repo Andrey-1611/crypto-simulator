@@ -49,4 +49,25 @@ class LocalDataSource implements LocalRepository {
     final db = await _database;
     await db.delete(favouriteCoins, where: 'id = ?', whereArgs: [coinId]);
   }
+
+  @override
+  Future<void> clear() async {
+    final db = await _database;
+    await db.delete(favouriteCoins);
+  }
+
+  @override
+  Future<void> setFavouriteCoins(List<CryptoCoin> coins) async {
+    final db = await _database;
+    await db.delete(favouriteCoins);
+    final batch = db.batch();
+    coins.map(
+      (coin) => batch.insert(
+        favouriteCoins,
+        coin.toJson(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      ),
+    );
+    await batch.commit(noResult: true);
+  }
 }

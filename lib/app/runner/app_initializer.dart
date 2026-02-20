@@ -1,3 +1,4 @@
+import 'package:Bitmark/data/repositories/local_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

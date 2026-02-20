@@ -14,4 +14,7 @@ abstract class ApiConstants {
       '/data/pricemulti?fsyms=$symbol&tsyms=USD';
 
   static const imagesHost = 'https://www.cryptocompare.com';
+
+  static const appUrl = 'https://expense-tracker-d697a.firebaseapp.com';
+  static const packageName = 'com.example.crypto_simulator';
 }
