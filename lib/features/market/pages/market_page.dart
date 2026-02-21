@@ -1,6 +1,6 @@
+import 'package:Bitmark/data/models/coin_price.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:Bitmark/app/widgets/crypto_coin_card.dart';
-import 'package:Bitmark/data/models/crypto_coin_details.dart';
+import 'package:Bitmark/app/widgets/coin_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -55,18 +55,13 @@ class _MarketPageState extends ConsumerState<MarketPage> {
         child: Center(
           child: cryptoCoinsP.when(
             data: (coins) {
-              final filterCoins = CryptoCoinDetails.filterCryptoCoins(
-                coins,
-                ref.watch(sortCryptoCoinsProvider),
-                ref.watch(searchCoinsProvider),
-              );
-              return filterCoins.isNotEmpty
+              return coins.isNotEmpty
                   ? RefreshIndicator(
                       onRefresh: () => ref
                           .read(marketNotifierProvider.notifier)
                           .updateCoinsPrices(),
                       child: _CryptoCoinsList(
-                        coins: filterCoins,
+                        coins: coins,
                         scrollController: _scrollController,
                       ),
                     )
@@ -85,7 +80,7 @@ class _MarketPageState extends ConsumerState<MarketPage> {
 }
 
 class _CryptoCoinsList extends ConsumerWidget {
-  final List<CryptoCoinDetails> coins;
+  final List<CoinPrice> coins;
   final ScrollController scrollController;
 
   const _CryptoCoinsList({required this.coins, required this.scrollController});
@@ -97,7 +92,7 @@ class _CryptoCoinsList extends ConsumerWidget {
       itemCount: coins.length,
       itemBuilder: (context, index) {
         final coin = coins[index];
-        return CryptoCoinCard(coin: coin, price: coin.currentPrice);
+        return CoinCard(coin: coin.coin, price: coin.price);
       },
     );
   }
@@ -156,7 +151,7 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
       bottom: PreferredSize(
         preferredSize: preferredSize,
         child: Padding(
-          padding:  EdgeInsets.all(12.sp),
+          padding: EdgeInsets.all(12.sp),
           child: Row(
             children: [
               Expanded(

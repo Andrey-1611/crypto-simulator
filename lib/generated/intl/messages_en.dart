@@ -53,7 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "By market capitalization",
     ),
     "by_price": MessageLookupByLibrary.simpleMessage("By price"),
-    "by_volume": MessageLookupByLibrary.simpleMessage("By volume"),
+    "by_volume": MessageLookupByLibrary.simpleMessage("24h volume"),
     "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "check": MessageLookupByLibrary.simpleMessage("Check"),
     "circulating_supply": MessageLookupByLibrary.simpleMessage(

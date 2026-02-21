@@ -108,27 +108,6 @@ class CryptoCoinDetails extends CryptoCoin {
       volume24h: (data['VOLUME24HOURTO'] as num).toDouble(),
     );
   }
-
-  static List<CryptoCoinDetails> filterCryptoCoins(
-    List<CryptoCoinDetails> coins,
-    SortType sort,
-    String search,
-  ) {
-    coins = coins
-        .where((coin) => coin.name.toLowerCase().contains(search.toLowerCase()))
-        .toList();
-    coins.sort(
-      (a, b) => switch (sort) {
-        SortType.marketCap => b.marketCap.compareTo(a.marketCap),
-        SortType.price => b.currentPrice.compareTo(a.currentPrice),
-        SortType.change24h => b.priceChange24h.abs().compareTo(
-          a.priceChange24h.abs(),
-        ),
-        SortType.volume24h => b.volume24h.compareTo(a.volume24h),
-      },
-    );
-    return coins;
-  }
 }
 
 enum SortType { marketCap, price, change24h, volume24h }

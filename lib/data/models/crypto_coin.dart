@@ -38,6 +38,14 @@ class CryptoCoin {
     );
   }
 
+  factory CryptoCoin.fromApi(Map<String, dynamic> map) {
+    return CryptoCoin(
+      id: map['Id'] as String,
+      symbol: map['Name'] as String,
+      name: map['FullName'] as String,
+      imageUrl: map['ImageUrl'] as String,
+    );
+  }
   factory CryptoCoin.empty() =>
       const CryptoCoin(id: '', symbol: '', name: '', imageUrl: '');
 }

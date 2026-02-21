@@ -5,5 +5,5 @@ final cryptoCoinPriceProvider = FutureProvider.autoDispose
     .family<double, String>((ref, symbol) async {
       return await ref
           .read(cryptoRepositoryProvider)
-          .getCoinPriceBySimbol(symbol);
+          .getCoinPriceBySymbol(symbol);
     });

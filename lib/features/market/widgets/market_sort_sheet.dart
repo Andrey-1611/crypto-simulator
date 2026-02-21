@@ -1,3 +1,4 @@
+import 'package:Bitmark/features/market/providers/market_provider.dart';
 import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,7 +26,10 @@ class MarketSortSheet extends ConsumerWidget {
           const SizeBox(height: 0.02),
           RadioGroup<SortType>(
             groupValue: sort,
-            onChanged: (v) => ref.read(sortCryptoCoinsProvider.notifier).state = v!,
+            onChanged: (sortType) {
+              ref.read(sortCryptoCoinsProvider.notifier).state = sortType!;
+              ref.read(marketNotifierProvider.notifier).changeSort(sortType);
+            },
             child: Column(
               children: [
                 RadioListTile(
@@ -37,7 +41,10 @@ class MarketSortSheet extends ConsumerWidget {
                   value: SortType.change24h,
                   title: Text(s.by_change_24h),
                 ),
-                RadioListTile(value: SortType.volume24h, title: Text(s.by_volume)),
+                RadioListTile(
+                  value: SortType.volume24h,
+                  title: Text(s.by_volume),
+                ),
               ],
             ),
           ),

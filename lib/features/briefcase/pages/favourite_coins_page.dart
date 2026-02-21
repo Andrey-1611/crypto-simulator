@@ -1,4 +1,4 @@
-import 'package:Bitmark/app/widgets/crypto_coin_card.dart';
+import 'package:Bitmark/app/widgets/coin_card.dart';
 import 'package:Bitmark/features/briefcase/providers/favourite_provider.dart';
 import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class FavouriteCoinsPage extends ConsumerWidget {
               itemCount: coins.length,
               itemBuilder: (context, index) {
                 final coin = coins[index];
-                return CryptoCoinCard(coin: coin.coin, price: coin.price);
+                return CoinCard(coin: coin.coin, price: coin.price);
               },
             )
           : const _EmptyList(),

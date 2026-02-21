@@ -43,7 +43,7 @@
   "by_market_cap": "По капитализации",
   "by_price": "По цене",
   "by_change_24h": "Изменение за 24ч",
-  "by_volume": "По объёму",
+  "by_volume": "По объёму за 24ч",
   "sell_coin_a": "Продажа {coinName}",
   "coins_balance": "Количество монет на балансе",
   "id": "ID",

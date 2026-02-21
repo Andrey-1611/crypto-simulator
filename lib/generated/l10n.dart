@@ -379,9 +379,9 @@ class S {
     );
   }
 
-  /// `By volume`
+  /// `24h volume`
   String get by_volume {
-    return Intl.message('By volume', name: 'by_volume', desc: '', args: []);
+    return Intl.message('24h volume', name: 'by_volume', desc: '', args: []);
   }
 
   /// `Sell {coinName}`

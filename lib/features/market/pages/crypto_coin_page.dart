@@ -5,8 +5,8 @@ import 'package:Bitmark/app/widgets/info_bloc.dart';
 import 'package:Bitmark/app/widgets/loader.dart';
 import 'package:Bitmark/app/widgets/unknown_error.dart';
 import 'package:Bitmark/data/models/crypto_coin_details.dart';
-import 'package:Bitmark/features/market/widgets/buy_crypto_coin_sheet.dart';
-import 'package:Bitmark/features/market/widgets/sell_crypto_coin_sheet.dart';
+import 'package:Bitmark/features/market/widgets/buy_coin_sheet.dart';
+import 'package:Bitmark/features/market/widgets/sell_coin_sheet.dart';
 import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,7 +15,7 @@ import '../../../app/widgets/info_row.dart';
 import '../../../app/widgets/size_box.dart';
 import '../../../data/models/crypto_coin.dart';
 import '../../briefcase/providers/briefcase_provider.dart';
-import '../providers/crypto_coin_details_provider.dart';
+import '../providers/coin_details_provider.dart';
 
 @RoutePage()
 class CryptoCoinPage extends ConsumerWidget {
@@ -23,7 +23,7 @@ class CryptoCoinPage extends ConsumerWidget {
 
   const CryptoCoinPage({super.key, required this.coin});
 
-  void refresh(WidgetRef ref) => ref.refresh(cryptoCoinDetailsProvider(coin));
+  void refresh(WidgetRef ref) => ref.refresh(coinDetailsProvider(coin));
 
   void toggle(WidgetRef ref, CryptoCoin coin, double price) => ref
       .read(favouriteNotifierProvider.notifier)
@@ -31,7 +31,7 @@ class CryptoCoinPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final coinP = ref.watch(cryptoCoinDetailsProvider(coin));
+    final coinP = ref.watch(coinDetailsProvider(coin));
     final favouriteP = ref.watch(favouriteNotifierProvider);
     final theme = Theme.of(context);
     return Scaffold(

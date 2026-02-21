@@ -1,5 +1,5 @@
 import 'package:auto_route/annotations.dart';
-import 'package:Bitmark/app/widgets/crypto_coin_card.dart';
+import 'package:Bitmark/app/widgets/coin_card.dart';
 import 'package:Bitmark/app/widgets/info_row.dart';
 import 'package:Bitmark/app/widgets/loader.dart';
 import 'package:Bitmark/app/widgets/unknown_error.dart';
@@ -33,8 +33,7 @@ class TradePage extends ConsumerWidget {
               SizeBox(
                 height: 0.11,
                 child: coinP.when(
-                  data: (price) =>
-                      CryptoCoinCard(coin: trade.coin, price: price),
+                  data: (price) => CoinCard(coin: trade.coin, price: price),
                   error: (_, _) => const UnknownError(),
                   loading: () => const Loader(),
                 ),

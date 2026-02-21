@@ -5,11 +5,11 @@ import '../../core/utils/extensions.dart';
 import '../../data/models/crypto_coin.dart';
 import '../router/app_router.dart';
 
-class CryptoCoinCard extends StatelessWidget {
+class CoinCard extends StatelessWidget {
   final CryptoCoin coin;
   final double price;
 
-  const CryptoCoinCard({super.key, required this.coin, required this.price});
+  const CoinCard({super.key, required this.coin, required this.price});
 
   @override
   Widget build(BuildContext context) {

@@ -44,7 +44,7 @@
   "by_market_cap": "By market capitalization",
   "by_price": "By price",
   "by_change_24h": "24h change",
-  "by_volume": "By volume",
+  "by_volume": "24h volume",
   "sell_coin_a": "Sell {coinName}",
   "coins_balance": "Number of coins on the balance",
   "symbol": "Symbol",

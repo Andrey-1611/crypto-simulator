@@ -51,7 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "by_change_24h": MessageLookupByLibrary.simpleMessage("Изменение за 24ч"),
     "by_market_cap": MessageLookupByLibrary.simpleMessage("По капитализации"),
     "by_price": MessageLookupByLibrary.simpleMessage("По цене"),
-    "by_volume": MessageLookupByLibrary.simpleMessage("По объёму"),
+    "by_volume": MessageLookupByLibrary.simpleMessage("По объёму за 24ч"),
     "cancel": MessageLookupByLibrary.simpleMessage("Отмена"),
     "check": MessageLookupByLibrary.simpleMessage("Проверить"),
     "circulating_supply": MessageLookupByLibrary.simpleMessage("В обращении"),
