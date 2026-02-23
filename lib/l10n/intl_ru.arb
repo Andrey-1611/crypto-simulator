@@ -49,8 +49,8 @@
   "id": "ID",
   "sell": "Продать",
   "test": "",
-  "high_24h": "Максимум (24ч)",
-  "low_24h": "Минимум (24ч)",
+  "high_24h": "Максимум 24ч",
+  "low_24h": "Минимум 24ч",
   "coins_not_found": "Монет не найдено",
   "reset_search": "Сбросить поиск",
   "search_hint": "Поиск...",
@@ -117,5 +117,12 @@
   "supply": "Всего монет",
   "market_cap": "Капитализация",
   "circulating_supply": "В обращении",
-  "information": "Информация"
+  "information": "Информация",
+  "search_coins": "Поиск монет",
+  "start_searching_coins": "Начните искать монеты",
+  "open_24h": "Открытие за 24ч",
+  "high_day": "Максимум за день",
+  "low_day": "Минимум за день",
+  "volume_day": "Объём за день",
+  "circulating_supply_cap": "Капитализация в обращении"
 }

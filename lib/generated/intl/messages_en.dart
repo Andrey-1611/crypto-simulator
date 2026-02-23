@@ -61,6 +61,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "circulating_supply": MessageLookupByLibrary.simpleMessage(
       "Circulating supply",
     ),
+    "circulating_supply_cap": MessageLookupByLibrary.simpleMessage(
+      "Circulating Supply Market Cap",
+    ),
     "coin": MessageLookupByLibrary.simpleMessage("Coin"),
     "coin_amount": MessageLookupByLibrary.simpleMessage("Coin amount"),
     "coin_balance": MessageLookupByLibrary.simpleMessage("Coin Balance"),
@@ -102,6 +105,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Forgot password? Reset password",
     ),
     "high_24h": MessageLookupByLibrary.simpleMessage("High (24h)"),
+    "high_day": MessageLookupByLibrary.simpleMessage("High Day"),
     "highest_amount": MessageLookupByLibrary.simpleMessage(
       "Highest amount first",
     ),
@@ -118,6 +122,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "information": MessageLookupByLibrary.simpleMessage("Information"),
     "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
     "low_24h": MessageLookupByLibrary.simpleMessage("Low (24h)"),
+    "low_day": MessageLookupByLibrary.simpleMessage("Low Day"),
     "lowest_amount": MessageLookupByLibrary.simpleMessage(
       "Lowest amount first",
     ),
@@ -149,6 +154,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Number of Transactions",
     ),
     "oldest_first": MessageLookupByLibrary.simpleMessage("Oldest first"),
+    "open_24h": MessageLookupByLibrary.simpleMessage("Open 24h"),
     "open_day": MessageLookupByLibrary.simpleMessage("Open Day"),
     "open_hour": MessageLookupByLibrary.simpleMessage("Open Hour"),
     "password": MessageLookupByLibrary.simpleMessage("Password"),
@@ -160,6 +166,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "resetPassword": MessageLookupByLibrary.simpleMessage("Reset password"),
     "reset_search": MessageLookupByLibrary.simpleMessage("Reset search"),
     "search_coin": MessageLookupByLibrary.simpleMessage("Search coin"),
+    "search_coins": MessageLookupByLibrary.simpleMessage("Search Coins"),
     "search_hint": MessageLookupByLibrary.simpleMessage("Search..."),
     "select_period": MessageLookupByLibrary.simpleMessage("Select period"),
     "sell": MessageLookupByLibrary.simpleMessage("Sell"),
@@ -172,6 +179,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "signUp": MessageLookupByLibrary.simpleMessage("Sign Up"),
     "sort": MessageLookupByLibrary.simpleMessage("Sorting"),
     "sorting": MessageLookupByLibrary.simpleMessage("Sorting"),
+    "start_searching_coins": MessageLookupByLibrary.simpleMessage(
+      "Start searching coins",
+    ),
     "success": MessageLookupByLibrary.simpleMessage("Success!"),
     "supply": MessageLookupByLibrary.simpleMessage("Supply"),
     "supply_data": MessageLookupByLibrary.simpleMessage("Supply Data"),
@@ -198,6 +208,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user_data": MessageLookupByLibrary.simpleMessage("User Information"),
     "volume_24h": MessageLookupByLibrary.simpleMessage("Volume (24h)"),
     "volume_data": MessageLookupByLibrary.simpleMessage("Volume Data"),
+    "volume_day": MessageLookupByLibrary.simpleMessage("Volume Day"),
     "volume_hour": MessageLookupByLibrary.simpleMessage("Volume Hour"),
   };
 }

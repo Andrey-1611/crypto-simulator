@@ -57,6 +57,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "change_24h_pct": MessageLookupByLibrary.simpleMessage("Изменение % 24ч"),
     "check": MessageLookupByLibrary.simpleMessage("Проверить"),
     "circulating_supply": MessageLookupByLibrary.simpleMessage("В обращении"),
+    "circulating_supply_cap": MessageLookupByLibrary.simpleMessage(
+      "Капитализация в обращении",
+    ),
     "coin": MessageLookupByLibrary.simpleMessage("Монета"),
     "coin_amount": MessageLookupByLibrary.simpleMessage("Количество монет"),
     "coin_balance": MessageLookupByLibrary.simpleMessage("Баланс в монетах"),
@@ -96,7 +99,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "forgotPassword": MessageLookupByLibrary.simpleMessage(
       "Забыли пароль? Сбросить пароль",
     ),
-    "high_24h": MessageLookupByLibrary.simpleMessage("Максимум (24ч)"),
+    "high_24h": MessageLookupByLibrary.simpleMessage("Максимум 24ч"),
+    "high_day": MessageLookupByLibrary.simpleMessage("Максимум за день"),
     "highest_amount": MessageLookupByLibrary.simpleMessage(
       "Сначала больше монет",
     ),
@@ -114,7 +118,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "id": MessageLookupByLibrary.simpleMessage("ID"),
     "information": MessageLookupByLibrary.simpleMessage("Информация"),
     "loading": MessageLookupByLibrary.simpleMessage("Загрузка..."),
-    "low_24h": MessageLookupByLibrary.simpleMessage("Минимум (24ч)"),
+    "low_24h": MessageLookupByLibrary.simpleMessage("Минимум 24ч"),
+    "low_day": MessageLookupByLibrary.simpleMessage("Минимум за день"),
     "lowest_amount": MessageLookupByLibrary.simpleMessage(
       "Сначала меньше монет",
     ),
@@ -148,6 +153,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Количество операций",
     ),
     "oldest_first": MessageLookupByLibrary.simpleMessage("Сначала старые"),
+    "open_24h": MessageLookupByLibrary.simpleMessage("Открытие за 24ч"),
     "open_day": MessageLookupByLibrary.simpleMessage("Открытие дня"),
     "open_hour": MessageLookupByLibrary.simpleMessage("Открытие часа"),
     "password": MessageLookupByLibrary.simpleMessage("Пароль"),
@@ -159,6 +165,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "resetPassword": MessageLookupByLibrary.simpleMessage("Сброс пароля"),
     "reset_search": MessageLookupByLibrary.simpleMessage("Сбросить поиск"),
     "search_coin": MessageLookupByLibrary.simpleMessage("Поиск монеты"),
+    "search_coins": MessageLookupByLibrary.simpleMessage("Поиск монет"),
     "search_hint": MessageLookupByLibrary.simpleMessage("Поиск..."),
     "select_period": MessageLookupByLibrary.simpleMessage("Выбрать период"),
     "sell": MessageLookupByLibrary.simpleMessage("Продать"),
@@ -171,6 +178,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "signUp": MessageLookupByLibrary.simpleMessage("Зарегистрироваться"),
     "sort": MessageLookupByLibrary.simpleMessage("Сортировка"),
     "sorting": MessageLookupByLibrary.simpleMessage("Сортировка"),
+    "start_searching_coins": MessageLookupByLibrary.simpleMessage(
+      "Начните искать монеты",
+    ),
     "success": MessageLookupByLibrary.simpleMessage("Успешно!"),
     "supply": MessageLookupByLibrary.simpleMessage("Всего монет"),
     "supply_data": MessageLookupByLibrary.simpleMessage("Данные о монетах"),
@@ -197,6 +207,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user_data": MessageLookupByLibrary.simpleMessage("Данные о пользователе"),
     "volume_24h": MessageLookupByLibrary.simpleMessage("Объем за 24ч"),
     "volume_data": MessageLookupByLibrary.simpleMessage("Данные объёма"),
+    "volume_day": MessageLookupByLibrary.simpleMessage("Объём за день"),
     "volume_hour": MessageLookupByLibrary.simpleMessage("Объем за час"),
   };
 }

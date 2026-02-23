@@ -161,6 +161,10 @@ class _DataBlocs extends StatelessWidget {
                 value: coin.priceData.price.toCryptoPrice,
               ),
               InfoRow(
+                title: s.open_24h,
+                value: coin.priceData.open24h.toCryptoPrice,
+              ),
+              InfoRow(
                 title: s.change_24h,
                 value: coin.priceData.change24h.toCryptoPrice,
               ),
@@ -186,37 +190,20 @@ class _DataBlocs extends StatelessWidget {
                 value: coin.dailyData.openDay.toCryptoPrice,
               ),
               InfoRow(
+                title: s.high_day,
+                value: coin.dailyData.highDay.toCryptoPrice,
+              ),
+              InfoRow(
+                title: s.low_day,
+                value: coin.dailyData.lowDay.toCryptoPrice,
+              ),
+              InfoRow(
                 title: s.day_change,
                 value: coin.dailyData.changeDay.toCryptoPrice,
               ),
               InfoRow(
                 title: s.day_change_pct,
                 value: coin.dailyData.changePctDay.percent,
-              ),
-            ],
-          ),
-          InfoBloc(
-            title: s.hourly_data,
-            children: [
-              InfoRow(
-                title: s.open_hour,
-                value: coin.hourlyData.openHour.toCryptoPrice,
-              ),
-              InfoRow(
-                title: s.hour_change,
-                value: coin.hourlyData.changeHour.toCryptoPrice,
-              ),
-              InfoRow(
-                title: s.hour_change_pct,
-                value: coin.hourlyData.changePctHour.percent,
-              ),
-              InfoRow(
-                title: s.hour_high,
-                value: coin.hourlyData.highHour.toCryptoPrice,
-              ),
-              InfoRow(
-                title: s.hour_low,
-                value: coin.hourlyData.lowHour.toCryptoPrice,
               ),
             ],
           ),
@@ -235,6 +222,10 @@ class _DataBlocs extends StatelessWidget {
                 title: s.top_tier_volume_24h,
                 value: coin.volumeData.topTierVolume24h.toCryptoPrice,
               ),
+              InfoRow(
+                title: s.volume_day,
+                value: coin.volumeData.volumeDay.toCryptoPrice,
+              ),
             ],
           ),
           InfoBloc(
@@ -242,18 +233,24 @@ class _DataBlocs extends StatelessWidget {
             children: [
               InfoRow(title: s.supply, value: coin.supplyData.supply.toCrypto),
               InfoRow(
+                title: s.circulating_supply,
+                value: coin.supplyData.circulatingSupply.toCrypto,
+              ),
+              InfoRow(
                 title: s.market_cap,
                 value: coin.supplyData.marketCap.toCryptoPrice,
               ),
               InfoRow(
-                title: s.circulating_supply,
+                title: s.circulating_supply_cap,
                 value: coin.supplyData.circulatingSupplyMarketCap.toCryptoPrice,
               ),
             ],
           ),
+
           InfoBloc(
             title: s.information,
             children: [
+              InfoRow(title: s.name, value: coin.info.name),
               InfoRow(title: s.symbol, value: coin.info.symbol),
               InfoRow(title: s.id, value: coin.info.id),
             ],

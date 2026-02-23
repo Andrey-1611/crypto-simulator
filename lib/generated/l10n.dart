@@ -898,6 +898,56 @@ class S {
   String get supply {
     return Intl.message('Supply', name: 'supply', desc: '', args: []);
   }
+
+  /// `Search Coins`
+  String get search_coins {
+    return Intl.message(
+      'Search Coins',
+      name: 'search_coins',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start searching coins`
+  String get start_searching_coins {
+    return Intl.message(
+      'Start searching coins',
+      name: 'start_searching_coins',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open 24h`
+  String get open_24h {
+    return Intl.message('Open 24h', name: 'open_24h', desc: '', args: []);
+  }
+
+  /// `High Day`
+  String get high_day {
+    return Intl.message('High Day', name: 'high_day', desc: '', args: []);
+  }
+
+  /// `Low Day`
+  String get low_day {
+    return Intl.message('Low Day', name: 'low_day', desc: '', args: []);
+  }
+
+  /// `Volume Day`
+  String get volume_day {
+    return Intl.message('Volume Day', name: 'volume_day', desc: '', args: []);
+  }
+
+  /// `Circulating Supply Market Cap`
+  String get circulating_supply_cap {
+    return Intl.message(
+      'Circulating Supply Market Cap',
+      name: 'circulating_supply_cap',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

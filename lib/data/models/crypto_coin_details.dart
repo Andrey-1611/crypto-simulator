@@ -36,6 +36,7 @@ class CryptoCoinDetails {
 
 class PriceData {
   final double price;
+  final double open24h;
   final double change24h;
   final double changePct24h;
   final double high24h;
@@ -43,6 +44,7 @@ class PriceData {
 
   PriceData({
     required this.price,
+    required this.open24h,
     required this.change24h,
     required this.changePct24h,
     required this.high24h,
@@ -52,6 +54,7 @@ class PriceData {
   factory PriceData.fromApi(Map<String, dynamic> json) {
     return PriceData(
       price: (json['PRICE'] as num).toDouble(),
+      open24h: (json['OPEN24HOUR'] as num).toDouble(),
       change24h: (json['CHANGE24HOUR'] as num).toDouble(),
       changePct24h: (json['CHANGEPCT24HOUR'] as num).toDouble(),
       high24h: (json['HIGH24HOUR'] as num).toDouble(),
@@ -62,11 +65,15 @@ class PriceData {
 
 class DailyData {
   final double openDay;
+  final double highDay;
+  final double lowDay;
   final double changeDay;
   final double changePctDay;
 
   DailyData({
     required this.openDay,
+    required this.highDay,
+    required this.lowDay,
     required this.changeDay,
     required this.changePctDay,
   });
@@ -74,6 +81,8 @@ class DailyData {
   factory DailyData.fromApi(Map<String, dynamic> json) {
     return DailyData(
       openDay: (json['OPENDAY'] as num).toDouble(),
+      highDay: (json['HIGHDAY'] as num).toDouble(),
+      lowDay: (json['LOWDAY'] as num).toDouble(),
       changeDay: (json['CHANGEDAY'] as num).toDouble(),
       changePctDay: (json['CHANGEPCTDAY'] as num).toDouble(),
     );
@@ -110,11 +119,13 @@ class VolumeData {
   final double volumeHour;
   final double volume24h;
   final double topTierVolume24h;
+  final double volumeDay;
 
   VolumeData({
     required this.volumeHour,
     required this.volume24h,
     required this.topTierVolume24h,
+    required this.volumeDay,
   });
 
   factory VolumeData.fromApi(Map<String, dynamic> json) {
@@ -122,17 +133,20 @@ class VolumeData {
       volumeHour: (json['VOLUMEHOURTO'] as num).toDouble(),
       volume24h: (json['TOTALVOLUME24HTO'] as num).toDouble(),
       topTierVolume24h: (json['TOTALTOPTIERVOLUME24HTO'] as num).toDouble(),
+      volumeDay: (json['VOLUMEDAYTO'] as num).toDouble(),
     );
   }
 }
 
 class SupplyData {
   final int supply;
+  final int circulatingSupply;
   final double marketCap;
   final double circulatingSupplyMarketCap;
 
   SupplyData({
     required this.supply,
+    required this.circulatingSupply,
     required this.marketCap,
     required this.circulatingSupplyMarketCap,
   });
@@ -140,6 +154,7 @@ class SupplyData {
   factory SupplyData.fromApi(Map<String, dynamic> json) {
     return SupplyData(
       supply: (json['SUPPLY'] as num).toInt(),
+      circulatingSupply: (json['CIRCULATINGSUPPLY'] as num).toInt(),
       marketCap: (json['MKTCAP'] as num).toDouble(),
       circulatingSupplyMarketCap: (json['CIRCULATINGSUPPLYMKTCAP'] as num)
           .toDouble(),

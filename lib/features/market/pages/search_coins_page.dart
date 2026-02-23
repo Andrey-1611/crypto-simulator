@@ -33,9 +33,10 @@ class _SearchCoinsPageState extends ConsumerState<SearchCoinsPage> {
   @override
   Widget build(BuildContext context) {
     final searchCoinsP = ref.watch(searchCoinProvider);
+    final s = S.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Поиск монет'),
+        title: Text(s.search_coins),
         bottom: PreferredSize(
           preferredSize: .fromHeight(60.sp),
           child: Padding(
@@ -98,7 +99,7 @@ class _EmptyList extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          isSearch ? s.no_coins_found : 'Начните искать монеты',
+          isSearch ? s.no_coins_found : s.start_searching_coins,
           style: theme.textTheme.displayLarge,
         ),
       ],
