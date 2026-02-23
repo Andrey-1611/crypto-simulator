@@ -1,5 +1,4 @@
 import 'package:Bitmark/core/constants/api_constants.dart';
-import 'package:Bitmark/data/models/crypto_coin_details.dart';
 
 class CryptoCoin {
   final String id;
@@ -7,7 +6,9 @@ class CryptoCoin {
   final String name;
   final String imageUrl;
 
-  String get fullImageUrl => '${ApiConstants.imagesHost}/$imageUrl';
+  String get fullImageUrl => imageUrl.startsWith('http')
+      ? imageUrl
+      : '${ApiConstants.imagesHost}/$imageUrl';
 
   const CryptoCoin({
     required this.id,
@@ -29,15 +30,6 @@ class CryptoCoin {
     );
   }
 
-  factory CryptoCoin.fromDetails(CryptoCoinDetails details) {
-    return CryptoCoin(
-      id: details.id,
-      symbol: details.symbol,
-      name: details.name,
-      imageUrl: details.imageUrl,
-    );
-  }
-
   factory CryptoCoin.fromApi(Map<String, dynamic> map) {
     return CryptoCoin(
       id: map['Id'] as String,
@@ -46,6 +38,16 @@ class CryptoCoin {
       imageUrl: map['ImageUrl'] as String,
     );
   }
+
+  factory CryptoCoin.fromNewApi(Map<String, dynamic> map) {
+    return CryptoCoin(
+      id: map['ID'].toString(),
+      symbol: map['SYMBOL'] as String,
+      name: map['NAME'] as String,
+      imageUrl: map['LOGO_URL'] as String? ?? '',
+    );
+  }
+
   factory CryptoCoin.empty() =>
       const CryptoCoin(id: '', symbol: '', name: '', imageUrl: '');
 }

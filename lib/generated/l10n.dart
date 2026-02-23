@@ -788,6 +788,116 @@ class S {
       args: [],
     );
   }
+
+  /// `Current Price`
+  String get price {
+    return Intl.message('Current Price', name: 'price', desc: '', args: []);
+  }
+
+  /// `24h Change`
+  String get change_24h {
+    return Intl.message('24h Change', name: 'change_24h', desc: '', args: []);
+  }
+
+  /// `24h Change %`
+  String get change_24h_pct {
+    return Intl.message(
+      '24h Change %',
+      name: 'change_24h_pct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Daily Data`
+  String get daily_data {
+    return Intl.message('Daily Data', name: 'daily_data', desc: '', args: []);
+  }
+
+  /// `Open Day`
+  String get open_day {
+    return Intl.message('Open Day', name: 'open_day', desc: '', args: []);
+  }
+
+  /// `Day Change`
+  String get day_change {
+    return Intl.message('Day Change', name: 'day_change', desc: '', args: []);
+  }
+
+  /// `Day Change %`
+  String get day_change_pct {
+    return Intl.message(
+      'Day Change %',
+      name: 'day_change_pct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hourly Data`
+  String get hourly_data {
+    return Intl.message('Hourly Data', name: 'hourly_data', desc: '', args: []);
+  }
+
+  /// `Open Hour`
+  String get open_hour {
+    return Intl.message('Open Hour', name: 'open_hour', desc: '', args: []);
+  }
+
+  /// `Hour Change`
+  String get hour_change {
+    return Intl.message('Hour Change', name: 'hour_change', desc: '', args: []);
+  }
+
+  /// `Hour Change %`
+  String get hour_change_pct {
+    return Intl.message(
+      'Hour Change %',
+      name: 'hour_change_pct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hour High`
+  String get hour_high {
+    return Intl.message('Hour High', name: 'hour_high', desc: '', args: []);
+  }
+
+  /// `Hour Low`
+  String get hour_low {
+    return Intl.message('Hour Low', name: 'hour_low', desc: '', args: []);
+  }
+
+  /// `Volume Data`
+  String get volume_data {
+    return Intl.message('Volume Data', name: 'volume_data', desc: '', args: []);
+  }
+
+  /// `Volume Hour`
+  String get volume_hour {
+    return Intl.message('Volume Hour', name: 'volume_hour', desc: '', args: []);
+  }
+
+  /// `Top Tier Volume 24h`
+  String get top_tier_volume_24h {
+    return Intl.message(
+      'Top Tier Volume 24h',
+      name: 'top_tier_volume_24h',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Supply Data`
+  String get supply_data {
+    return Intl.message('Supply Data', name: 'supply_data', desc: '', args: []);
+  }
+
+  /// `Supply`
+  String get supply {
+    return Intl.message('Supply', name: 'supply', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -1,0 +1,107 @@
+import 'package:Bitmark/app/widgets/coin_card.dart';
+import 'package:Bitmark/app/widgets/loader.dart';
+import 'package:Bitmark/app/widgets/search_field.dart';
+import 'package:Bitmark/app/widgets/unknown_error.dart';
+import 'package:auto_route/annotations.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../core/utils/extensions.dart';
+import '../../../generated/l10n.dart';
+import '../providers/search_coins_provider.dart';
+
+@RoutePage()
+class SearchCoinsPage extends ConsumerStatefulWidget {
+  const SearchCoinsPage({super.key});
+
+  @override
+  ConsumerState createState() => _SearchCoinsPageState();
+}
+
+class _SearchCoinsPageState extends ConsumerState<SearchCoinsPage> {
+  final searchController = TextEditingController();
+
+  void search() =>
+      ref.read(queryProvider.notifier).state = searchController.text.trim();
+
+  @override
+  void initState() {
+    searchController.text = ref.read(queryProvider);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final searchCoinsP = ref.watch(searchCoinProvider);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Поиск монет'),
+        bottom: PreferredSize(
+          preferredSize: .fromHeight(60.sp),
+          child: Padding(
+            padding: .all(8.sp),
+            child: Row(
+              children: [
+                Expanded(
+                  child: SearchField(
+                    controller: searchController,
+                    reset: () => searchController.clear(),
+                  ),
+                ),
+                IconButton.filled(
+                  onPressed: search,
+                  icon: const Icon(Icons.search),
+                  style: ButtonStyle(
+                    shape: WidgetStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.sp),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: .all(16.sp),
+        child: Center(
+          child: searchCoinsP.when(
+            data: (coins) => coins.isNotEmpty
+                ? ListView.builder(
+                    itemCount: coins.length,
+                    itemBuilder: (context, index) {
+                      final coin = coins[index];
+                      return CoinCard(coin: coin.coin, price: coin.price);
+                    },
+                  )
+                : const _EmptyList(),
+            error: (err, stack) => const UnknownError(),
+            loading: () => const Loader(),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _EmptyList extends ConsumerWidget {
+  const _EmptyList();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = context.theme;
+    final s = S.of(context);
+    final isSearch = ref.watch(queryProvider) != '';
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          isSearch ? s.no_coins_found : 'Начните искать монеты',
+          style: theme.textTheme.displayLarge,
+        ),
+      ],
+    );
+  }
+}

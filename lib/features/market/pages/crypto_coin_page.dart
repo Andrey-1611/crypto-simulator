@@ -48,13 +48,9 @@ class CryptoCoinPage extends ConsumerWidget {
             data: (coin) => favouriteP.when(
               data: (coins) {
                 final ids = coins.map((c) => c.coin.id);
-                final isFavourite = ids.contains(coin.id);
+                final isFavourite = ids.contains(coin.info.id);
                 return IconButton(
-                  onPressed: () => toggle(
-                    ref,
-                    CryptoCoin.fromDetails(coin),
-                    coin.currentPrice,
-                  ),
+                  onPressed: () => toggle(ref, coin.info, coin.priceData.price),
                   icon: Icon(
                     isFavourite ? Icons.favorite : Icons.favorite_border,
                     color: isFavourite ? theme.colorScheme.error : null,
@@ -100,7 +96,7 @@ class _PriceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isUp = coin.changePercent24h >= 0;
+    final isUp = coin.priceData.changePct24h >= 0;
     final color = isUp ? Colors.green : Colors.red;
     final theme = context.theme;
     return Card(
@@ -111,7 +107,7 @@ class _PriceCard extends StatelessWidget {
             mainAxisAlignment: .spaceBetween,
             children: [
               Text(
-                coin.currentPrice.price4,
+                coin.priceData.price.price4,
                 style: theme.textTheme.displayLarge,
               ),
               Container(
@@ -128,7 +124,7 @@ class _PriceCard extends StatelessWidget {
                     ),
                     const SizeBox(width: 0.01),
                     Text(
-                      coin.changePercent24h.percent,
+                      coin.priceData.changePct24h.percent,
                       style: theme.textTheme.bodyMedium?.copyWith(color: color),
                     ),
                   ],
@@ -137,7 +133,7 @@ class _PriceCard extends StatelessWidget {
             ],
           ),
           subtitle: Text(
-            '${isUp ? '+' : '-'}\$${coin.priceChange24h.abs().toStringAsFixed(2)}',
+            '${isUp ? '+' : '-'}\$${coin.priceData.change24h.abs().toStringAsFixed(2)}',
             style: theme.textTheme.bodyMedium?.copyWith(color: color),
           ),
         ),
@@ -154,29 +150,116 @@ class _DataBlocs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
-    return Column(
-      children: [
-        InfoBloc(
-          title: s.market_data,
-          children: [
-            InfoRow(title: s.market_cap, value: coin.marketCap.toCryptoPrice),
-            InfoRow(
-              title: s.circulating_supply,
-              value: coin.circulatingSupply.toInt().toCrypto,
-            ),
-            InfoRow(title: s.volume_24h, value: coin.volume24h.toCryptoPrice),
-            InfoRow(title: s.high_24h, value: coin.high24h.toCryptoPrice),
-            InfoRow(title: s.low_24h, value: coin.low24h.toCryptoPrice),
-          ],
-        ),
-        InfoBloc(
-          title: s.information,
-          children: [
-            InfoRow(title: s.symbol, value: coin.symbol),
-            InfoRow(title: s.id, value: coin.id),
-          ],
-        ),
-      ],
+    return Expanded(
+      child: ListView(
+        children: [
+          InfoBloc(
+            title: s.market_data,
+            children: [
+              InfoRow(
+                title: s.price,
+                value: coin.priceData.price.toCryptoPrice,
+              ),
+              InfoRow(
+                title: s.change_24h,
+                value: coin.priceData.change24h.toCryptoPrice,
+              ),
+              InfoRow(
+                title: s.change_24h_pct,
+                value: coin.priceData.changePct24h.percent,
+              ),
+              InfoRow(
+                title: s.high_24h,
+                value: coin.priceData.high24h.toCryptoPrice,
+              ),
+              InfoRow(
+                title: s.low_24h,
+                value: coin.priceData.low24h.toCryptoPrice,
+              ),
+            ],
+          ),
+          InfoBloc(
+            title: s.daily_data,
+            children: [
+              InfoRow(
+                title: s.open_day,
+                value: coin.dailyData.openDay.toCryptoPrice,
+              ),
+              InfoRow(
+                title: s.day_change,
+                value: coin.dailyData.changeDay.toCryptoPrice,
+              ),
+              InfoRow(
+                title: s.day_change_pct,
+                value: coin.dailyData.changePctDay.percent,
+              ),
+            ],
+          ),
+          InfoBloc(
+            title: s.hourly_data,
+            children: [
+              InfoRow(
+                title: s.open_hour,
+                value: coin.hourlyData.openHour.toCryptoPrice,
+              ),
+              InfoRow(
+                title: s.hour_change,
+                value: coin.hourlyData.changeHour.toCryptoPrice,
+              ),
+              InfoRow(
+                title: s.hour_change_pct,
+                value: coin.hourlyData.changePctHour.percent,
+              ),
+              InfoRow(
+                title: s.hour_high,
+                value: coin.hourlyData.highHour.toCryptoPrice,
+              ),
+              InfoRow(
+                title: s.hour_low,
+                value: coin.hourlyData.lowHour.toCryptoPrice,
+              ),
+            ],
+          ),
+          InfoBloc(
+            title: s.volume_data,
+            children: [
+              InfoRow(
+                title: s.volume_hour,
+                value: coin.volumeData.volumeHour.toCryptoPrice,
+              ),
+              InfoRow(
+                title: s.volume_24h,
+                value: coin.volumeData.volume24h.toCryptoPrice,
+              ),
+              InfoRow(
+                title: s.top_tier_volume_24h,
+                value: coin.volumeData.topTierVolume24h.toCryptoPrice,
+              ),
+            ],
+          ),
+          InfoBloc(
+            title: s.supply_data,
+            children: [
+              InfoRow(title: s.supply, value: coin.supplyData.supply.toCrypto),
+              InfoRow(
+                title: s.market_cap,
+                value: coin.supplyData.marketCap.toCryptoPrice,
+              ),
+              InfoRow(
+                title: s.circulating_supply,
+                value: coin.supplyData.circulatingSupplyMarketCap.toCryptoPrice,
+              ),
+            ],
+          ),
+          InfoBloc(
+            title: s.information,
+            children: [
+              InfoRow(title: s.symbol, value: coin.info.symbol),
+              InfoRow(title: s.id, value: coin.info.id),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -221,7 +304,7 @@ class _ActionsButtons extends ConsumerWidget {
         ),
         userP.when(
           data: (data) {
-            final userCoin = data.user.findCoin(coin);
+            final userCoin = data.user.findCoin(coin.info);
             return userCoin.amount != 0
                 ? Flexible(
                     flex: 1,

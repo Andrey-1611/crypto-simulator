@@ -18,7 +18,7 @@ class CryptoDataSource implements CryptoRepository {
     final response = await _dio.get(ApiConstants.coinsBySimbol(coin.symbol));
     final data =
         response.data['RAW'][coin.symbol]['USD'] as Map<String, dynamic>;
-    return CryptoCoinDetails.fromCoinAPI(data, coin);
+    return CryptoCoinDetails.fromAPI(map: data, coin: coin);
   }
 
   @override
@@ -47,10 +47,14 @@ class CryptoDataSource implements CryptoRepository {
     );
     final data = response.data as Map<String, dynamic>;
     return symbols
-        .map(
-          (symbol) =>
-              (symbol: symbol, price: (data[symbol]['USD'] as num).toDouble()),
-        )
+        .map((symbol) {
+          if (data[symbol] == null) return null;
+          return (
+            symbol: symbol,
+            price: (data[symbol]['USD'] as num).toDouble(),
+          );
+        })
+        .whereType<({String symbol, double price})>()
         .toList();
   }
 
@@ -84,9 +88,7 @@ class CryptoDataSource implements CryptoRepository {
   Future<List<CoinPrice>> getCoinsByPercentChange(int page) async {
     final response = await _dio.get(ApiConstants.coinsByPercentChange(page));
     final data = response.data['Data'] as List;
-    final coins = data
-        .map((e) => CryptoCoin.fromApi(e['CoinInfo'] as Map<String, dynamic>))
-        .toList();
+    final coins = data.map((e) => CryptoCoin.fromApi(e['CoinInfo'])).toList();
     final symbols = coins.map((c) => c.symbol).toList();
     final prices = await getCoinsPricesBySymbols(symbols);
     return coins.map((coin) {
@@ -99,14 +101,25 @@ class CryptoDataSource implements CryptoRepository {
   Future<List<CoinPrice>> getCoinsByPrice(int page) async {
     final response = await _dio.get(ApiConstants.coinsByPrice(page));
     final data = response.data['Data'] as List;
-    final coins = data
-        .map((e) => CryptoCoin.fromApi(e['CoinInfo'] as Map<String, dynamic>))
-        .toList();
+    final coins = data.map((e) => CryptoCoin.fromApi(e['CoinInfo'])).toList();
     final symbols = coins.map((c) => c.symbol).toList();
     final prices = await getCoinsPricesBySymbols(symbols);
     return coins.map((coin) {
       final price = prices.firstWhere((p) => p.symbol == coin.symbol).price;
       return CoinPrice(coin: coin, price: price);
+    }).toList();
+  }
+
+  @override
+  Future<List<CoinPrice>> searchCoins(String query) async {
+    final response = await _dio.get(ApiConstants.searchCoins(query));
+    final data = response.data['Data']['LIST'] as List;
+    final coins = data.map((e) => CryptoCoin.fromNewApi(e)).toList();
+    final symbols = coins.map((c) => c.symbol).toList();
+    final prices = await getCoinsPricesBySymbols(symbols);
+    return prices.map((price) {
+      final coin = coins.firstWhere((c) => c.symbol == price.symbol);
+      return CoinPrice(coin: coin, price: price.price);
     }).toList();
   }
 }

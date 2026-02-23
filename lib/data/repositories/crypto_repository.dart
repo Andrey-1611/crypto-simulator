@@ -27,4 +27,6 @@ abstract interface class CryptoRepository {
   Future<List<CoinPrice>> getCoinsByPrice(int page);
 
   Future<List<CoinPrice>> getCoinsByPercentChange(int page);
+
+  Future<List<CoinPrice>> searchCoins(String query);
 }

@@ -25,6 +25,9 @@ abstract class ApiConstants {
   static String coinPricesBySimbol(String symbol) =>
       '/data/pricemulti?fsyms=$symbol&tsyms=USD';
 
+  static String searchCoins(String query) =>
+      'https://data-api.coindesk.com/asset/v1/search?search_string=$query';
+
   static const imagesHost = 'https://www.cryptocompare.com';
 
   static const appUrl = 'https://expense-tracker-d697a.firebaseapp.com';
