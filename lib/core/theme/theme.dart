@@ -63,6 +63,11 @@ final _textTheme = TextTheme(
     fontSize: 16.sp,
     color: _hintColor,
   ),
+  bodySmall: TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 14.sp,
+    color: _hintColor,
+  ),
   labelLarge: TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp),
 );
 
@@ -99,7 +104,7 @@ AppBarTheme _appBarTheme(Color color, Color titleColor) => AppBarTheme(
   centerTitle: true,
   backgroundColor: color,
   titleTextStyle: TextStyle(
-    fontSize: 28.sp,
+    fontSize: 26.sp,
     fontWeight: FontWeight.bold,
     color: titleColor,
   ),
@@ -130,20 +135,13 @@ final _elevatedButtonTheme = ElevatedButtonThemeData(
       fontWeight: FontWeight.w500,
       fontSize: 20.sp,
     ),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0.sp)),
   ),
 );
 
 final _outlineButtonTheme = OutlinedButtonThemeData(
   style: ElevatedButton.styleFrom(
-    //foregroundColor: Colors.white,
-    //backgroundColor: _primary,
-    /*textStyle: TextStyle(
-      color: Colors.white,
-      fontWeight: FontWeight.w500,
-      fontSize: 20.sp,
-    ),*/
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0.sp)),
   ),
 );
 

@@ -39,7 +39,7 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
     _coinsController.addListener(() {
       coinsAmount = int.tryParse(_coinsController.text) ?? 0;
       setState(() {
-        _totalPrice = coinsAmount * coin.currentPrice;
+        _totalPrice = coinsAmount * coin.priceData.price;
       });
     });
     ref.listenManual(briefcaseNotifierProvider(null), (_, state) {
@@ -64,7 +64,7 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
           .read(briefcaseNotifierProvider(null).notifier)
           .createTrade(
             coin: coin.info,
-            coinPrice: coin.currentPrice,
+            coinPrice: coin.priceData.price,
             amount: coinsAmount,
             type: TradeType.sell,
           );
@@ -85,7 +85,7 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
           final user = data.user;
           final userCoinsAmount = user.coins
               .firstWhere(
-                (c) => c.coin.symbol == coin.symbol,
+                (c) => c.coin.symbol == coin.info.symbol,
                 orElse: () => CoinAmount.empty(),
               )
               .amount;
@@ -93,7 +93,7 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                s.sell_coin_a(coin.name),
+                s.sell_coin_a(coin.info.name),
                 style: theme.textTheme.displayMedium,
               ),
               const Spacer(),

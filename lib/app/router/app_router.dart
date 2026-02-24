@@ -14,6 +14,7 @@ import '../../features/history/pages/trade_page.dart';
 import '../../features/home/home_page.dart';
 import '../../features/market/pages/crypto_coin_page.dart';
 import '../../features/market/pages/market_page.dart';
+import '../../features/market/pages/search_coins_page.dart';
 import '../../features/rating/pages/rating_page.dart';
 import '../../features/settings/pages/settings_page.dart';
 import 'auth_guard.dart';
@@ -44,6 +45,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: RatingRoute.page),
       ],
     ),
+    AutoRoute(page: SearchCoinsRoute.page),
     AutoRoute(page: SettingsRoute.page),
     AutoRoute(page: CryptoCoinRoute.page),
     AutoRoute(page: TradeRoute.page),

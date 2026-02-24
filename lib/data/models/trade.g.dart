@@ -24,4 +24,8 @@ Map<String, dynamic> _$TradeToJson(Trade instance) => <String, dynamic>{
   'createdAt': instance.createdAt.toIso8601String(),
 };
 
-const _$TradeTypeEnumMap = {TradeType.buy: 'buy', TradeType.sell: 'sell'};
+const _$TradeTypeEnumMap = {
+  TradeType.all: 'all',
+  TradeType.buy: 'buy',
+  TradeType.sell: 'sell',
+};

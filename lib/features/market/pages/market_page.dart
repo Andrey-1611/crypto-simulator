@@ -1,6 +1,7 @@
+import 'package:Bitmark/app/router/app_router.dart';
+import 'package:Bitmark/app/widgets/search_field.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:Bitmark/app/widgets/crypto_coin_card.dart';
-import 'package:Bitmark/data/models/crypto_coin_details.dart';
+import 'package:Bitmark/app/widgets/coin_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +11,7 @@ import '../../../app/widgets/unknown_error.dart';
 import '../../../core/utils/extensions.dart';
 import '../../../generated/l10n.dart';
 import '../providers/filter_providers.dart';
+import '../providers/filtered_coins_provider.dart';
 import '../providers/market_provider.dart';
 import '../widgets/market_sort_sheet.dart';
 
@@ -44,61 +46,65 @@ class _MarketPageState extends ConsumerState<MarketPage> {
 
   @override
   Widget build(BuildContext context) {
-    final cryptoCoinsP = ref.watch(marketNotifierProvider);
+    final cryptoCoinsP = ref.watch(filteredCoinsProvider);
+    final s = S.of(context);
     return Scaffold(
-      appBar: _AppBar(
-        size: Size.fromHeight(MediaQuery.sizeOf(context).height * 0.13),
-        searchController: _searchController,
-      ),
-      body: Padding(
-        padding: .all(16.0.sp),
-        child: Center(
-          child: cryptoCoinsP.when(
-            data: (coins) {
-              final filterCoins = CryptoCoinDetails.filterCryptoCoins(
-                coins,
-                ref.watch(sortCryptoCoinsProvider),
-                ref.watch(searchCoinsProvider),
-              );
-              return filterCoins.isNotEmpty
-                  ? RefreshIndicator(
-                      onRefresh: () => ref
-                          .read(marketNotifierProvider.notifier)
-                          .updateCoinsPrices(),
-                      child: _CryptoCoinsList(
-                        coins: filterCoins,
-                        scrollController: _scrollController,
-                      ),
-                    )
-                  : _EmptyList(searchController: _searchController);
-            },
-            error: (_, _) => UnknownError(
-              onPressed: () =>
-                  ref.read(marketNotifierProvider.notifier).getCryptoCoins(),
+      body: CustomScrollView(
+        controller: _scrollController,
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            snap: true,
+            floating: true,
+            automaticallyImplyLeading: false,
+            title: Text(s.market),
+            actions: [
+              IconButton(
+                onPressed: () => context.pushRoute(const SearchCoinsRoute()),
+                icon: const Icon(Icons.search),
+              ),
+              const SettingsButton(),
+            ],
+            bottom: PreferredSize(
+              preferredSize: .fromHeight(62.sp),
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: 12.sp,
+                  right: 12.sp,
+                  bottom: 12.sp,
+                ),
+                child: _SearchAndFilterRow(searchController: _searchController),
+              ),
             ),
-            loading: () => const Loader(),
           ),
-        ),
+          SliverPadding(
+            padding: EdgeInsets.all(16.sp),
+            sliver: cryptoCoinsP.when(
+              data: (coins) {
+                return coins.isNotEmpty
+                    ? SliverList.builder(
+                        itemCount: coins.length,
+                        itemBuilder: (context, index) {
+                          final coin = coins[index];
+                          return CoinCard(coin: coin.coin, price: coin.price);
+                        },
+                      )
+                    : SliverFillRemaining(
+                        child: _EmptyList(searchController: _searchController),
+                      );
+              },
+              loading: () => const SliverFillRemaining(child: Loader()),
+              error: (_, _) => SliverFillRemaining(
+                child: UnknownError(
+                  onPressed: () => ref
+                      .read(marketNotifierProvider.notifier)
+                      .getCryptoCoins(),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
-    );
-  }
-}
-
-class _CryptoCoinsList extends ConsumerWidget {
-  final List<CryptoCoinDetails> coins;
-  final ScrollController scrollController;
-
-  const _CryptoCoinsList({required this.coins, required this.scrollController});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return ListView.builder(
-      controller: scrollController,
-      itemCount: coins.length,
-      itemBuilder: (context, index) {
-        final coin = coins[index];
-        return CryptoCoinCard(coin: coin, price: coin.currentPrice);
-      },
     );
   }
 }
@@ -128,15 +134,13 @@ class _EmptyList extends ConsumerWidget {
   }
 }
 
-class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
-  final Size size;
+class _SearchAndFilterRow extends ConsumerWidget {
   final TextEditingController searchController;
 
-  const _AppBar({required this.size, required this.searchController});
+  const _SearchAndFilterRow({required this.searchController});
 
-  void update(String text, WidgetRef ref) {
-    ref.read(searchCoinsProvider.notifier).update((state) => text);
-  }
+  void update(WidgetRef ref, String text) =>
+      ref.read(searchCoinsProvider.notifier).update((state) => text);
 
   void showMarketFilters(BuildContext context) {
     showModalBottomSheet(
@@ -147,49 +151,23 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final s = S.of(context);
-    final theme = context.theme;
-    return AppBar(
-      title: Text(s.market),
-      actions: [const SettingsButton()],
-      automaticallyImplyLeading: false,
-      bottom: PreferredSize(
-        preferredSize: preferredSize,
-        child: Padding(
-          padding:  EdgeInsets.all(12.sp),
-          child: Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: searchController,
-                  textInputAction: TextInputAction.search,
-                  onChanged: (text) => update(text, ref),
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.search),
-                    hintText: s.search_hint,
-                    filled: true,
-                    fillColor: theme.scaffoldBackgroundColor,
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        searchController.clear();
-                        update('', ref);
-                      },
-                      icon: const Icon(Icons.close),
-                    ),
-                  ),
-                ),
-              ),
-              IconButton(
-                onPressed: () => showMarketFilters(context),
-                icon: const Icon(Icons.more_vert),
-              ),
-            ],
+    return Row(
+      children: [
+        Expanded(
+          child: SearchField(
+            controller: searchController,
+            reset: () {
+              searchController.clear();
+              update(ref, '');
+            },
+            onChanged: (text) => update(ref, text),
           ),
         ),
-      ),
+        IconButton(
+          onPressed: () => showMarketFilters(context),
+          icon: const Icon(Icons.more_vert),
+        ),
+      ],
     );
   }
-
-  @override
-  Size get preferredSize => size;
 }

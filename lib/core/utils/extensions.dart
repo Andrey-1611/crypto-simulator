@@ -28,6 +28,7 @@ extension StringCase on String {
 
 extension ContextX on BuildContext {
   ThemeData get theme => Theme.of(this);
+
   S get s => S.of(this);
 }
 
@@ -42,9 +43,9 @@ extension PriceFormatter on double {
 
   String get toCryptoPrice {
     return switch (this) {
-      >= 1e10 => '${(this / 1e9).toStringAsFixed(2)}B \$',
-      >= 1e7 => '${(this / 1e6).toStringAsFixed(2)}M \$',
-      >= 1e4 => '${(this / 1e3).toStringAsFixed(2)}K \$',
+      >= 1e10 => '${(this / 1e9).toStringAsFixed(3)}B \$',
+      >= 1e7 => '${(this / 1e6).toStringAsFixed(3)}M \$',
+      >= 1e4 => '${(this / 1e3).toStringAsFixed(3)}K \$',
       _ => '${toStringAsFixed(2)} \$',
     };
   }
@@ -53,10 +54,34 @@ extension PriceFormatter on double {
 extension AmountFormatter on int {
   String get toCrypto {
     return switch (this) {
-      >= 1e10 => '${(this / 1e9).toStringAsFixed(2)}B',
-      >= 1e7 => '${(this / 1e6).toStringAsFixed(2)}M',
-      >= 1e4 => '${(this / 1e3).toStringAsFixed(2)}K',
+      >= 1e10 => '${(this / 1e9).toStringAsFixed(3)}B',
+      >= 1e7 => '${(this / 1e6).toStringAsFixed(3)}M',
+      >= 1e4 => '${(this / 1e3).toStringAsFixed(3)}K',
       _ => toStringAsFixed(2),
     };
+  }
+}
+
+extension ChartFormat on double {
+  String get toChart {
+    final absValue = abs();
+    double value = this;
+    String suffix = '';
+    if (absValue >= 1e9) {
+      value = this / 1e9;
+      suffix = 'B';
+    } else if (absValue >= 1e6) {
+      value = this / 1e6;
+      suffix = 'M';
+    } else if (absValue >= 1e3) {
+      value = this / 1e3;
+      suffix = 'K';
+    }
+    final absVal = value.abs();
+    int integerDigits = absVal >= 1 ? absVal.floor().toString().length : 0;
+    int decimals = 3 - integerDigits;
+    if (decimals < 0) decimals = 0;
+    final formatted = value.toStringAsFixed(decimals);
+    return formatted + suffix;
   }
 }

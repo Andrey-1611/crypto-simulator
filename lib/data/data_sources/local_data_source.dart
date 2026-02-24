@@ -1,3 +1,4 @@
+import 'package:Bitmark/core/constants/databases_constants.dart';
 import 'package:Bitmark/data/models/crypto_coin.dart';
 import 'package:Bitmark/data/repositories/local_repository.dart';
 import 'package:sqflite/sqflite.dart';
@@ -5,7 +6,7 @@ import 'package:sqflite/sqflite.dart';
 class LocalDataSource implements LocalRepository {
   static Database? _db;
 
-  static const favouriteCoins = 'favouriteCoins';
+  static const favouriteCoins = DatabasesConstants.favouriteCoins;
 
   Future<Database> get _database async {
     return _db ??= await _initDatabase();
@@ -19,7 +20,7 @@ class LocalDataSource implements LocalRepository {
       version: 1,
       onCreate: (db, version) async {
         await db.execute('''
-        CREATE TABLE $favouriteCoins (
+        CREATE TABLE IF NOT EXISTS $favouriteCoins (
           id TEXT PRIMARY KEY,
           symbol TEXT,
           name TEXT,
@@ -65,7 +66,7 @@ class LocalDataSource implements LocalRepository {
       (coin) => batch.insert(
         favouriteCoins,
         coin.toJson(),
-        conflictAlgorithm: ConflictAlgorithm.replace,
+        conflictAlgorithm: .replace,
       ),
     );
     await batch.commit(noResult: true);

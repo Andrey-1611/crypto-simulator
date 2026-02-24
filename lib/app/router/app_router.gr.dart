@@ -233,6 +233,22 @@ class ResetPasswordRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SearchCoinsPage]
+class SearchCoinsRoute extends PageRouteInfo<void> {
+  const SearchCoinsRoute({List<PageRouteInfo>? children})
+    : super(SearchCoinsRoute.name, initialChildren: children);
+
+  static const String name = 'SearchCoinsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SearchCoinsPage();
+    },
+  );
+}
+
+/// generated route for
 /// [SettingsPage]
 class SettingsRoute extends PageRouteInfo<void> {
   const SettingsRoute({List<PageRouteInfo>? children})
