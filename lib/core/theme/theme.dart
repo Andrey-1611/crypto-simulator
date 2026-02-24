@@ -57,6 +57,7 @@ final _textTheme = TextTheme(
   displayLarge: TextStyle(fontWeight: FontWeight.bold, fontSize: 28.sp),
   displayMedium: TextStyle(fontWeight: FontWeight.w800, fontSize: 20.sp),
   displaySmall: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.sp),
+  bodyLarge: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),
   bodyMedium: TextStyle(
     fontWeight: FontWeight.w400,
     fontSize: 16.sp,
