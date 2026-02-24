@@ -1,4 +1,5 @@
 import 'package:Bitmark/core/utils/extensions.dart';
+import 'package:Bitmark/data/models/price_point.dart';
 import 'package:Bitmark/features/briefcase/providers/favourite_provider.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:Bitmark/app/widgets/info_bloc.dart';
@@ -8,6 +9,7 @@ import 'package:Bitmark/data/models/crypto_coin_details.dart';
 import 'package:Bitmark/features/market/widgets/buy_coin_sheet.dart';
 import 'package:Bitmark/features/market/widgets/sell_coin_sheet.dart';
 import 'package:Bitmark/generated/l10n.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,10 +47,11 @@ class CryptoCoinPage extends ConsumerWidget {
         ),
         actions: [
           coinP.when(
-            data: (coin) => favouriteP.when(
+            data: (data) => favouriteP.when(
               data: (coins) {
+                final coin = data.coin;
                 final ids = coins.map((c) => c.coin.id);
-                final isFavourite = ids.contains(coin.info.id);
+                final isFavourite = ids.contains(data.coin.info.id);
                 return IconButton(
                   onPressed: () => toggle(ref, coin.info, coin.priceData.price),
                   icon: Icon(
@@ -72,11 +75,19 @@ class CryptoCoinPage extends ConsumerWidget {
       body: Padding(
         padding: .all(16.0.sp),
         child: coinP.when(
-          data: (coin) {
+          data: (data) {
+            final coin = data.coin;
             return Column(
               children: [
                 _PriceCard(coin: coin),
-                _DataBlocs(coin: coin),
+                Expanded(
+                  child: ListView(
+                    children: [
+                      _LineChart(prices: data.prices),
+                      _DataBlocs(coin: coin),
+                    ],
+                  ),
+                ),
                 _ActionsButtons(coin: coin),
               ],
             );
@@ -142,6 +153,78 @@ class _PriceCard extends StatelessWidget {
   }
 }
 
+class _LineChart extends StatelessWidget {
+  final List<PricePoint> prices;
+
+  const _LineChart({required this.prices});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = context.theme;
+    final spots = prices
+        .map((p) => FlSpot(p.time.millisecondsSinceEpoch.toDouble(), p.close))
+        .toList();
+    final rawMinY = spots.map((e) => e.y).reduce((a, b) => a < b ? a : b);
+    final rawMaxY = spots.map((e) => e.y).reduce((a, b) => a > b ? a : b);
+    final range = rawMaxY - rawMinY;
+    final padding = range == 0 ? 1.0 : range * 0.1;
+    final adjustedMin = rawMinY - padding;
+    final adjustedMax = rawMaxY + padding;
+    final interval = (adjustedMax - adjustedMin) / 2;
+    final minY = adjustedMin;
+    final maxY = adjustedMin + interval * 2;
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 32.sp),
+      child: SizeBox(
+        height: 0.25,
+        child: LineChart(
+          LineChartData(
+            minX: spots.first.x,
+            maxX: spots.last.x,
+            minY: minY,
+            maxY: maxY,
+            titlesData: FlTitlesData(
+              topTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false),
+              ),
+              rightTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false),
+              ),
+              leftTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false),
+              ),
+              bottomTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  interval: const Duration(days: 7).inMilliseconds.toDouble(),
+                  getTitlesWidget: (value, meta) {
+                    final date = DateTime.fromMillisecondsSinceEpoch(
+                      value.toInt(),
+                    );
+                    return Text(
+                      "${date.day}/${date.month}",
+                      style: theme.textTheme.bodySmall,
+                    );
+                  },
+                ),
+              ),
+            ),
+            borderData: FlBorderData(show: true),
+            lineBarsData: [
+              LineChartBarData(
+                spots: spots,
+                color: theme.primaryColor,
+                barWidth: 2,
+                dotData: const FlDotData(show: false),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _DataBlocs extends StatelessWidget {
   final CryptoCoinDetails coin;
 
@@ -150,113 +233,108 @@ class _DataBlocs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
-    return Expanded(
-      child: ListView(
-        children: [
-          InfoBloc(
-            title: s.market_data,
-            children: [
-              InfoRow(
-                title: s.price,
-                value: coin.priceData.price.toCryptoPrice,
-              ),
-              InfoRow(
-                title: s.open_24h,
-                value: coin.priceData.open24h.toCryptoPrice,
-              ),
-              InfoRow(
-                title: s.change_24h,
-                value: coin.priceData.change24h.toCryptoPrice,
-              ),
-              InfoRow(
-                title: s.change_24h_pct,
-                value: coin.priceData.changePct24h.percent,
-              ),
-              InfoRow(
-                title: s.high_24h,
-                value: coin.priceData.high24h.toCryptoPrice,
-              ),
-              InfoRow(
-                title: s.low_24h,
-                value: coin.priceData.low24h.toCryptoPrice,
-              ),
-            ],
-          ),
-          InfoBloc(
-            title: s.daily_data,
-            children: [
-              InfoRow(
-                title: s.open_day,
-                value: coin.dailyData.openDay.toCryptoPrice,
-              ),
-              InfoRow(
-                title: s.high_day,
-                value: coin.dailyData.highDay.toCryptoPrice,
-              ),
-              InfoRow(
-                title: s.low_day,
-                value: coin.dailyData.lowDay.toCryptoPrice,
-              ),
-              InfoRow(
-                title: s.day_change,
-                value: coin.dailyData.changeDay.toCryptoPrice,
-              ),
-              InfoRow(
-                title: s.day_change_pct,
-                value: coin.dailyData.changePctDay.percent,
-              ),
-            ],
-          ),
-          InfoBloc(
-            title: s.volume_data,
-            children: [
-              InfoRow(
-                title: s.volume_hour,
-                value: coin.volumeData.volumeHour.toCryptoPrice,
-              ),
-              InfoRow(
-                title: s.volume_24h,
-                value: coin.volumeData.volume24h.toCryptoPrice,
-              ),
-              InfoRow(
-                title: s.top_tier_volume_24h,
-                value: coin.volumeData.topTierVolume24h.toCryptoPrice,
-              ),
-              InfoRow(
-                title: s.volume_day,
-                value: coin.volumeData.volumeDay.toCryptoPrice,
-              ),
-            ],
-          ),
-          InfoBloc(
-            title: s.supply_data,
-            children: [
-              InfoRow(title: s.supply, value: coin.supplyData.supply.toCrypto),
-              InfoRow(
-                title: s.circulating_supply,
-                value: coin.supplyData.circulatingSupply.toCrypto,
-              ),
-              InfoRow(
-                title: s.market_cap,
-                value: coin.supplyData.marketCap.toCryptoPrice,
-              ),
-              InfoRow(
-                title: s.circulating_supply_cap,
-                value: coin.supplyData.circulatingSupplyMarketCap.toCryptoPrice,
-              ),
-            ],
-          ),
+    return Column(
+      children: [
+        InfoBloc(
+          title: s.market_data,
+          children: [
+            InfoRow(title: s.price, value: coin.priceData.price.toCryptoPrice),
+            InfoRow(
+              title: s.open_24h,
+              value: coin.priceData.open24h.toCryptoPrice,
+            ),
+            InfoRow(
+              title: s.change_24h,
+              value: coin.priceData.change24h.toCryptoPrice,
+            ),
+            InfoRow(
+              title: s.change_24h_pct,
+              value: coin.priceData.changePct24h.percent,
+            ),
+            InfoRow(
+              title: s.high_24h,
+              value: coin.priceData.high24h.toCryptoPrice,
+            ),
+            InfoRow(
+              title: s.low_24h,
+              value: coin.priceData.low24h.toCryptoPrice,
+            ),
+          ],
+        ),
+        InfoBloc(
+          title: s.daily_data,
+          children: [
+            InfoRow(
+              title: s.open_day,
+              value: coin.dailyData.openDay.toCryptoPrice,
+            ),
+            InfoRow(
+              title: s.high_day,
+              value: coin.dailyData.highDay.toCryptoPrice,
+            ),
+            InfoRow(
+              title: s.low_day,
+              value: coin.dailyData.lowDay.toCryptoPrice,
+            ),
+            InfoRow(
+              title: s.day_change,
+              value: coin.dailyData.changeDay.toCryptoPrice,
+            ),
+            InfoRow(
+              title: s.day_change_pct,
+              value: coin.dailyData.changePctDay.percent,
+            ),
+          ],
+        ),
+        InfoBloc(
+          title: s.volume_data,
+          children: [
+            InfoRow(
+              title: s.volume_hour,
+              value: coin.volumeData.volumeHour.toCryptoPrice,
+            ),
+            InfoRow(
+              title: s.volume_24h,
+              value: coin.volumeData.volume24h.toCryptoPrice,
+            ),
+            InfoRow(
+              title: s.top_tier_volume_24h,
+              value: coin.volumeData.topTierVolume24h.toCryptoPrice,
+            ),
+            InfoRow(
+              title: s.volume_day,
+              value: coin.volumeData.volumeDay.toCryptoPrice,
+            ),
+          ],
+        ),
+        InfoBloc(
+          title: s.supply_data,
+          children: [
+            InfoRow(title: s.supply, value: coin.supplyData.supply.toCrypto),
+            InfoRow(
+              title: s.circulating_supply,
+              value: coin.supplyData.circulatingSupply.toCrypto,
+            ),
+            InfoRow(
+              title: s.market_cap,
+              value: coin.supplyData.marketCap.toCryptoPrice,
+            ),
+            InfoRow(
+              title: s.circulating_supply_cap,
+              value: coin.supplyData.circulatingSupplyMarketCap.toCryptoPrice,
+            ),
+          ],
+        ),
 
-          InfoBloc(
-            title: s.information,
-            children: [
-              InfoRow(title: s.name, value: coin.info.name),
-              InfoRow(title: s.symbol, value: coin.info.symbol),
-              InfoRow(title: s.id, value: coin.info.id),
-            ],
-          ),
-        ],
-      ),
+        InfoBloc(
+          title: s.information,
+          children: [
+            InfoRow(title: s.name, value: coin.info.name),
+            InfoRow(title: s.symbol, value: coin.info.symbol),
+            InfoRow(title: s.id, value: coin.info.id),
+          ],
+        ),
+      ],
     );
   }
 }

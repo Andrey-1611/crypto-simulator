@@ -57,10 +57,14 @@ final _textTheme = TextTheme(
   displayLarge: TextStyle(fontWeight: FontWeight.bold, fontSize: 28.sp),
   displayMedium: TextStyle(fontWeight: FontWeight.w800, fontSize: 20.sp),
   displaySmall: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.sp),
-  bodyLarge: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),
   bodyMedium: TextStyle(
     fontWeight: FontWeight.w400,
     fontSize: 16.sp,
+    color: _hintColor,
+  ),
+  bodySmall: TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 14.sp,
     color: _hintColor,
   ),
   labelLarge: TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp),

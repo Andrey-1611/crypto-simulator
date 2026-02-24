@@ -3,6 +3,7 @@ import 'package:Bitmark/data/data_sources/crypto_data_source.dart';
 import 'package:Bitmark/data/models/coin_price.dart';
 import 'package:Bitmark/data/models/crypto_coin.dart';
 import 'package:Bitmark/data/models/crypto_coin_details.dart';
+import 'package:Bitmark/data/models/price_point.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final cryptoRepositoryProvider = Provider<CryptoRepository>((ref) {
@@ -29,4 +30,6 @@ abstract interface class CryptoRepository {
   Future<List<CoinPrice>> getCoinsByPercentChange(int page);
 
   Future<List<CoinPrice>> searchCoins(String query);
+
+  Future<List<PricePoint>> getCoinPriceHistoryBySymbol(String symbol);
 }
