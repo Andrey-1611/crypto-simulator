@@ -1,4 +1,4 @@
-import 'package:Bitmark/data/repositories/local_repository.dart';
+import 'package:Bitmark/core/utils/network_interceptor.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,6 +15,7 @@ class AppInitializer {
     FlutterError.onError = (details) =>
         container.read(talkerProvider).handle(details.exception, details.stack);
     final dio = container.read(dioProvider);
+    dio.interceptors.add(NetworkInterceptor());
     dio.interceptors.add(TalkerDioLogger());
     await container.read(packageProvider.future);
   }

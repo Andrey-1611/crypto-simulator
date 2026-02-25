@@ -33,7 +33,7 @@ class RatingPage extends ConsumerWidget {
               onRefresh: () async => ref.refresh(ratingProvider),
               child: _UsersList(users: users),
             ),
-            error: (_, _) => const UnknownError(),
+            error: (e, _) => UnknownError(error: e),
             loading: () => const Loader(),
           ),
         ),

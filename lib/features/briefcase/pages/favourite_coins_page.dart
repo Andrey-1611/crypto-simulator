@@ -22,7 +22,7 @@ class FavouriteCoinsPage extends ConsumerWidget {
               },
             )
           : const _EmptyList(),
-      error: (_, _) => const UnknownError(),
+      error: (e, _) => UnknownError(error: e),
       loading: () => const Loader(),
     );
   }

@@ -81,7 +81,10 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
         data: (data) => Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(s.buy_coin(coin.info.name), style: theme.textTheme.displayMedium),
+            Text(
+              s.buy_coin(coin.info.name),
+              style: theme.textTheme.displayMedium,
+            ),
             const Spacer(),
             CoinsTextField(coinsController: _coinsController),
             InfoCard(title: s.balance, value: data.user.balance.price4),
@@ -95,7 +98,7 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
             const Spacer(),
           ],
         ),
-        error: (_, _) => UnknownError(onPressed: () {}),
+        error: (e, _) => UnknownError(error: e),
         loading: () => const Loader(),
       ),
     );

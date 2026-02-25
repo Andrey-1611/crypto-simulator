@@ -113,7 +113,7 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
             ],
           );
         },
-        error: (_, _) => UnknownError(onPressed: () {}),
+        error: (e, _) => UnknownError(error: e),
         loading: () => const Loader(),
       ),
     );

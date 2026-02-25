@@ -78,7 +78,7 @@ class _SearchCoinsPageState extends ConsumerState<SearchCoinsPage> {
                     },
                   )
                 : const _EmptyList(),
-            error: (err, stack) => const UnknownError(),
+            error: (e, _) => UnknownError(error: e),
             loading: () => const Loader(),
           ),
         ),

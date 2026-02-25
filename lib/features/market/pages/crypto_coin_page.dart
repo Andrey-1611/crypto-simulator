@@ -92,7 +92,7 @@ class CryptoCoinPage extends ConsumerWidget {
               ],
             );
           },
-          error: (_, _) => UnknownError(onPressed: () {}),
+          error: (e, _) => UnknownError(error: e),
           loading: () => const Loader(),
         ),
       ),
@@ -395,7 +395,7 @@ class _ActionsButtons extends ConsumerWidget {
                   )
                 : const SizedBox.shrink();
           },
-          error: (_, _) => const UnknownError(),
+          error: (e, _) => UnknownError(error: e),
           loading: () => const Loader(),
         ),
       ],

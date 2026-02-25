@@ -94,11 +94,12 @@ class _MarketPageState extends ConsumerState<MarketPage> {
                       );
               },
               loading: () => const SliverFillRemaining(child: Loader()),
-              error: (_, _) => SliverFillRemaining(
+              error: (e, _) => SliverFillRemaining(
                 child: UnknownError(
                   onPressed: () => ref
                       .read(marketNotifierProvider.notifier)
                       .getCryptoCoins(),
+                  error: e,
                 ),
               ),
             ),

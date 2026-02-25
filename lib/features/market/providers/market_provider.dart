@@ -15,6 +15,7 @@ class MarketNotifier extends AsyncNotifier<List<CoinPrice>> {
 
   @override
   FutureOr<List<CoinPrice>> build() async {
+    ref.keepAlive();
     await ref.read(packageProvider.future);
     return await ref.read(cryptoRepositoryProvider).getCoinsByMarketCap(0);
   }

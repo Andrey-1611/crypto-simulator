@@ -34,7 +34,7 @@ class TradePage extends ConsumerWidget {
                 height: 0.11,
                 child: coinP.when(
                   data: (price) => CoinCard(coin: trade.coin, price: price),
-                  error: (_, _) => const UnknownError(),
+                  error: (e, _) => UnknownError(error: e),
                   loading: () => const Loader(),
                 ),
               ),

@@ -83,7 +83,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     ],
                   );
                 },
-                error: (_, _) => const UnknownError(),
+                error: (e, _) => UnknownError(error: e),
                 loading: () => const Loader(),
               ),
             ),
@@ -106,7 +106,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   ),
                 ],
               ),
-              error: (_, _) => const UnknownError(),
+              error: (e, _) => UnknownError(error: e),
               loading: () => const Loader(),
             ),
             const Spacer(),

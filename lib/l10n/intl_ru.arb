@@ -124,5 +124,6 @@
   "high_day": "Максимум за день",
   "low_day": "Минимум за день",
   "volume_day": "Объём за день",
-  "circulating_supply_cap": "Капитализация в обращении"
+  "circulating_supply_cap": "Капитализация в обращении",
+  "no_internet_connection": "Нет подключения к интернету"
 }

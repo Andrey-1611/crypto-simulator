@@ -70,9 +70,10 @@ class BalancePage extends ConsumerWidget {
           ],
         );
       },
-      error: (_, _) => UnknownError(
+      error: (e, _) => UnknownError(
         onPressed: () =>
             ref.read(briefcaseNotifierProvider(user).notifier).build(),
+        error: e,
       ),
       loading: () => const Loader(),
     );

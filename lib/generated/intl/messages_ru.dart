@@ -139,6 +139,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "no_favourite_coins": MessageLookupByLibrary.simpleMessage(
       "У вас нет избранных монет",
     ),
+    "no_internet_connection": MessageLookupByLibrary.simpleMessage(
+      "Нет подключения к интернету",
+    ),
     "no_operations_found": MessageLookupByLibrary.simpleMessage(
       "Операций не найдено",
     ),

@@ -123,5 +123,6 @@
   "high_day": "High Day",
   "low_day": "Low Day",
   "volume_day": "Volume Day",
-  "circulating_supply_cap": "Circulating Supply Market Cap"
+  "circulating_supply_cap": "Circulating Supply Market Cap",
+  "no_internet_connection": "No internet connection"
 }

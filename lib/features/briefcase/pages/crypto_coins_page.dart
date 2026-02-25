@@ -47,8 +47,10 @@ class CryptoCoinsPage extends ConsumerWidget {
               )
             : _EmptyList(user: user, isFiltered: data.isFiltered);
       },
-      error: (_, _) =>
-          UnknownError(onPressed: () => ref.refresh(cryptoCoinsProvider(user))),
+      error: (e, _) => UnknownError(
+        onPressed: () => ref.refresh(cryptoCoinsProvider(user)),
+        error: e,
+      ),
       loading: () => const Loader(),
     );
   }

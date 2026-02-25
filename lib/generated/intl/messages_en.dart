@@ -140,6 +140,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "no_favourite_coins": MessageLookupByLibrary.simpleMessage(
       "You have no favourite coins",
     ),
+    "no_internet_connection": MessageLookupByLibrary.simpleMessage(
+      "No internet connection",
+    ),
     "no_operations_found": MessageLookupByLibrary.simpleMessage(
       "No operations found",
     ),

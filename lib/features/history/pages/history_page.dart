@@ -35,7 +35,7 @@ class HistoryPage extends ConsumerWidget {
             data: (data) => data.trades.isNotEmpty
                 ? _TradesList(trades: data.trades)
                 : _EmptyList(user: user, isFiltered: data.isFilterd),
-            error: (_, _) => const UnknownError(),
+            error: (e, _) => UnknownError(error: e),
             loading: () => const Loader(),
           ),
         ),
