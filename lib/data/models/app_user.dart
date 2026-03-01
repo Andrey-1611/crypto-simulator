@@ -3,6 +3,7 @@ class AppUser {
   final String name;
   final String email;
   final DateTime createdAt;
+
   const AppUser({
     required this.id,
     required this.name,

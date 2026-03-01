@@ -48,6 +48,9 @@ dev_dependencies:
   auto_route_generator: ^10.4.0
   json_serializable: ^6.11.2
   flutter_launcher_icons: ^0.14.4
+  mocktail: ^1.0.4
+  firebase_auth_mocks: ^0.15.1
+  fake_cloud_firestore: ^4.0.1
 
 flutter:
   uses-material-design: true

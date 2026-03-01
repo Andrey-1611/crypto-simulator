@@ -14,7 +14,7 @@ abstract class ApiConstants {
       '/data/top/price?limit=30&tsym=USD&page=$page';
 
   static String coinsByPercentChange(int page) =>
-      '/data/top/percent?limit=10&tsym=USD&page=$page';
+      '/data/top/percent?limit=30&tsym=USD&page=$page';
 
   static String coinsBySimbol(String symbol) =>
       '/data/pricemultifull?fsyms=$symbol&tsyms=USD';

@@ -1,9 +1,7 @@
 import 'package:Bitmark/data/models/coin_price.dart';
 import 'package:Bitmark/data/models/price_point.dart';
 import 'package:dio/dio.dart';
-
 import '../../core/constants/api_constants.dart';
-import '../../core/utils/network_interceptor.dart';
 import '../models/crypto_coin.dart';
 import '../models/crypto_coin_details.dart';
 import '../repositories/crypto_repository.dart';
