@@ -125,5 +125,10 @@
   "low_day": "Минимум за день",
   "volume_day": "Объём за день",
   "circulating_supply_cap": "Капитализация в обращении",
-  "no_internet_connection": "Нет подключения к интернету"
+  "no_internet_connection": "Нет подключения к интернету",
+  "profit": "Прибыль",
+  "current_price": "Текущая цена",
+  "current_total_price": "Текущая общая цена",
+  "profit_percent": "Прибыль в %",
+  "current_indicators": "Текущие показатели"
 }

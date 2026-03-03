@@ -20,12 +20,10 @@ import '../../briefcase/providers/briefcase_provider.dart';
 import '../providers/coin_details_provider.dart';
 
 @RoutePage()
-class CryptoCoinPage extends ConsumerWidget {
+class CoinDetailsPage extends ConsumerWidget {
   final CryptoCoin coin;
 
-  const CryptoCoinPage({super.key, required this.coin});
-
-  void refresh(WidgetRef ref) => ref.refresh(coinDetailsProvider(coin));
+  const CoinDetailsPage({super.key, required this.coin});
 
   void toggle(WidgetRef ref, CryptoCoin coin, double price) => ref
       .read(favouriteNotifierProvider.notifier)
@@ -65,10 +63,6 @@ class CryptoCoinPage extends ConsumerWidget {
             ),
             loading: () => const SizedBox.shrink(),
             error: (_, _) => const SizedBox.shrink(),
-          ),
-          IconButton(
-            onPressed: () => refresh(ref),
-            icon: const Icon(Icons.refresh),
           ),
         ],
       ),
@@ -174,7 +168,7 @@ class _LineChart extends StatelessWidget {
     final minY = adjustedMin;
     final maxY = adjustedMin + interval * 2;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 32.sp),
+      padding: EdgeInsets.symmetric(vertical: 32.sp, horizontal: 16.sp),
       child: SizeBox(
         height: 0.25,
         child: LineChart(
@@ -183,6 +177,7 @@ class _LineChart extends StatelessWidget {
             maxX: spots.last.x,
             minY: minY,
             maxY: maxY,
+
             titlesData: FlTitlesData(
               topTitles: const AxisTitles(
                 sideTitles: SideTitles(showTitles: false),
@@ -209,9 +204,16 @@ class _LineChart extends StatelessWidget {
                 ),
               ),
             ),
+            lineTouchData: const LineTouchData(
+              touchTooltipData: LineTouchTooltipData(
+                fitInsideHorizontally: true,
+                fitInsideVertically: true,
+              ),
+            ),
             borderData: FlBorderData(show: true),
             lineBarsData: [
               LineChartBarData(
+                isCurved: true,
                 spots: spots,
                 color: theme.primaryColor,
                 barWidth: 2,
@@ -347,6 +349,7 @@ class _ActionsButtons extends ConsumerWidget {
   void showBuyCoinSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (_) => BuyCryptoCoinSheet(coin: coin),
     );
   }
@@ -354,6 +357,7 @@ class _ActionsButtons extends ConsumerWidget {
   void showSellCoinSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (_) => SellCryptoCoinSheet(coin: coin),
     );
   }

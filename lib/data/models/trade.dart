@@ -27,6 +27,16 @@ class Trade {
 
   double get totalPrice => coinPrice * amount;
 
+  double currentTotalPrice(double currentPrice) => currentPrice * amount;
+
+  double profit(double currentPrice) {
+    final multiplier = type == TradeType.buy ? 1 : -1;
+    return (currentPrice - coinPrice) * amount * multiplier;
+  }
+
+  double profitPercent(double currentPrice) =>
+      (profit(currentPrice) / totalPrice) * 100;
+
   Map<String, dynamic> toJson() => _$TradeToJson(this);
 
   factory Trade.fromJson(Map<String, dynamic> json) => _$TradeFromJson(json);
@@ -48,21 +58,18 @@ class Trade {
   }
 
   static List<Trade> filterTrades(
-      List<Trade> trades,
-      FilterTradesState filter,
-      ) {
+    List<Trade> trades,
+    FilterTradesState filter,
+  ) {
     return trades.where((trade) {
       if (filter.coinName.isNotEmpty) {
         final query = filter.coinName.toLowerCase();
-        final matchesName =
-        trade.coin.name.toLowerCase().contains(query);
-        final matchesSymbol =
-        trade.coin.symbol.toLowerCase().contains(query);
+        final matchesName = trade.coin.name.toLowerCase().contains(query);
+        final matchesSymbol = trade.coin.symbol.toLowerCase().contains(query);
         if (!matchesName && !matchesSymbol) return false;
       }
 
-      if (filter.tradeType != TradeType.all &&
-          trade.type != filter.tradeType) {
+      if (filter.tradeType != TradeType.all && trade.type != filter.tradeType) {
         return false;
       }
 
@@ -74,15 +81,13 @@ class Trade {
       }
 
       if (filter.totalPriceRange case final range?) {
-        if (trade.totalPrice < range.start ||
-            trade.totalPrice > range.end) {
+        if (trade.totalPrice < range.start || trade.totalPrice > range.end) {
           return false;
         }
       }
 
       if (filter.amountRange case final range?) {
-        if (trade.amount < range.start ||
-            trade.amount > range.end) {
+        if (trade.amount < range.start || trade.amount > range.end) {
           return false;
         }
       }

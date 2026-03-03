@@ -958,6 +958,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Profit`
+  String get profit {
+    return Intl.message('Profit', name: 'profit', desc: '', args: []);
+  }
+
+  /// `Current Price`
+  String get current_price {
+    return Intl.message(
+      'Current Price',
+      name: 'current_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current Total Price`
+  String get current_total_price {
+    return Intl.message(
+      'Current Total Price',
+      name: 'current_total_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profit %`
+  String get profit_percent {
+    return Intl.message('Profit %', name: 'profit_percent', desc: '', args: []);
+  }
+
+  /// `Current Indicators`
+  String get current_indicators {
+    return Intl.message(
+      'Current Indicators',
+      name: 'current_indicators',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

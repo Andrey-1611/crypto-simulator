@@ -13,7 +13,6 @@ class CoinsTextField extends StatelessWidget {
     return TextField(
       controller: coinsController,
       autofocus: true,
-      maxLength: 5,
       keyboardType: TextInputType.number,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       decoration: InputDecoration(hintText: s.num_coins),

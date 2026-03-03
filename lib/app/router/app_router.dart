@@ -12,7 +12,7 @@ import '../../features/briefcase/pages/briefcase_page.dart';
 import '../../features/history/pages/history_page.dart';
 import '../../features/history/pages/trade_page.dart';
 import '../../features/home/home_page.dart';
-import '../../features/market/pages/crypto_coin_page.dart';
+import '../../features/market/pages/coin_details_page.dart';
 import '../../features/market/pages/market_page.dart';
 import '../../features/market/pages/search_coins_page.dart';
 import '../../features/rating/pages/rating_page.dart';

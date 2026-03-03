@@ -77,6 +77,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "coins_not_found": MessageLookupByLibrary.simpleMessage("Монет не найдено"),
     "confirm": MessageLookupByLibrary.simpleMessage("Подтвердить"),
     "created": MessageLookupByLibrary.simpleMessage("Создан"),
+    "current_indicators": MessageLookupByLibrary.simpleMessage(
+      "Текущие показатели",
+    ),
+    "current_price": MessageLookupByLibrary.simpleMessage("Текущая цена"),
+    "current_total_price": MessageLookupByLibrary.simpleMessage(
+      "Текущая общая цена",
+    ),
     "daily_data": MessageLookupByLibrary.simpleMessage("Данные за день"),
     "dark_theme": MessageLookupByLibrary.simpleMessage("Темная тема"),
     "data": MessageLookupByLibrary.simpleMessage("Данные"),
@@ -162,6 +169,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "password": MessageLookupByLibrary.simpleMessage("Пароль"),
     "perform": MessageLookupByLibrary.simpleMessage("Совершить"),
     "price": MessageLookupByLibrary.simpleMessage("Текущая цена"),
+    "profit": MessageLookupByLibrary.simpleMessage("Прибыль"),
+    "profit_percent": MessageLookupByLibrary.simpleMessage("Прибыль в %"),
     "rating": MessageLookupByLibrary.simpleMessage("Рейтинг"),
     "resend": MessageLookupByLibrary.simpleMessage("Отправить повторно"),
     "reset": MessageLookupByLibrary.simpleMessage("Сбросить"),

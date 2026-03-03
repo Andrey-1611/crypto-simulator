@@ -9,6 +9,7 @@ import 'package:Bitmark/data/models/trade.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/widgets/info_card.dart';
+import '../../../app/widgets/size_box.dart';
 import '../../../core/utils/dialog_helper.dart';
 import '../../../core/utils/extensions.dart';
 import '../../../data/models/coin_amount.dart';
@@ -90,14 +91,16 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
               )
               .amount;
           return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: .center,
+            mainAxisSize: .min,
             children: [
               Text(
                 s.sell_coin_a(coin.info.name),
                 style: theme.textTheme.displayMedium,
               ),
-              const Spacer(),
+              const SizeBox(height: 0.06,),
               CoinsTextField(coinsController: _coinsController),
+              const SizeBox(height: 0.01,),
               InfoCard(
                 title: s.coins_balance,
                 value: userCoinsAmount.toString(),
@@ -109,7 +112,7 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
                     _totalPrice != 0 ? sell(context, userCoinsAmount) : null,
                 child: Text(s.confirm),
               ),
-              const Spacer(),
+              const SizeBox(height: 0.08,),
             ],
           );
         },

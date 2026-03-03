@@ -1,3 +1,4 @@
+import 'package:Bitmark/app/widgets/info_bloc.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:Bitmark/app/widgets/coin_card.dart';
 import 'package:Bitmark/app/widgets/info_row.dart';
@@ -7,10 +8,9 @@ import 'package:Bitmark/data/models/trade.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../app/widgets/size_box.dart';
 import '../../../core/utils/extensions.dart';
 import '../../../generated/l10n.dart';
-import '../providers/crypto_coin_price_provider.dart';
+import '../providers/trade_provider.dart';
 
 @RoutePage()
 class TradePage extends ConsumerWidget {
@@ -20,36 +20,23 @@ class TradePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = context.theme;
     final s = S.of(context);
-    final coinP = ref.watch(cryptoCoinPriceProvider(trade.coin.symbol));
+    final tradeP = ref.watch(tradeProvider(trade));
     return Scaffold(
       appBar: AppBar(title: Text(s.trade_details)),
       body: Padding(
         padding: .all(16.sp),
         child: Center(
-          child: Column(
-            children: [
-              SizeBox(
-                height: 0.11,
-                child: coinP.when(
-                  data: (price) => CoinCard(coin: trade.coin, price: price),
-                  error: (e, _) => UnknownError(error: e),
-                  loading: () => const Loader(),
-                ),
-              ),
-              Card(
-                child: Padding(
-                  padding: .all(16.sp),
-                  child: Column(
-                    crossAxisAlignment: .start,
+          child: tradeP.when(
+            data: (data) {
+              final currentPrice = data.coin.price;
+              return Column(
+                children: [
+                  CoinCard(coin: trade.coin, price: (currentPrice)),
+                  InfoBloc(
+                    title: s.data,
                     children: [
-                      Text(s.data, style: theme.textTheme.bodyLarge),
-                      const SizeBox(height: 0.02),
-                      InfoRow(
-                        title: S.of(context).type,
-                        value: trade.type.type,
-                      ),
+                      InfoRow(title: s.type, value: trade.type.type),
                       InfoRow(title: s.amount, value: trade.amount.toString()),
                       InfoRow(title: s.coin, value: trade.coin.symbol),
                       InfoRow(title: s.coin_id, value: trade.coin.id),
@@ -64,9 +51,32 @@ class TradePage extends ConsumerWidget {
                       InfoRow(title: s.date, value: trade.createdAt.format),
                     ],
                   ),
-                ),
-              ),
-            ],
+                  InfoBloc(
+                    title: s.current_indicators,
+                    children: [
+                      InfoRow(
+                        title: s.current_price,
+                        value: currentPrice.price4,
+                      ),
+                      InfoRow(
+                        title: s.current_total_price,
+                        value: trade.currentTotalPrice(currentPrice).price2,
+                      ),
+                      InfoRow(
+                        title: s.profit,
+                        value: trade.profit(currentPrice).price2,
+                      ),
+                      InfoRow(
+                        title: s.profit_percent,
+                        value: trade.profitPercent(currentPrice).percent,
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            },
+            error: (e, _) => UnknownError(error: e),
+            loading: () => const Loader(),
           ),
         ),
       ),

@@ -81,6 +81,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "coins_not_found": MessageLookupByLibrary.simpleMessage("No coins found"),
     "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
     "created": MessageLookupByLibrary.simpleMessage("Created"),
+    "current_indicators": MessageLookupByLibrary.simpleMessage(
+      "Current Indicators",
+    ),
+    "current_price": MessageLookupByLibrary.simpleMessage("Current Price"),
+    "current_total_price": MessageLookupByLibrary.simpleMessage(
+      "Current Total Price",
+    ),
     "daily_data": MessageLookupByLibrary.simpleMessage("Daily Data"),
     "dark_theme": MessageLookupByLibrary.simpleMessage("Dark Theme"),
     "data": MessageLookupByLibrary.simpleMessage("Data"),
@@ -163,6 +170,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "password": MessageLookupByLibrary.simpleMessage("Password"),
     "perform": MessageLookupByLibrary.simpleMessage("Perform"),
     "price": MessageLookupByLibrary.simpleMessage("Current Price"),
+    "profit": MessageLookupByLibrary.simpleMessage("Profit"),
+    "profit_percent": MessageLookupByLibrary.simpleMessage("Profit %"),
     "rating": MessageLookupByLibrary.simpleMessage("Rating"),
     "resend": MessageLookupByLibrary.simpleMessage("Resend"),
     "reset": MessageLookupByLibrary.simpleMessage("Reset"),

@@ -60,7 +60,7 @@ class BriefcaseRouteArgs {
 }
 
 /// generated route for
-/// [CryptoCoinPage]
+/// [CoinDetailsPage]
 class CryptoCoinRoute extends PageRouteInfo<CryptoCoinRouteArgs> {
   CryptoCoinRoute({
     Key? key,
@@ -78,7 +78,7 @@ class CryptoCoinRoute extends PageRouteInfo<CryptoCoinRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<CryptoCoinRouteArgs>();
-      return CryptoCoinPage(key: args.key, coin: args.coin);
+      return CoinDetailsPage(key: args.key, coin: args.coin);
     },
   );
 }
