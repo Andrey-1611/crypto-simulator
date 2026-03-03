@@ -40,7 +40,7 @@ class CryptoCoinsPage extends ConsumerWidget {
                       subtitle: Text('${price.price4}, ${s.coins_a(amount)}'),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () =>
-                          context.pushRoute(CryptoCoinRoute(coin: coin)),
+                          context.pushRoute(CoinDetailsRoute(coin: coin)),
                     ),
                   );
                 },

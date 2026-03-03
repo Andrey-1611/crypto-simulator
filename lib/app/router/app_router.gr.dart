@@ -61,30 +61,30 @@ class BriefcaseRouteArgs {
 
 /// generated route for
 /// [CoinDetailsPage]
-class CryptoCoinRoute extends PageRouteInfo<CryptoCoinRouteArgs> {
-  CryptoCoinRoute({
+class CoinDetailsRoute extends PageRouteInfo<CoinDetailsRouteArgs> {
+  CoinDetailsRoute({
     Key? key,
     required CryptoCoin coin,
     List<PageRouteInfo>? children,
   }) : super(
-         CryptoCoinRoute.name,
-         args: CryptoCoinRouteArgs(key: key, coin: coin),
+         CoinDetailsRoute.name,
+         args: CoinDetailsRouteArgs(key: key, coin: coin),
          initialChildren: children,
        );
 
-  static const String name = 'CryptoCoinRoute';
+  static const String name = 'CoinDetailsRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<CryptoCoinRouteArgs>();
+      final args = data.argsAs<CoinDetailsRouteArgs>();
       return CoinDetailsPage(key: args.key, coin: args.coin);
     },
   );
 }
 
-class CryptoCoinRouteArgs {
-  const CryptoCoinRouteArgs({this.key, required this.coin});
+class CoinDetailsRouteArgs {
+  const CoinDetailsRouteArgs({this.key, required this.coin});
 
   final Key? key;
 
@@ -92,18 +92,34 @@ class CryptoCoinRouteArgs {
 
   @override
   String toString() {
-    return 'CryptoCoinRouteArgs{key: $key, coin: $coin}';
+    return 'CoinDetailsRouteArgs{key: $key, coin: $coin}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    if (other is! CryptoCoinRouteArgs) return false;
+    if (other is! CoinDetailsRouteArgs) return false;
     return key == other.key && coin == other.coin;
   }
 
   @override
   int get hashCode => key.hashCode ^ coin.hashCode;
+}
+
+/// generated route for
+/// [CompareCoinsPage]
+class CompareCoinsRoute extends PageRouteInfo<void> {
+  const CompareCoinsRoute({List<PageRouteInfo>? children})
+    : super(CompareCoinsRoute.name, initialChildren: children);
+
+  static const String name = 'CompareCoinsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CompareCoinsPage();
+    },
+  );
 }
 
 /// generated route for

@@ -1,3 +1,4 @@
+import 'package:Bitmark/app/router/app_router.dart';
 import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:Bitmark/data/models/price_point.dart';
 import 'package:Bitmark/features/briefcase/providers/favourite_provider.dart';
@@ -9,6 +10,7 @@ import 'package:Bitmark/data/models/crypto_coin_details.dart';
 import 'package:Bitmark/features/market/widgets/buy_coin_sheet.dart';
 import 'package:Bitmark/features/market/widgets/sell_coin_sheet.dart';
 import 'package:Bitmark/generated/l10n.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,12 +52,22 @@ class CoinDetailsPage extends ConsumerWidget {
                 final coin = data.coin;
                 final ids = coins.map((c) => c.coin.id);
                 final isFavourite = ids.contains(data.coin.info.id);
-                return IconButton(
-                  onPressed: () => toggle(ref, coin.info, coin.priceData.price),
-                  icon: Icon(
-                    isFavourite ? Icons.favorite : Icons.favorite_border,
-                    color: isFavourite ? theme.colorScheme.error : null,
-                  ),
+                return Row(
+                  children: [
+                    IconButton(
+                      onPressed: () =>
+                          toggle(ref, coin.info, coin.priceData.price),
+                      icon: Icon(
+                        isFavourite ? Icons.favorite : Icons.favorite_border,
+                        color: isFavourite ? theme.colorScheme.error : null,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () =>
+                          context.pushRoute(const CompareCoinsRoute()),
+                      icon: const Icon(Icons.receipt),
+                    ),
+                  ],
                 );
               },
               loading: () => const SizedBox.shrink(),
@@ -177,7 +189,6 @@ class _LineChart extends StatelessWidget {
             maxX: spots.last.x,
             minY: minY,
             maxY: maxY,
-
             titlesData: FlTitlesData(
               topTitles: const AxisTitles(
                 sideTitles: SideTitles(showTitles: false),

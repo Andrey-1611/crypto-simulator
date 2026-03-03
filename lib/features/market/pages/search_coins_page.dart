@@ -2,7 +2,11 @@ import 'package:Bitmark/app/widgets/coin_card.dart';
 import 'package:Bitmark/app/widgets/loader.dart';
 import 'package:Bitmark/app/widgets/search_field.dart';
 import 'package:Bitmark/app/widgets/unknown_error.dart';
+import 'package:Bitmark/core/utils/dialog_helper.dart';
+import 'package:Bitmark/core/utils/toast_helper.dart';
+import 'package:Bitmark/features/market/providers/compare_coins_provider.dart';
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,6 +31,16 @@ class _SearchCoinsPageState extends ConsumerState<SearchCoinsPage> {
   @override
   void initState() {
     searchController.text = ref.read(queryProvider);
+    ref.listenManual(compareCoinsNotifierProvider, (_, state) {
+      state.when(
+        data: (_) {
+          context.pop();
+          context.pop();
+        },
+        error: (_, _) => ToastHelper.unknownError(),
+        loading: () => DialogHelper.loading(context),
+      );
+    });
     super.initState();
   }
 
