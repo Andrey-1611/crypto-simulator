@@ -109,7 +109,8 @@ class _TradesList extends StatelessWidget {
         return Card(
           child: ListTile(
             leading: GestureDetector(
-              onTap: () => context.pushRoute(CoinDetailsRoute(coin: trade.coin)),
+              onTap: () =>
+                  context.pushRoute(CoinDetailsRoute(coin: trade.coin)),
               child: SizeBox.square(
                 size: 0.14,
                 child: Image.network(trade.coin.fullImageUrl),

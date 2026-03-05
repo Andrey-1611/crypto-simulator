@@ -3,17 +3,25 @@ import 'package:Bitmark/data/models/coin_full_data.dart';
 import 'package:Bitmark/data/models/crypto_coin.dart';
 import 'package:Bitmark/data/repositories/crypto_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final compareCoinsNotifierProvider =
     AsyncNotifierProvider<CompareCoinsNotifier, List<CoinFullData>>(
       CompareCoinsNotifier.new,
     );
 
+final compareCoinsPeriodProvider = StateProvider<CompareCoinsPeriod>((_) => .year);
+
+final _coinsAllHistoryProvider = StateProvider<List<CoinFullData>>((_) => []);
+
 class CompareCoinsNotifier extends AsyncNotifier<List<CoinFullData>> {
   @override
-  FutureOr<List<CoinFullData>> build() async => <CoinFullData>[];
+  FutureOr<List<CoinFullData>> build() => <CoinFullData>[];
 
-  void setFirstCoin(CoinFullData coinData) => state = .data([coinData]);
+  void setFirstCoin(CoinFullData coinData) {
+    state = .data([coinData]);
+    ref.read(_coinsAllHistoryProvider.notifier).state = [coinData];
+  }
 
   void addCoin(CryptoCoin coin) async {
     final coins = state.requireValue;
@@ -28,9 +36,45 @@ class CompareCoinsNotifier extends AsyncNotifier<List<CoinFullData>> {
       final coinPrices = await ref
           .read(cryptoRepositoryProvider)
           .getCoinPriceHistoryBySymbol(coin.symbol);
-      return [...coins, CoinFullData(coin: coinDetails, prices: coinPrices)];
+      final coinData = CoinFullData(coin: coinDetails, prices: coinPrices);
+      final allCoins = ref.read(_coinsAllHistoryProvider.notifier);
+      allCoins.state = [...allCoins.state, coinData];
+      return [...coins, coinData];
     });
   }
 
-  void removeCoin(String coinSymbol) {}
+  void removeCoin(String coinSymbol) {
+    final updated = state.requireValue
+        .where((c) => c.coin.info.symbol != coinSymbol)
+        .toList();
+    ref.read(_coinsAllHistoryProvider.notifier).state = updated;
+    state = .data(updated);
+  }
+
+  void removeAll() {
+    state = const .data([]);
+    ref.read(_coinsAllHistoryProvider.notifier).state = [];
+  }
+
+  void changePeriod(CompareCoinsPeriod period) {
+    final allCoins = ref.read(_coinsAllHistoryProvider);
+    final updated = allCoins.map((c) {
+      final newPrices = c.prices.sublist(c.prices.length - period.days);
+      return c.copyWith(prices: newPrices);
+    }).toList();
+    state = .data(updated);
+    ref.read(compareCoinsPeriodProvider.notifier).state = period;
+  }
+}
+
+enum CompareCoinsPeriod {
+  week(7),
+  month(30),
+  threeMonths(90),
+  sixMonths(180),
+  year(365);
+
+  final int days;
+
+  const CompareCoinsPeriod(this.days);
 }

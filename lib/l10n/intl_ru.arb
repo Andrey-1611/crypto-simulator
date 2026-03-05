@@ -130,5 +130,7 @@
   "current_price": "Текущая цена",
   "current_total_price": "Текущая общая цена",
   "profit_percent": "Прибыль в %",
-  "current_indicators": "Текущие показатели"
+  "current_indicators": "Текущие показатели",
+  "add": "Добавить",
+  "search": "Найти"
 }

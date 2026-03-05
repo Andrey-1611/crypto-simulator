@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -83,5 +85,12 @@ extension ChartFormat on double {
     if (decimals < 0) decimals = 0;
     final formatted = value.toStringAsFixed(decimals);
     return formatted + suffix;
+  }
+}
+
+extension ColorRandom on Color {
+  static Color random(int index) {
+    final r = Random(index);
+    return .fromARGB(255, r.nextInt(256), r.nextInt(256), r.nextInt(256));
   }
 }

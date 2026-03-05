@@ -124,7 +124,8 @@ class CryptoDataSource implements CryptoRepository {
   }
 
   @override
-  Future<List<PricePoint>> getCoinPriceHistoryBySymbol(String symbol) async {
+  Future<List<PricePoint>> getCoinPriceHistoryBySymbol(
+    String symbol) async {
     final response = await _dio.get(ApiConstants.dailyPair(symbol));
     final data = response.data['Data']['Data'] as List;
     return data.map((m) => PricePoint.fromApi(m)).toList();

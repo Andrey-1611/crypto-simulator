@@ -8,8 +8,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/widgets/loader.dart';
 import '../../../app/widgets/settings_button.dart';
 import '../../../app/widgets/unknown_error.dart';
+import '../../../core/utils/dialog_helper.dart';
 import '../../../core/utils/extensions.dart';
+import '../../../core/utils/toast_helper.dart';
 import '../../../generated/l10n.dart';
+import '../providers/compare_coins_provider.dart';
 import '../providers/filter_providers.dart';
 import '../providers/filtered_coins_provider.dart';
 import '../providers/market_provider.dart';
@@ -30,6 +33,25 @@ class _MarketPageState extends ConsumerState<MarketPage> {
   @override
   void initState() {
     super.initState();
+    final stack = context.router.stack;
+    final fromCompare =
+        stack.length >= 2 &&
+        stack[stack.length - 2].name == CompareCoinsRoute.name;
+    if (fromCompare) {
+      ref.listenManual(compareCoinsNotifierProvider, (_, state) {
+        state.when(
+          data: (_) {
+            context.pop();
+            context.pop();
+          },
+          error: (_, _) {
+            context.pop();
+            ToastHelper.unknownError();
+          },
+          loading: () => DialogHelper.loading(context),
+        );
+      });
+    }
     final text = ref.read(searchCoinsProvider);
     if (_searchController.text != text) {
       _searchController.text = text;
@@ -56,7 +78,6 @@ class _MarketPageState extends ConsumerState<MarketPage> {
             pinned: true,
             snap: true,
             floating: true,
-            automaticallyImplyLeading: false,
             title: Text(s.market),
             actions: [
               IconButton(

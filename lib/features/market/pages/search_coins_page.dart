@@ -37,7 +37,10 @@ class _SearchCoinsPageState extends ConsumerState<SearchCoinsPage> {
           context.pop();
           context.pop();
         },
-        error: (_, _) => ToastHelper.unknownError(),
+        error: (_, _)  {
+          context.pop();
+          ToastHelper.unknownError();
+        },
         loading: () => DialogHelper.loading(context),
       );
     });

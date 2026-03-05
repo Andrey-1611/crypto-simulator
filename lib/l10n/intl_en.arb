@@ -129,5 +129,7 @@
   "current_price": "Current Price",
   "current_total_price": "Current Total Price",
   "profit_percent": "Profit %",
-  "current_indicators": "Current Indicators"
+  "current_indicators": "Current Indicators",
+  "add": "Add",
+  "search": "Search"
 }

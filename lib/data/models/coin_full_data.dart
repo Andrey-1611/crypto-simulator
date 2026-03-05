@@ -6,4 +6,8 @@ class CoinFullData {
   final List<PricePoint> prices;
 
   CoinFullData({required this.coin, required this.prices});
+
+  CoinFullData copyWith({CryptoCoinDetails? coin, List<PricePoint>? prices}) {
+    return CoinFullData(coin: coin ?? this.coin, prices: prices ?? this.prices);
+  }
 }

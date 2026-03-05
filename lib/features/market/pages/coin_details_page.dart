@@ -2,7 +2,6 @@ import 'package:Bitmark/app/router/app_router.dart';
 import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:Bitmark/data/models/price_point.dart';
 import 'package:Bitmark/features/briefcase/providers/favourite_provider.dart';
-import 'package:auto_route/annotations.dart';
 import 'package:Bitmark/app/widgets/info_bloc.dart';
 import 'package:Bitmark/app/widgets/loader.dart';
 import 'package:Bitmark/app/widgets/unknown_error.dart';
@@ -31,9 +30,13 @@ class CoinDetailsPage extends ConsumerWidget {
       .read(favouriteNotifierProvider.notifier)
       .toggleIsFavourite(coin, price);
 
+  void changePeriod(WidgetRef ref, Set<CoinDetailsPeriod> period) => ref
+      .read(coinDetailsNotifierProvider(coin).notifier)
+      .changePeriod(period.first);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final coinP = ref.watch(coinDetailsProvider(coin));
+    final coinP = ref.watch(coinDetailsNotifierProvider(coin));
     final favouriteP = ref.watch(favouriteNotifierProvider);
     final theme = Theme.of(context);
     return Scaffold(
@@ -86,6 +89,17 @@ class CoinDetailsPage extends ConsumerWidget {
             return Column(
               children: [
                 _PriceCard(coin: coin),
+                SegmentedButton<CoinDetailsPeriod>(
+                  segments: const [
+                    ButtonSegment(value: .week, label: Text('1W')),
+                    ButtonSegment(value: .month, label: Text('1M')),
+                    ButtonSegment(value: .threeMonths, label: Text('3M')),
+                    ButtonSegment(value: .sixMonths, label: Text('6M')),
+                    ButtonSegment(value: .year, label: Text('1Y')),
+                  ],
+                  selected: {ref.watch(coinDetailsPeriodProvider)},
+                  onSelectionChanged: (period) => changePeriod(ref, period),
+                ),
                 Expanded(
                   child: ListView(
                     children: [
@@ -180,7 +194,7 @@ class _LineChart extends StatelessWidget {
     final minY = adjustedMin;
     final maxY = adjustedMin + interval * 2;
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 32.sp, horizontal: 16.sp),
+      padding: .all(16.sp),
       child: SizeBox(
         height: 0.25,
         child: LineChart(
@@ -189,30 +203,14 @@ class _LineChart extends StatelessWidget {
             maxX: spots.last.x,
             minY: minY,
             maxY: maxY,
-            titlesData: FlTitlesData(
-              topTitles: const AxisTitles(
+            titlesData: const FlTitlesData(
+              topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              rightTitles: AxisTitles(
                 sideTitles: SideTitles(showTitles: false),
               ),
-              rightTitles: const AxisTitles(
-                sideTitles: SideTitles(showTitles: false),
-              ),
-              leftTitles: const AxisTitles(
-                sideTitles: SideTitles(showTitles: false),
-              ),
+              leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
               bottomTitles: AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: true,
-                  interval: const Duration(days: 7).inMilliseconds.toDouble(),
-                  getTitlesWidget: (value, meta) {
-                    final date = DateTime.fromMillisecondsSinceEpoch(
-                      value.toInt(),
-                    );
-                    return Text(
-                      "${date.day}/${date.month}",
-                      style: theme.textTheme.bodySmall,
-                    );
-                  },
-                ),
+                sideTitles: SideTitles(showTitles: false),
               ),
             ),
             lineTouchData: const LineTouchData(
@@ -221,7 +219,6 @@ class _LineChart extends StatelessWidget {
                 fitInsideVertically: true,
               ),
             ),
-            borderData: FlBorderData(show: true),
             lineBarsData: [
               LineChartBarData(
                 isCurved: true,
