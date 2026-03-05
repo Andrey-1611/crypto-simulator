@@ -56,6 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "cancel": MessageLookupByLibrary.simpleMessage("Отмена"),
     "change_24h": MessageLookupByLibrary.simpleMessage("Изменение 24ч"),
     "change_24h_pct": MessageLookupByLibrary.simpleMessage("Изменение % 24ч"),
+    "change_pct": MessageLookupByLibrary.simpleMessage("Изменение в %"),
     "check": MessageLookupByLibrary.simpleMessage("Проверить"),
     "circulating_supply": MessageLookupByLibrary.simpleMessage("В обращении"),
     "circulating_supply_cap": MessageLookupByLibrary.simpleMessage(
@@ -170,6 +171,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "password": MessageLookupByLibrary.simpleMessage("Пароль"),
     "perform": MessageLookupByLibrary.simpleMessage("Совершить"),
     "price": MessageLookupByLibrary.simpleMessage("Текущая цена"),
+    "price_p": MessageLookupByLibrary.simpleMessage("Цена"),
     "profit": MessageLookupByLibrary.simpleMessage("Прибыль"),
     "profit_percent": MessageLookupByLibrary.simpleMessage("Прибыль в %"),
     "rating": MessageLookupByLibrary.simpleMessage("Рейтинг"),

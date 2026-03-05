@@ -18,7 +18,11 @@ class FavouriteCoinsPage extends ConsumerWidget {
               itemCount: coins.length,
               itemBuilder: (context, index) {
                 final coin = coins[index];
-                return CoinCard(coin: coin.coin, price: coin.price);
+                return CoinCard(
+                  coin: coin.coin,
+                  price: coin.price,
+                  isFavourite: true,
+                );
               },
             )
           : const _EmptyList(),

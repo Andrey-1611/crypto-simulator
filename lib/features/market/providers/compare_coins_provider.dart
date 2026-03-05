@@ -10,7 +10,11 @@ final compareCoinsNotifierProvider =
       CompareCoinsNotifier.new,
     );
 
-final compareCoinsPeriodProvider = StateProvider<CompareCoinsPeriod>((_) => .year);
+final compareCoinsPeriodProvider = StateProvider<CompareCoinsPeriod>(
+  (_) => .year,
+);
+
+final lineChartTypeProvider = StateProvider<LineChartType>((_) => .price);
 
 final _coinsAllHistoryProvider = StateProvider<List<CoinFullData>>((_) => []);
 
@@ -78,3 +82,5 @@ enum CompareCoinsPeriod {
 
   const CompareCoinsPeriod(this.days);
 }
+
+enum LineChartType { price, percentChange }

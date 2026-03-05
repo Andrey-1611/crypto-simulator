@@ -213,10 +213,18 @@ class _LineChart extends StatelessWidget {
                 sideTitles: SideTitles(showTitles: false),
               ),
             ),
-            lineTouchData: const LineTouchData(
+            lineTouchData: LineTouchData(
               touchTooltipData: LineTouchTooltipData(
                 fitInsideHorizontally: true,
                 fitInsideVertically: true,
+                getTooltipItems: (spots) => spots
+                    .map(
+                      (spot) => LineTooltipItem(
+                        spot.y.price4,
+                        theme.textTheme.bodyLarge!,
+                      ),
+                    )
+                    .toList(),
               ),
             ),
             lineBarsData: [

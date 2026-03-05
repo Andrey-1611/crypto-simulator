@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "change_24h": MessageLookupByLibrary.simpleMessage("24h Change"),
     "change_24h_pct": MessageLookupByLibrary.simpleMessage("24h Change %"),
+    "change_pct": MessageLookupByLibrary.simpleMessage("Price Change %"),
     "check": MessageLookupByLibrary.simpleMessage("Check"),
     "circulating_supply": MessageLookupByLibrary.simpleMessage(
       "Circulating supply",
@@ -80,6 +81,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Number of coins on the balance",
     ),
     "coins_not_found": MessageLookupByLibrary.simpleMessage("No coins found"),
+    "compare_coins": MessageLookupByLibrary.simpleMessage("Compare Coins"),
     "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
     "created": MessageLookupByLibrary.simpleMessage("Created"),
     "current_indicators": MessageLookupByLibrary.simpleMessage(
@@ -171,6 +173,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "password": MessageLookupByLibrary.simpleMessage("Password"),
     "perform": MessageLookupByLibrary.simpleMessage("Perform"),
     "price": MessageLookupByLibrary.simpleMessage("Current Price"),
+    "price_p": MessageLookupByLibrary.simpleMessage("Price"),
     "profit": MessageLookupByLibrary.simpleMessage("Profit"),
     "profit_percent": MessageLookupByLibrary.simpleMessage("Profit %"),
     "rating": MessageLookupByLibrary.simpleMessage("Rating"),

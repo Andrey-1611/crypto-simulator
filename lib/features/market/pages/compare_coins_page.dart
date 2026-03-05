@@ -2,6 +2,7 @@ import 'package:Bitmark/app/router/app_router.dart';
 import 'package:Bitmark/app/widgets/coin_card.dart';
 import 'package:Bitmark/app/widgets/loader.dart';
 import 'package:Bitmark/app/widgets/unknown_error.dart';
+import 'package:Bitmark/data/models/price_point.dart';
 import 'package:Bitmark/features/market/providers/compare_coins_provider.dart';
 import 'package:Bitmark/generated/l10n.dart';
 import 'package:auto_route/auto_route.dart';
@@ -26,6 +27,9 @@ class CompareCoinsPage extends ConsumerWidget {
   void changePeriod(WidgetRef ref, CompareCoinsPeriod period) =>
       ref.read(compareCoinsNotifierProvider.notifier).changePeriod(period);
 
+  void changeType(WidgetRef ref, LineChartType type) =>
+      ref.read(lineChartTypeProvider.notifier).state = type;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final compareCoinsP = ref.watch(compareCoinsNotifierProvider);
@@ -33,7 +37,7 @@ class CompareCoinsPage extends ConsumerWidget {
     final theme = context.theme;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Сравнение монет'),
+        title: Text(s.compare_coins),
         actions: [
           PopupMenuButton<CompareCoinsPopup>(
             icon: const Icon(Icons.more_vert),
@@ -68,6 +72,19 @@ class CompareCoinsPage extends ConsumerWidget {
                         selected: {ref.watch(compareCoinsPeriodProvider)},
                         onSelectionChanged: (period) =>
                             changePeriod(ref, period.first),
+                      ),
+                      const SizeBox(height: 0.01),
+                      SegmentedButton<LineChartType>(
+                        segments: [
+                          ButtonSegment(value: .price, label: Text(s.price_p)),
+                          ButtonSegment(
+                            value: .percentChange,
+                            label: Text(s.change_pct),
+                          ),
+                        ],
+                        selected: {ref.watch(lineChartTypeProvider)},
+                        onSelectionChanged: (type) =>
+                            changeType(ref, type.first),
                       ),
                       const SizeBox(height: 0.01),
                       SizeBox(
@@ -136,14 +153,18 @@ class _ChartRound extends StatelessWidget {
 
 enum CompareCoinsPopup { add, search, deleteAll }
 
-class _CompareCoinsChart extends StatelessWidget {
+class _CompareCoinsChart extends ConsumerWidget {
   final List<CoinFullData> coins;
 
   const _CompareCoinsChart({required this.coins});
 
   @override
-  Widget build(BuildContext context) {
-    final allSpots = coins.expand((c) => c.prices.map((p) => p.close)).toList();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final type = ref.watch(lineChartTypeProvider);
+    final allSpots = coins
+        .expand((c) => PricePoint.getCoinSpots(c, type).map((p) => p.y))
+        .toList();
     final minY = allSpots.reduce((a, b) => a < b ? a : b) * 0.9;
     final maxY = allSpots.reduce((a, b) => a > b ? a : b) * 1.1;
     return LineChart(
@@ -151,26 +172,27 @@ class _CompareCoinsChart extends StatelessWidget {
         minY: minY,
         maxY: maxY,
         lineBarsData: coins.asMap().entries.map((entry) {
-          final index = entry.key;
-          final coinData = entry.value;
-          final spots = coinData.prices
-              .map(
-                (p) =>
-                    FlSpot(p.time.millisecondsSinceEpoch.toDouble(), p.close),
-              )
-              .toList();
+          final spots = PricePoint.getCoinSpots(entry.value, type);
           return LineChartBarData(
             spots: spots,
             isCurved: true,
             dotData: const FlDotData(show: false),
             barWidth: 2,
-            color: ColorRandom.random(index),
+            color: ColorRandom.random(entry.key),
           );
         }).toList(),
-        lineTouchData: const LineTouchData(
+        lineTouchData: LineTouchData(
           touchTooltipData: LineTouchTooltipData(
             fitInsideHorizontally: true,
             fitInsideVertically: true,
+            getTooltipItems: (spots) => spots
+                .map(
+                  (spot) => LineTooltipItem(
+                    type == .price ? spot.y.price4 : spot.y.percent,
+                    theme.textTheme.bodyLarge!,
+                  ),
+                )
+                .toList(),
           ),
         ),
         titlesData: const FlTitlesData(

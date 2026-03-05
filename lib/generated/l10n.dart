@@ -1008,6 +1008,31 @@ class S {
   String get search {
     return Intl.message('Search', name: 'search', desc: '', args: []);
   }
+
+  /// `Compare Coins`
+  String get compare_coins {
+    return Intl.message(
+      'Compare Coins',
+      name: 'compare_coins',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price`
+  String get price_p {
+    return Intl.message('Price', name: 'price_p', desc: '', args: []);
+  }
+
+  /// `Price Change %`
+  String get change_pct {
+    return Intl.message(
+      'Price Change %',
+      name: 'change_pct',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

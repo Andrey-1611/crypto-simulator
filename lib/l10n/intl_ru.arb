@@ -132,5 +132,7 @@
   "profit_percent": "Прибыль в %",
   "current_indicators": "Текущие показатели",
   "add": "Добавить",
-  "search": "Найти"
+  "search": "Найти",
+  "price_p": "Цена",
+  "change_pct": "Изменение в %"
 }
