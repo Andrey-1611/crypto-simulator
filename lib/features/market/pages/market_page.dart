@@ -30,14 +30,16 @@ class _MarketPageState extends ConsumerState<MarketPage> {
   final _searchController = TextEditingController();
   final _scrollController = ScrollController();
 
+  bool isFromCompare(BuildContext context) {
+    final stack = context.router.stack;
+    return stack.length >= 2 &&
+        stack[stack.length - 2].name == CompareCoinsRoute.name;
+  }
+
   @override
   void initState() {
     super.initState();
-    final stack = context.router.stack;
-    final fromCompare =
-        stack.length >= 2 &&
-        stack[stack.length - 2].name == CompareCoinsRoute.name;
-    if (fromCompare) {
+    if (isFromCompare(context)) {
       ref.listenManual(compareCoinsNotifierProvider, (_, state) {
         state.when(
           data: (_) {
@@ -78,6 +80,7 @@ class _MarketPageState extends ConsumerState<MarketPage> {
             pinned: true,
             snap: true,
             floating: true,
+            automaticallyImplyLeading: isFromCompare(context),
             title: Text(s.market),
             actions: [
               IconButton(
