@@ -35,7 +35,7 @@ class HistoryPage extends ConsumerWidget {
             data: (data) => data.trades.isNotEmpty
                 ? _TradesList(trades: data.trades)
                 : _EmptyList(user: user, isFiltered: data.isFilterd),
-            error: (_, _) => const UnknownError(),
+            error: (e, _) => UnknownError(error: e),
             loading: () => const Loader(),
           ),
         ),
@@ -109,7 +109,8 @@ class _TradesList extends StatelessWidget {
         return Card(
           child: ListTile(
             leading: GestureDetector(
-              onTap: () => context.pushRoute(CryptoCoinRoute(coin: trade.coin)),
+              onTap: () =>
+                  context.pushRoute(CoinDetailsRoute(coin: trade.coin)),
               child: SizeBox.square(
                 size: 0.14,
                 child: Image.network(trade.coin.fullImageUrl),

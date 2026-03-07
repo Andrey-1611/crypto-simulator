@@ -1,3 +1,8 @@
+import 'package:fl_chart/fl_chart.dart';
+
+import '../../features/market/providers/compare_coins_provider.dart';
+import 'coin_full_data.dart';
+
 class PricePoint {
   final DateTime time;
   final double open;
@@ -21,5 +26,27 @@ class PricePoint {
       low: (json['low'] as num).toDouble(),
       close: (json['close'] as num).toDouble(),
     );
+  }
+
+  static List<FlSpot> getCoinSpots(CoinFullData coin, LineChartType type) {
+    return switch (type) {
+      .price =>
+        coin.prices
+            .map(
+              (p) => FlSpot(p.time.millisecondsSinceEpoch.toDouble(), p.close),
+            )
+            .toList(),
+      .percentChange =>
+        coin.prices
+            .map(
+              (p) => FlSpot(
+                p.time.millisecondsSinceEpoch.toDouble(),
+                ((p.close - coin.prices.first.close) /
+                        coin.prices.first.close) *
+                    100,
+              ),
+            )
+            .toList(),
+    };
   }
 }

@@ -14,7 +14,7 @@ abstract class ApiConstants {
       '/data/top/price?limit=30&tsym=USD&page=$page';
 
   static String coinsByPercentChange(int page) =>
-      '/data/top/percent?limit=10&tsym=USD&page=$page';
+      '/data/top/percent?limit=30&tsym=USD&page=$page';
 
   static String coinsBySimbol(String symbol) =>
       '/data/pricemultifull?fsyms=$symbol&tsyms=USD';
@@ -29,10 +29,7 @@ abstract class ApiConstants {
       'https://data-api.coindesk.com/asset/v1/search?search_string=$query';
 
   static String dailyPair(String symbol) =>
-      '/data/v2/histoday?fsym=$symbol&tsym=USD&limit=30';
+      '/data/v2/histoday?fsym=$symbol&tsym=USD&limit=366';
 
   static const imagesHost = 'https://www.cryptocompare.com';
-
-  static const appUrl = 'https://expense-tracker-d697a.firebaseapp.com';
-  static const packageName = 'com.example.crypto_simulator';
 }

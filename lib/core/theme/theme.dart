@@ -27,6 +27,7 @@ final darkTheme = ThemeData(
   outlinedButtonTheme: _outlineButtonTheme,
   hintColor: _hintColor,
   dialogTheme: _dialogTheme,
+  segmentedButtonTheme: _segmentedButtonTheme,
   colorScheme: const ColorScheme.dark(primary: _primary, error: Colors.red),
 );
 
@@ -48,6 +49,7 @@ final lightTheme = ThemeData(
   bottomSheetTheme: _bottomSheetTheme(_lightBackground),
   hintColor: _hintColor,
   dialogTheme: _dialogTheme,
+  segmentedButtonTheme: _segmentedButtonTheme,
   colorScheme: const ColorScheme.light(primary: _primary, error: Colors.red),
 );
 
@@ -156,4 +158,15 @@ BottomSheetThemeData _bottomSheetTheme(Color color) =>
 
 final _dialogTheme = DialogThemeData(
   titleTextStyle: TextStyle(fontSize: 18.sp),
+);
+
+final _segmentedButtonTheme = SegmentedButtonThemeData(
+  style: ButtonStyle(
+    backgroundColor: .resolveWith((states) {
+      if (states.contains(WidgetState.selected)) {
+        return _primary;
+      }
+      return _darkCard;
+    }),
+  ),
 );

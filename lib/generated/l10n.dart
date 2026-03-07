@@ -948,6 +948,91 @@ class S {
       args: [],
     );
   }
+
+  /// `No internet connection`
+  String get no_internet_connection {
+    return Intl.message(
+      'No internet connection',
+      name: 'no_internet_connection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profit`
+  String get profit {
+    return Intl.message('Profit', name: 'profit', desc: '', args: []);
+  }
+
+  /// `Current Price`
+  String get current_price {
+    return Intl.message(
+      'Current Price',
+      name: 'current_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current Total Price`
+  String get current_total_price {
+    return Intl.message(
+      'Current Total Price',
+      name: 'current_total_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profit %`
+  String get profit_percent {
+    return Intl.message('Profit %', name: 'profit_percent', desc: '', args: []);
+  }
+
+  /// `Current Indicators`
+  String get current_indicators {
+    return Intl.message(
+      'Current Indicators',
+      name: 'current_indicators',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add`
+  String get add {
+    return Intl.message('Add', name: 'add', desc: '', args: []);
+  }
+
+  /// `Search`
+  String get search {
+    return Intl.message('Search', name: 'search', desc: '', args: []);
+  }
+
+  /// `Compare Coins`
+  String get compare_coins {
+    return Intl.message(
+      'Compare Coins',
+      name: 'compare_coins',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price`
+  String get price_p {
+    return Intl.message('Price', name: 'price_p', desc: '', args: []);
+  }
+
+  /// `Price Change %`
+  String get change_pct {
+    return Intl.message(
+      'Price Change %',
+      name: 'change_pct',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

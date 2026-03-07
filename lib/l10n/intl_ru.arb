@@ -124,5 +124,15 @@
   "high_day": "Максимум за день",
   "low_day": "Минимум за день",
   "volume_day": "Объём за день",
-  "circulating_supply_cap": "Капитализация в обращении"
+  "circulating_supply_cap": "Капитализация в обращении",
+  "no_internet_connection": "Нет подключения к интернету",
+  "profit": "Прибыль",
+  "current_price": "Текущая цена",
+  "current_total_price": "Текущая общая цена",
+  "profit_percent": "Прибыль в %",
+  "current_indicators": "Текущие показатели",
+  "add": "Добавить",
+  "search": "Найти",
+  "price_p": "Цена",
+  "change_pct": "Изменение в %"
 }

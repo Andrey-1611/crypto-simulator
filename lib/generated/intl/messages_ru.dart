@@ -35,6 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "add": MessageLookupByLibrary.simpleMessage("Добавить"),
     "alreadyHaveAccount": MessageLookupByLibrary.simpleMessage(
       "Уже есть аккаунт?  Войти в аккаунт",
     ),
@@ -55,6 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "cancel": MessageLookupByLibrary.simpleMessage("Отмена"),
     "change_24h": MessageLookupByLibrary.simpleMessage("Изменение 24ч"),
     "change_24h_pct": MessageLookupByLibrary.simpleMessage("Изменение % 24ч"),
+    "change_pct": MessageLookupByLibrary.simpleMessage("Изменение в %"),
     "check": MessageLookupByLibrary.simpleMessage("Проверить"),
     "circulating_supply": MessageLookupByLibrary.simpleMessage("В обращении"),
     "circulating_supply_cap": MessageLookupByLibrary.simpleMessage(
@@ -77,6 +79,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "coins_not_found": MessageLookupByLibrary.simpleMessage("Монет не найдено"),
     "confirm": MessageLookupByLibrary.simpleMessage("Подтвердить"),
     "created": MessageLookupByLibrary.simpleMessage("Создан"),
+    "current_indicators": MessageLookupByLibrary.simpleMessage(
+      "Текущие показатели",
+    ),
+    "current_price": MessageLookupByLibrary.simpleMessage("Текущая цена"),
+    "current_total_price": MessageLookupByLibrary.simpleMessage(
+      "Текущая общая цена",
+    ),
     "daily_data": MessageLookupByLibrary.simpleMessage("Данные за день"),
     "dark_theme": MessageLookupByLibrary.simpleMessage("Темная тема"),
     "data": MessageLookupByLibrary.simpleMessage("Данные"),
@@ -139,6 +148,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "no_favourite_coins": MessageLookupByLibrary.simpleMessage(
       "У вас нет избранных монет",
     ),
+    "no_internet_connection": MessageLookupByLibrary.simpleMessage(
+      "Нет подключения к интернету",
+    ),
     "no_operations_found": MessageLookupByLibrary.simpleMessage(
       "Операций не найдено",
     ),
@@ -159,11 +171,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "password": MessageLookupByLibrary.simpleMessage("Пароль"),
     "perform": MessageLookupByLibrary.simpleMessage("Совершить"),
     "price": MessageLookupByLibrary.simpleMessage("Текущая цена"),
+    "price_p": MessageLookupByLibrary.simpleMessage("Цена"),
+    "profit": MessageLookupByLibrary.simpleMessage("Прибыль"),
+    "profit_percent": MessageLookupByLibrary.simpleMessage("Прибыль в %"),
     "rating": MessageLookupByLibrary.simpleMessage("Рейтинг"),
     "resend": MessageLookupByLibrary.simpleMessage("Отправить повторно"),
     "reset": MessageLookupByLibrary.simpleMessage("Сбросить"),
     "resetPassword": MessageLookupByLibrary.simpleMessage("Сброс пароля"),
     "reset_search": MessageLookupByLibrary.simpleMessage("Сбросить поиск"),
+    "search": MessageLookupByLibrary.simpleMessage("Найти"),
     "search_coin": MessageLookupByLibrary.simpleMessage("Поиск монеты"),
     "search_coins": MessageLookupByLibrary.simpleMessage("Поиск монет"),
     "search_hint": MessageLookupByLibrary.simpleMessage("Поиск..."),

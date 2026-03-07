@@ -1,6 +1,6 @@
-import 'package:Bitmark/core/constants/api_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import '../../core/constants/app_constants.dart';
 import '../models/app_user.dart';
 import '../repositories/auth_repository.dart';
 
@@ -72,9 +72,9 @@ class AuthDataSource implements AuthRepository {
   @override
   Future<void> sendEmailVerification() async {
     final actionCodeSettings = ActionCodeSettings(
-      url: ApiConstants.appUrl,
+      url: AppConstants.appUrl,
       handleCodeInApp: true,
-      androidPackageName: ApiConstants.packageName,
+      androidPackageName: AppConstants.packageName,
     );
     await _auth.currentUser!.sendEmailVerification(actionCodeSettings);
   }

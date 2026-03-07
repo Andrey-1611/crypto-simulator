@@ -1,7 +1,7 @@
+import 'package:Bitmark/app/router/app_router.dart';
 import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:Bitmark/data/models/price_point.dart';
 import 'package:Bitmark/features/briefcase/providers/favourite_provider.dart';
-import 'package:auto_route/annotations.dart';
 import 'package:Bitmark/app/widgets/info_bloc.dart';
 import 'package:Bitmark/app/widgets/loader.dart';
 import 'package:Bitmark/app/widgets/unknown_error.dart';
@@ -9,6 +9,7 @@ import 'package:Bitmark/data/models/crypto_coin_details.dart';
 import 'package:Bitmark/features/market/widgets/buy_coin_sheet.dart';
 import 'package:Bitmark/features/market/widgets/sell_coin_sheet.dart';
 import 'package:Bitmark/generated/l10n.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,20 +21,22 @@ import '../../briefcase/providers/briefcase_provider.dart';
 import '../providers/coin_details_provider.dart';
 
 @RoutePage()
-class CryptoCoinPage extends ConsumerWidget {
+class CoinDetailsPage extends ConsumerWidget {
   final CryptoCoin coin;
 
-  const CryptoCoinPage({super.key, required this.coin});
-
-  void refresh(WidgetRef ref) => ref.refresh(coinDetailsProvider(coin));
+  const CoinDetailsPage({super.key, required this.coin});
 
   void toggle(WidgetRef ref, CryptoCoin coin, double price) => ref
       .read(favouriteNotifierProvider.notifier)
       .toggleIsFavourite(coin, price);
 
+  void changePeriod(WidgetRef ref, Set<CoinDetailsPeriod> period) => ref
+      .read(coinDetailsNotifierProvider(coin).notifier)
+      .changePeriod(period.first);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final coinP = ref.watch(coinDetailsProvider(coin));
+    final coinP = ref.watch(coinDetailsNotifierProvider(coin));
     final favouriteP = ref.watch(favouriteNotifierProvider);
     final theme = Theme.of(context);
     return Scaffold(
@@ -52,12 +55,22 @@ class CryptoCoinPage extends ConsumerWidget {
                 final coin = data.coin;
                 final ids = coins.map((c) => c.coin.id);
                 final isFavourite = ids.contains(data.coin.info.id);
-                return IconButton(
-                  onPressed: () => toggle(ref, coin.info, coin.priceData.price),
-                  icon: Icon(
-                    isFavourite ? Icons.favorite : Icons.favorite_border,
-                    color: isFavourite ? theme.colorScheme.error : null,
-                  ),
+                return Row(
+                  children: [
+                    IconButton(
+                      onPressed: () =>
+                          toggle(ref, coin.info, coin.priceData.price),
+                      icon: Icon(
+                        isFavourite ? Icons.favorite : Icons.favorite_border,
+                        color: isFavourite ? theme.colorScheme.error : null,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () =>
+                          context.pushRoute(const CompareCoinsRoute()),
+                      icon: const Icon(Icons.receipt),
+                    ),
+                  ],
                 );
               },
               loading: () => const SizedBox.shrink(),
@@ -65,10 +78,6 @@ class CryptoCoinPage extends ConsumerWidget {
             ),
             loading: () => const SizedBox.shrink(),
             error: (_, _) => const SizedBox.shrink(),
-          ),
-          IconButton(
-            onPressed: () => refresh(ref),
-            icon: const Icon(Icons.refresh),
           ),
         ],
       ),
@@ -80,6 +89,17 @@ class CryptoCoinPage extends ConsumerWidget {
             return Column(
               children: [
                 _PriceCard(coin: coin),
+                SegmentedButton<CoinDetailsPeriod>(
+                  segments: const [
+                    ButtonSegment(value: .week, label: Text('1W')),
+                    ButtonSegment(value: .month, label: Text('1M')),
+                    ButtonSegment(value: .threeMonths, label: Text('3M')),
+                    ButtonSegment(value: .sixMonths, label: Text('6M')),
+                    ButtonSegment(value: .year, label: Text('1Y')),
+                  ],
+                  selected: {ref.watch(coinDetailsPeriodProvider)},
+                  onSelectionChanged: (period) => changePeriod(ref, period),
+                ),
                 Expanded(
                   child: ListView(
                     children: [
@@ -92,7 +112,7 @@ class CryptoCoinPage extends ConsumerWidget {
               ],
             );
           },
-          error: (_, _) => UnknownError(onPressed: () {}),
+          error: (e, _) => UnknownError(error: e),
           loading: () => const Loader(),
         ),
       ),
@@ -174,7 +194,7 @@ class _LineChart extends StatelessWidget {
     final minY = adjustedMin;
     final maxY = adjustedMin + interval * 2;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 32.sp),
+      padding: .all(16.sp),
       child: SizeBox(
         height: 0.25,
         child: LineChart(
@@ -183,35 +203,33 @@ class _LineChart extends StatelessWidget {
             maxX: spots.last.x,
             minY: minY,
             maxY: maxY,
-            titlesData: FlTitlesData(
-              topTitles: const AxisTitles(
+            titlesData: const FlTitlesData(
+              topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              rightTitles: AxisTitles(
                 sideTitles: SideTitles(showTitles: false),
               ),
-              rightTitles: const AxisTitles(
-                sideTitles: SideTitles(showTitles: false),
-              ),
-              leftTitles: const AxisTitles(
-                sideTitles: SideTitles(showTitles: false),
-              ),
+              leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
               bottomTitles: AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: true,
-                  interval: const Duration(days: 7).inMilliseconds.toDouble(),
-                  getTitlesWidget: (value, meta) {
-                    final date = DateTime.fromMillisecondsSinceEpoch(
-                      value.toInt(),
-                    );
-                    return Text(
-                      "${date.day}/${date.month}",
-                      style: theme.textTheme.bodySmall,
-                    );
-                  },
-                ),
+                sideTitles: SideTitles(showTitles: false),
               ),
             ),
-            borderData: FlBorderData(show: true),
+            lineTouchData: LineTouchData(
+              touchTooltipData: LineTouchTooltipData(
+                fitInsideHorizontally: true,
+                fitInsideVertically: true,
+                getTooltipItems: (spots) => spots
+                    .map(
+                      (spot) => LineTooltipItem(
+                        spot.y.price4,
+                        theme.textTheme.bodyLarge!,
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
             lineBarsData: [
               LineChartBarData(
+                isCurved: true,
                 spots: spots,
                 color: theme.primaryColor,
                 barWidth: 2,
@@ -347,6 +365,7 @@ class _ActionsButtons extends ConsumerWidget {
   void showBuyCoinSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (_) => BuyCryptoCoinSheet(coin: coin),
     );
   }
@@ -354,6 +373,7 @@ class _ActionsButtons extends ConsumerWidget {
   void showSellCoinSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (_) => SellCryptoCoinSheet(coin: coin),
     );
   }
@@ -395,7 +415,7 @@ class _ActionsButtons extends ConsumerWidget {
                   )
                 : const SizedBox.shrink();
           },
-          error: (_, _) => const UnknownError(),
+          error: (e, _) => UnknownError(error: e),
           loading: () => const Loader(),
         ),
       ],

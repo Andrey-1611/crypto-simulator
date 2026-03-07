@@ -1,7 +1,6 @@
 import 'package:Bitmark/data/models/coin_price.dart';
 import 'package:Bitmark/data/models/price_point.dart';
 import 'package:dio/dio.dart';
-
 import '../../core/constants/api_constants.dart';
 import '../models/crypto_coin.dart';
 import '../models/crypto_coin_details.dart';
@@ -125,7 +124,8 @@ class CryptoDataSource implements CryptoRepository {
   }
 
   @override
-  Future<List<PricePoint>> getCoinPriceHistoryBySymbol(String symbol) async {
+  Future<List<PricePoint>> getCoinPriceHistoryBySymbol(
+    String symbol) async {
     final response = await _dio.get(ApiConstants.dailyPair(symbol));
     final data = response.data['Data']['Data'] as List;
     return data.map((m) => PricePoint.fromApi(m)).toList();

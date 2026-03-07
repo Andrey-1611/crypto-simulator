@@ -40,15 +40,17 @@ class CryptoCoinsPage extends ConsumerWidget {
                       subtitle: Text('${price.price4}, ${s.coins_a(amount)}'),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () =>
-                          context.pushRoute(CryptoCoinRoute(coin: coin)),
+                          context.pushRoute(CoinDetailsRoute(coin: coin)),
                     ),
                   );
                 },
               )
             : _EmptyList(user: user, isFiltered: data.isFiltered);
       },
-      error: (_, _) =>
-          UnknownError(onPressed: () => ref.refresh(cryptoCoinsProvider(user))),
+      error: (e, _) => UnknownError(
+        onPressed: () => ref.refresh(cryptoCoinsProvider(user)),
+        error: e,
+      ),
       loading: () => const Loader(),
     );
   }

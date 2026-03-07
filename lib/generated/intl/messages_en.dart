@@ -35,6 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "add": MessageLookupByLibrary.simpleMessage("Add"),
     "alreadyHaveAccount": MessageLookupByLibrary.simpleMessage(
       "Already have an account? Sign in",
     ),
@@ -57,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "change_24h": MessageLookupByLibrary.simpleMessage("24h Change"),
     "change_24h_pct": MessageLookupByLibrary.simpleMessage("24h Change %"),
+    "change_pct": MessageLookupByLibrary.simpleMessage("Price Change %"),
     "check": MessageLookupByLibrary.simpleMessage("Check"),
     "circulating_supply": MessageLookupByLibrary.simpleMessage(
       "Circulating supply",
@@ -79,8 +81,16 @@ class MessageLookup extends MessageLookupByLibrary {
       "Number of coins on the balance",
     ),
     "coins_not_found": MessageLookupByLibrary.simpleMessage("No coins found"),
+    "compare_coins": MessageLookupByLibrary.simpleMessage("Compare Coins"),
     "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
     "created": MessageLookupByLibrary.simpleMessage("Created"),
+    "current_indicators": MessageLookupByLibrary.simpleMessage(
+      "Current Indicators",
+    ),
+    "current_price": MessageLookupByLibrary.simpleMessage("Current Price"),
+    "current_total_price": MessageLookupByLibrary.simpleMessage(
+      "Current Total Price",
+    ),
     "daily_data": MessageLookupByLibrary.simpleMessage("Daily Data"),
     "dark_theme": MessageLookupByLibrary.simpleMessage("Dark Theme"),
     "data": MessageLookupByLibrary.simpleMessage("Data"),
@@ -140,6 +150,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "no_favourite_coins": MessageLookupByLibrary.simpleMessage(
       "You have no favourite coins",
     ),
+    "no_internet_connection": MessageLookupByLibrary.simpleMessage(
+      "No internet connection",
+    ),
     "no_operations_found": MessageLookupByLibrary.simpleMessage(
       "No operations found",
     ),
@@ -160,11 +173,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "password": MessageLookupByLibrary.simpleMessage("Password"),
     "perform": MessageLookupByLibrary.simpleMessage("Perform"),
     "price": MessageLookupByLibrary.simpleMessage("Current Price"),
+    "price_p": MessageLookupByLibrary.simpleMessage("Price"),
+    "profit": MessageLookupByLibrary.simpleMessage("Profit"),
+    "profit_percent": MessageLookupByLibrary.simpleMessage("Profit %"),
     "rating": MessageLookupByLibrary.simpleMessage("Rating"),
     "resend": MessageLookupByLibrary.simpleMessage("Resend"),
     "reset": MessageLookupByLibrary.simpleMessage("Reset"),
     "resetPassword": MessageLookupByLibrary.simpleMessage("Reset password"),
     "reset_search": MessageLookupByLibrary.simpleMessage("Reset search"),
+    "search": MessageLookupByLibrary.simpleMessage("Search"),
     "search_coin": MessageLookupByLibrary.simpleMessage("Search coin"),
     "search_coins": MessageLookupByLibrary.simpleMessage("Search Coins"),
     "search_hint": MessageLookupByLibrary.simpleMessage("Search..."),
