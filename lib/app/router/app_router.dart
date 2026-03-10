@@ -9,6 +9,7 @@ import '../../features/auth/pages/reset_password_page.dart';
 import '../../features/auth/pages/sign_in_page.dart';
 import '../../features/auth/pages/sign_up_page.dart';
 import '../../features/briefcase/pages/briefcase_page.dart';
+import '../../features/briefcase/pages/favourite_coins_page.dart';
 import '../../features/history/pages/history_page.dart';
 import '../../features/history/pages/trade_page.dart';
 import '../../features/home/home_page.dart';
@@ -46,6 +47,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: RatingRoute.page),
       ],
     ),
+    AutoRoute(page: FavouriteCoinsRoute.page),
     AutoRoute(page: SettingsRoute.page),
     AutoRoute(page: SearchCoinsRoute.page),
     AutoRoute(page: CompareCoinsRoute.page),

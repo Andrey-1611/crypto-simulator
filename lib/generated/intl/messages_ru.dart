@@ -77,6 +77,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Количество монет на балансе",
     ),
     "coins_not_found": MessageLookupByLibrary.simpleMessage("Монет не найдено"),
+    "compare": MessageLookupByLibrary.simpleMessage("Сравнение"),
+    "compare_coins": MessageLookupByLibrary.simpleMessage("Сравнение монет"),
     "confirm": MessageLookupByLibrary.simpleMessage("Подтвердить"),
     "created": MessageLookupByLibrary.simpleMessage("Создан"),
     "current_indicators": MessageLookupByLibrary.simpleMessage(
@@ -183,6 +185,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "search_coin": MessageLookupByLibrary.simpleMessage("Поиск монеты"),
     "search_coins": MessageLookupByLibrary.simpleMessage("Поиск монет"),
     "search_hint": MessageLookupByLibrary.simpleMessage("Поиск..."),
+    "searching": MessageLookupByLibrary.simpleMessage("Поиск"),
     "select_period": MessageLookupByLibrary.simpleMessage("Выбрать период"),
     "sell": MessageLookupByLibrary.simpleMessage("Продать"),
     "sell_coin_a": m4,

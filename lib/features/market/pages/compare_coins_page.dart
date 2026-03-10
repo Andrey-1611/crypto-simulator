@@ -42,13 +42,15 @@ class CompareCoinsPage extends ConsumerWidget {
           PopupMenuButton<CompareCoinsPopup>(
             icon: const Icon(Icons.more_vert),
             onSelected: (value) => switch (value) {
-              .add => context.pushRoute(const MarketRoute()),
+              .market => context.pushRoute(const MarketRoute()),
               .search => context.pushRoute(const SearchCoinsRoute()),
+              .favourite => context.pushRoute(const FavouriteCoinsRoute()),
               .deleteAll => removeAll(ref),
             },
             itemBuilder: (context) => [
-              PopupMenuItem(value: .add, child: Text(s.add)),
-              PopupMenuItem(value: .search, child: Text(s.search)),
+              PopupMenuItem(value: .market, child: Text(s.market)),
+              PopupMenuItem(value: .search, child: Text(s.searching)),
+              PopupMenuItem(value: .favourite, child: Text(s.favourite)),
               PopupMenuItem(value: .deleteAll, child: Text(s.reset)),
             ],
           ),
@@ -62,6 +64,7 @@ class CompareCoinsPage extends ConsumerWidget {
                 ? Column(
                     children: [
                       SegmentedButton<CompareCoinsPeriod>(
+                        showSelectedIcon: false,
                         segments: const [
                           ButtonSegment(value: .week, label: Text('1W')),
                           ButtonSegment(value: .month, label: Text('1M')),
@@ -75,6 +78,7 @@ class CompareCoinsPage extends ConsumerWidget {
                       ),
                       const SizeBox(height: 0.01),
                       SegmentedButton<LineChartType>(
+                        showSelectedIcon: false,
                         segments: [
                           ButtonSegment(value: .price, label: Text(s.price_p)),
                           ButtonSegment(
@@ -120,10 +124,7 @@ class CompareCoinsPage extends ConsumerWidget {
                       ),
                     ],
                   )
-                : Text(
-                    s.start_searching_coins,
-                    style: theme.textTheme.displayLarge,
-                  ),
+                : Text(s.no_coins(true), style: theme.textTheme.displayLarge),
             error: (e, _) => UnknownError(error: e),
             loading: () => const Loader(),
           ),
@@ -151,7 +152,7 @@ class _ChartRound extends StatelessWidget {
   }
 }
 
-enum CompareCoinsPopup { add, search, deleteAll }
+enum CompareCoinsPopup { market, search, favourite, deleteAll }
 
 class _CompareCoinsChart extends ConsumerWidget {
   final List<CoinFullData> coins;
@@ -160,10 +161,11 @@ class _CompareCoinsChart extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
+    final theme = context.theme;
+    final period = ref.watch(compareCoinsPeriodProvider);
     final type = ref.watch(lineChartTypeProvider);
     final allSpots = coins
-        .expand((c) => PricePoint.getCoinSpots(c, type).map((p) => p.y))
+        .expand((c) => PricePoint.getCoinSpots(c, type, period).map((p) => p.y))
         .toList();
     final minY = allSpots.reduce((a, b) => a < b ? a : b) * 0.9;
     final maxY = allSpots.reduce((a, b) => a > b ? a : b) * 1.1;
@@ -172,7 +174,7 @@ class _CompareCoinsChart extends ConsumerWidget {
         minY: minY,
         maxY: maxY,
         lineBarsData: coins.asMap().entries.map((entry) {
-          final spots = PricePoint.getCoinSpots(entry.value, type);
+          final spots = PricePoint.getCoinSpots(entry.value, type, period);
           return LineChartBarData(
             spots: spots,
             isCurved: true,
@@ -188,7 +190,7 @@ class _CompareCoinsChart extends ConsumerWidget {
             getTooltipItems: (spots) => spots
                 .map(
                   (spot) => LineTooltipItem(
-                    type == .price ? spot.y.price4 : spot.y.percent,
+                    type == .price ? spot.y.priceA : spot.y.inPercent,
                     theme.textTheme.bodyLarge!,
                   ),
                 )

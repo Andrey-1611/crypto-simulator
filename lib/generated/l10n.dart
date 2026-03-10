@@ -1033,6 +1033,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Search`
+  String get searching {
+    return Intl.message('Search', name: 'searching', desc: '', args: []);
+  }
+
+  /// `Compare`
+  String get compare {
+    return Intl.message('Compare', name: 'compare', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

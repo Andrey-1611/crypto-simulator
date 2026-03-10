@@ -28,22 +28,26 @@ class PricePoint {
     );
   }
 
-  static List<FlSpot> getCoinSpots(CoinFullData coin, LineChartType type) {
+  static List<FlSpot> getCoinSpots(
+    CoinFullData coin,
+    LineChartType type,
+    CompareCoinsPeriod period,
+  ) {
+    final prices = period.days >= 90 ? coin.dailyPrices : coin.hourlyPrices;
     return switch (type) {
       .price =>
-        coin.prices
+        prices
             .map(
               (p) => FlSpot(p.time.millisecondsSinceEpoch.toDouble(), p.close),
             )
             .toList(),
       .percentChange =>
-        coin.prices
+        prices
             .map(
               (p) => FlSpot(
                 p.time.millisecondsSinceEpoch.toDouble(),
-                ((p.close - coin.prices.first.close) /
-                        coin.prices.first.close) *
-                    100,
+                100 +
+                    ((p.close - prices.first.close) / prices.first.close) * 100,
               ),
             )
             .toList(),

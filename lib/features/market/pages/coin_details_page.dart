@@ -39,13 +39,14 @@ class CoinDetailsPage extends ConsumerWidget {
     final coinP = ref.watch(coinDetailsNotifierProvider(coin));
     final favouriteP = ref.watch(favouriteNotifierProvider);
     final theme = Theme.of(context);
+    final isShort = ref.watch(coinDetailsPeriodProvider).days < 90;
     return Scaffold(
       appBar: AppBar(
         title: Row(
           children: [
             SizeBox.square(size: 0.1, child: Image.network(coin.fullImageUrl)),
             const SizeBox(width: 0.01),
-            Expanded(child: Text(coin.name, overflow: TextOverflow.ellipsis)),
+            Expanded(child: Text(coin.name, overflow: .ellipsis)),
           ],
         ),
         actions: [
@@ -68,7 +69,7 @@ class CoinDetailsPage extends ConsumerWidget {
                     IconButton(
                       onPressed: () =>
                           context.pushRoute(const CompareCoinsRoute()),
-                      icon: const Icon(Icons.receipt),
+                      icon: const Icon(Icons.compare_arrows),
                     ),
                   ],
                 );
@@ -89,21 +90,25 @@ class CoinDetailsPage extends ConsumerWidget {
             return Column(
               children: [
                 _PriceCard(coin: coin),
-                SegmentedButton<CoinDetailsPeriod>(
-                  segments: const [
-                    ButtonSegment(value: .week, label: Text('1W')),
-                    ButtonSegment(value: .month, label: Text('1M')),
-                    ButtonSegment(value: .threeMonths, label: Text('3M')),
-                    ButtonSegment(value: .sixMonths, label: Text('6M')),
-                    ButtonSegment(value: .year, label: Text('1Y')),
-                  ],
-                  selected: {ref.watch(coinDetailsPeriodProvider)},
-                  onSelectionChanged: (period) => changePeriod(ref, period),
-                ),
                 Expanded(
                   child: ListView(
                     children: [
-                      _LineChart(prices: data.prices),
+                      SegmentedButton<CoinDetailsPeriod>(
+                        showSelectedIcon: false,
+                        segments: const [
+                          ButtonSegment(value: .week, label: Text('1W')),
+                          ButtonSegment(value: .month, label: Text('1M')),
+                          ButtonSegment(value: .threeMonths, label: Text('3M')),
+                          ButtonSegment(value: .sixMonths, label: Text('6M')),
+                          ButtonSegment(value: .year, label: Text('1Y')),
+                        ],
+                        selected: {ref.watch(coinDetailsPeriodProvider)},
+                        onSelectionChanged: (period) =>
+                            changePeriod(ref, period),
+                      ),
+                      _LineChart(
+                        prices: isShort ? data.hourlyPrices : data.dailyPrices,
+                      ),
                       _DataBlocs(coin: coin),
                     ],
                   ),
@@ -220,7 +225,7 @@ class _LineChart extends StatelessWidget {
                 getTooltipItems: (spots) => spots
                     .map(
                       (spot) => LineTooltipItem(
-                        spot.y.price4,
+                        spot.y.priceA,
                         theme.textTheme.bodyLarge!,
                       ),
                     )

@@ -31,5 +31,8 @@ abstract class ApiConstants {
   static String dailyPair(String symbol) =>
       '/data/v2/histoday?fsym=$symbol&tsym=USD&limit=366';
 
+  static String hourlyPair(String symbol) =>
+      '/data/v2/histohour?fsym=$symbol&tsym=USD&limit=730';
+
   static const imagesHost = 'https://www.cryptocompare.com';
 }

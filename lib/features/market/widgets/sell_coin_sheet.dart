@@ -78,9 +78,15 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
   Widget build(BuildContext context) {
     final theme = context.theme;
     final userP = ref.watch(briefcaseNotifierProvider(null));
+    final size = MediaQuery.of(context);
     final s = S.of(context);
     return Padding(
-      padding: .all(32.sp),
+      padding: .only(
+        top: 32.sp,
+        left: 32.sp,
+        right: 32.sp,
+        bottom: size.viewInsets.bottom + 32.sp,
+      ),
       child: userP.when(
         data: (data) {
           final user = data.user;
@@ -98,9 +104,9 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
                 s.sell_coin_a(coin.info.name),
                 style: theme.textTheme.displayMedium,
               ),
-              const SizeBox(height: 0.06,),
+              const SizeBox(height: 0.06),
               CoinsTextField(coinsController: _coinsController),
-              const SizeBox(height: 0.01,),
+              const SizeBox(height: 0.01),
               InfoCard(
                 title: s.coins_balance,
                 value: userCoinsAmount.toString(),
@@ -112,7 +118,7 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
                     _totalPrice != 0 ? sell(context, userCoinsAmount) : null,
                 child: Text(s.confirm),
               ),
-              const SizeBox(height: 0.08,),
+              const SizeBox(height: 0.08),
             ],
           );
         },

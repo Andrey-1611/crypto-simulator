@@ -1,5 +1,5 @@
 import 'package:Bitmark/app/router/app_router.dart';
-import 'package:Bitmark/app/widgets/search_field.dart';
+import 'package:Bitmark/features/market/providers/sort_market_provider.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:Bitmark/app/widgets/coin_card.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +9,9 @@ import '../../../app/widgets/loader.dart';
 import '../../../app/widgets/settings_button.dart';
 import '../../../app/widgets/unknown_error.dart';
 import '../../../core/utils/dialog_helper.dart';
-import '../../../core/utils/extensions.dart';
 import '../../../core/utils/toast_helper.dart';
 import '../../../generated/l10n.dart';
 import '../providers/compare_coins_provider.dart';
-import '../providers/filter_providers.dart';
-import '../providers/filtered_coins_provider.dart';
 import '../providers/market_provider.dart';
 import '../widgets/market_sort_sheet.dart';
 
@@ -27,14 +24,7 @@ class MarketPage extends ConsumerStatefulWidget {
 }
 
 class _MarketPageState extends ConsumerState<MarketPage> {
-  final _searchController = TextEditingController();
   final _scrollController = ScrollController();
-
-  bool isFromCompare(BuildContext context) {
-    final stack = context.router.stack;
-    return stack.length >= 2 &&
-        stack[stack.length - 2].name == CompareCoinsRoute.name;
-  }
 
   @override
   void initState() {
@@ -54,10 +44,6 @@ class _MarketPageState extends ConsumerState<MarketPage> {
         );
       });
     }
-    final text = ref.read(searchCoinsProvider);
-    if (_searchController.text != text) {
-      _searchController.text = text;
-    }
     _scrollController.addListener(_onScroll);
   }
 
@@ -68,104 +54,16 @@ class _MarketPageState extends ConsumerState<MarketPage> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final cryptoCoinsP = ref.watch(filteredCoinsProvider);
-    final s = S.of(context);
-    return Scaffold(
-      body: CustomScrollView(
-        controller: _scrollController,
-        slivers: [
-          SliverAppBar(
-            pinned: true,
-            snap: true,
-            floating: true,
-            automaticallyImplyLeading: isFromCompare(context),
-            title: Text(s.market),
-            actions: [
-              IconButton(
-                onPressed: () => context.pushRoute(const SearchCoinsRoute()),
-                icon: const Icon(Icons.search),
-              ),
-              const SettingsButton(),
-            ],
-            bottom: PreferredSize(
-              preferredSize: .fromHeight(62.sp),
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: 12.sp,
-                  right: 12.sp,
-                  bottom: 12.sp,
-                ),
-                child: _SearchAndFilterRow(searchController: _searchController),
-              ),
-            ),
-          ),
-          SliverPadding(
-            padding: EdgeInsets.all(16.sp),
-            sliver: cryptoCoinsP.when(
-              data: (coins) {
-                return coins.isNotEmpty
-                    ? SliverList.builder(
-                        itemCount: coins.length,
-                        itemBuilder: (context, index) {
-                          final coin = coins[index];
-                          return CoinCard(coin: coin.coin, price: coin.price);
-                        },
-                      )
-                    : SliverFillRemaining(
-                        child: _EmptyList(searchController: _searchController),
-                      );
-              },
-              loading: () => const SliverFillRemaining(child: Loader()),
-              error: (e, _) => SliverFillRemaining(
-                child: UnknownError(
-                  onPressed: () => ref
-                      .read(marketNotifierProvider.notifier)
-                      .getCryptoCoins(),
-                  error: e,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+  bool isFromCompare(BuildContext context) {
+    final stack = context.router.stack;
+    return stack.length >= 2 &&
+        stack[stack.length - 2].name == CompareCoinsRoute.name;
   }
-}
 
-class _EmptyList extends ConsumerWidget {
-  final TextEditingController searchController;
-
-  const _EmptyList({required this.searchController});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = context.theme;
-    final s = S.of(context);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(s.coins_not_found, style: theme.textTheme.displayLarge),
-        TextButton(
-          onPressed: () {
-            ref.read(searchCoinsProvider.notifier).update((state) => '');
-            searchController.clear();
-          },
-          child: Text(s.reset_search),
-        ),
-      ],
-    );
+  void getCoins(WidgetRef ref) {
+    ref.read(sortMarketProvider.notifier).update((state) => .marketCap);
+    ref.read(marketNotifierProvider.notifier).getCryptoCoins();
   }
-}
-
-class _SearchAndFilterRow extends ConsumerWidget {
-  final TextEditingController searchController;
-
-  const _SearchAndFilterRow({required this.searchController});
-
-  void update(WidgetRef ref, String text) =>
-      ref.read(searchCoinsProvider.notifier).update((state) => text);
 
   void showMarketFilters(BuildContext context) {
     showModalBottomSheet(
@@ -175,24 +73,57 @@ class _SearchAndFilterRow extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      children: [
-        Expanded(
-          child: SearchField(
-            controller: searchController,
-            reset: () {
-              searchController.clear();
-              update(ref, '');
+  Widget build(BuildContext context) {
+    final cryptoCoinsP = ref.watch(marketNotifierProvider);
+    final s = S.of(context);
+    final fromCompare = isFromCompare(context);
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: fromCompare,
+        title: Text(s.market),
+        leading: !fromCompare
+            ? IconButton(
+                onPressed: () => context.pushRoute(const SearchCoinsRoute()),
+                icon: const Icon(Icons.search),
+              )
+            : null,
+        actions: [
+          fromCompare
+              ? IconButton(
+                  onPressed: () => showMarketFilters(context),
+                  icon: const Icon(Icons.swap_vert),
+                )
+              : PopupMenuButton<MarketPopup>(
+                  icon: const Icon(Icons.more_vert),
+                  onSelected: (value) => switch (value) {
+                    .sort => showMarketFilters(context),
+                    .compare => context.pushRoute(const CompareCoinsRoute()),
+                  },
+                  itemBuilder: (context) => [
+                    PopupMenuItem(value: .sort, child: Text(s.sort)),
+                    PopupMenuItem(value: .compare, child: Text(s.compare)),
+                  ],
+                ),
+          if (!fromCompare) const SettingsButton(),
+        ],
+      ),
+      body: Padding(
+        padding: .all(16.sp),
+        child: cryptoCoinsP.when(
+          data: (coins) => ListView.builder(
+            itemCount: coins.length,
+            itemBuilder: (context, index) {
+              final coin = coins[index];
+              return CoinCard(coin: coin.coin, price: coin.price);
             },
-            onChanged: (text) => update(ref, text),
           ),
+          loading: () => const Loader(),
+          error: (e, _) =>
+              UnknownError(onPressed: () => getCoins(ref), error: e),
         ),
-        IconButton(
-          onPressed: () => showMarketFilters(context),
-          icon: const Icon(Icons.more_vert),
-        ),
-      ],
+      ),
     );
   }
 }
+
+enum MarketPopup { sort, compare }

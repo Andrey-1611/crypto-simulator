@@ -134,5 +134,7 @@
   "search": "Search",
   "compare_coins": "Compare Coins",
   "price_p": "Price",
-  "change_pct": "Price Change %"
+  "change_pct": "Price Change %",
+  "searching": "Search",
+  "compare": "Compare"
 }

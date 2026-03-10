@@ -41,10 +41,23 @@ extension PriceFormatter on double {
 
   String get price => '${toStringAsFixed(0)} \$';
 
+  String get priceA {
+    final value = switch (this) {
+      >= 1000 => 0,
+      >= 1 => 2,
+      >= 0.01 => 4,
+      >= 0.0001 => 6,
+      _ => 8,
+    };
+    return '${toStringAsFixed(value)} \$';
+  }
+
   String get percent {
     final sign = this > 0 ? '+' : '';
     return '$sign${toStringAsFixed(2)} %';
   }
+
+  String get inPercent => '${toStringAsFixed(2)} %';
 
   String get toCryptoPrice {
     return switch (this) {

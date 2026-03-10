@@ -86,7 +86,7 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
       ),
       child: userP.when(
         data: (data) => Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: .center,
           mainAxisSize: .min,
           children: [
             Text(

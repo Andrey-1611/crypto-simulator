@@ -134,5 +134,8 @@
   "add": "Добавить",
   "search": "Найти",
   "price_p": "Цена",
-  "change_pct": "Изменение в %"
+  "change_pct": "Изменение в %",
+  "compare_coins": "Сравнение монет",
+  "searching": "Поиск",
+  "compare": "Сравнение"
 }

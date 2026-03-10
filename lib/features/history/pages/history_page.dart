@@ -66,11 +66,13 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
     ref.read(filterTradesOnSheetProvider.notifier).state = .initial();
   }
 
+  bool get userIsNull => user == null;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final s = S.of(context);
     return AppBar(
-      automaticallyImplyLeading: user != null,
+      automaticallyImplyLeading: !userIsNull,
       title: Text(s.history),
       actions: [
         PopupMenuButton<PopupMenuType>(
@@ -86,7 +88,7 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
             PopupMenuItem(value: .reset, child: Text(s.reset)),
           ],
         ),
-        const SettingsButton(),
+        userIsNull ? const SettingsButton() : const SizedBox.shrink(),
       ],
     );
   }
@@ -146,7 +148,7 @@ class _EmptyList extends ConsumerWidget {
     final theme = context.theme;
     final s = S.of(context);
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: .center,
       children: [
         Text(
           isFiltered ? s.no_operations_found : s.empty_trades(user != null),

@@ -200,7 +200,7 @@ void main() {
         requestOptions: RequestOptions(path: ''),
       ),
     );
-    final result = await dataSource.getCoinPriceHistoryBySymbol(
+    final result = await dataSource.getCoinPriceDailyHistory(
       MockData.coinBTC.symbol,
     );
     expect(result, isA<List<PricePoint>>());
