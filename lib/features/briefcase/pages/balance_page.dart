@@ -48,10 +48,6 @@ class BalancePage extends ConsumerWidget {
                   value: tradesUtils.maxTrade.price4,
                 ),
                 InfoRow(
-                  title: s.num_transactions,
-                  value: tradesUtils.tradesLength.toString(),
-                ),
-                InfoRow(
                   title: s.first_trade,
                   value: tradesUtils.firstTrade?.hourFormat ?? '-',
                 ),
@@ -63,16 +59,20 @@ class BalancePage extends ConsumerWidget {
                   title: s.total_spent,
                   value: trades.tradesTotalPrice.price4,
                 ),
+                InfoRow(title: s.spent_7d, value: tradesUtils.spent7d.price4),
+                InfoRow(title: s.spent_24h, value: tradesUtils.spent24h.price4),
+                InfoRow(
+                  title: s.num_transactions,
+                  value: tradesUtils.tradesLength.toString(),
+                ),
                 InfoRow(
                   title: s.trades_7d,
                   value: tradesUtils.trades7d.toString(),
                 ),
-                InfoRow(title: s.spent_7d, value: tradesUtils.spent7d.price4),
                 InfoRow(
                   title: s.trades_24h,
                   value: tradesUtils.trades24h.toString(),
                 ),
-                InfoRow(title: s.spent_24h, value: tradesUtils.spent24h.price4),
               ],
             ),
             InfoBloc(

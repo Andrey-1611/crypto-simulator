@@ -111,6 +111,7 @@ class _MarketPageState extends ConsumerState<MarketPage> {
         padding: .all(16.sp),
         child: cryptoCoinsP.when(
           data: (coins) => ListView.builder(
+            controller: _scrollController,
             itemCount: coins.length,
             itemBuilder: (context, index) {
               final coin = coins[index];
