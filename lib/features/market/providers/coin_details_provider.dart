@@ -6,14 +6,17 @@ import 'package:flutter_riverpod/legacy.dart';
 import '../../../data/models/crypto_coin.dart';
 import '../../../data/repositories/crypto_repository.dart';
 
-final coinDetailsNotifierProvider =
-    AsyncNotifierProvider.family<CoinDetailsNotifier, CoinFullData, CryptoCoin>(
+final coinDetailsNotifierProvider = AsyncNotifierProvider.autoDispose
+    .family<CoinDetailsNotifier, CoinFullData, CryptoCoin>(
       (coin) => CoinDetailsNotifier(coin: coin),
     );
 
-final _coinAllHistory = StateProvider<List<PricePoint>>((_) => []);
+final _dailyHistory = StateProvider<List<PricePoint>>((_) => []);
+final _hourlyHistory = StateProvider<List<PricePoint>>((_) => []);
 
-final coinDetailsPeriodProvider = StateProvider<CoinDetailsPeriod>((_) => .year);
+final coinDetailsPeriodProvider = StateProvider<CoinDetailsPeriod>(
+  (_) => .year,
+);
 
 class CoinDetailsNotifier extends AsyncNotifier<CoinFullData> {
   final CryptoCoin coin;
@@ -25,19 +28,53 @@ class CoinDetailsNotifier extends AsyncNotifier<CoinFullData> {
     final details = await ref
         .read(cryptoRepositoryProvider)
         .getCoinDetailsBySymbol(coin);
-    final prices = await ref
+    final dailyPrices = await ref
         .read(cryptoRepositoryProvider)
-        .getCoinPriceHistoryBySymbol(coin.symbol);
-    final coinData = CoinFullData(coin: details, prices: prices);
+        .getCoinPriceDailyHistory(coin.symbol);
+    final hourlyPrices = await ref
+        .read(cryptoRepositoryProvider)
+        .getCoinPriceHourlyHistory(coin.symbol);
+    final coinData = CoinFullData(
+      coin: details,
+      dailyPrices: dailyPrices,
+      hourlyPrices: hourlyPrices,
+    );
     ref.read(compareCoinsNotifierProvider.notifier).setFirstCoin(coinData);
-    ref.read(_coinAllHistory.notifier).state = prices;
+    ref.read(_dailyHistory.notifier).state = dailyPrices;
+    ref.read(_hourlyHistory.notifier).state = hourlyPrices;
+    final period = ref.read(coinDetailsPeriodProvider);
+    if (period != .year) {
+      if (period.days >= 90) {
+        return coinData.copyWith(
+          dailyPrices: coinData.dailyPrices.sublist(
+            coinData.dailyPrices.length - period.days,
+          ),
+        );
+      } else {
+        return coinData.copyWith(
+          hourlyPrices: coinData.hourlyPrices.sublist(
+            coinData.hourlyPrices.length - period.days * 24,
+          ),
+        );
+      }
+    }
     return coinData;
   }
 
   void changePeriod(CoinDetailsPeriod period) {
-    final allPrices = ref.read(_coinAllHistory);
-    final newPrices = allPrices.sublist(allPrices.length - period.days);
-    state = .data(state.requireValue.copyWith(prices: newPrices));
+    final dailyPrices = ref.read(_dailyHistory);
+    final hourlyPrices = ref.read(_hourlyHistory);
+    late final CoinFullData newCoin;
+    if (period.days >= 90) {
+      final newPrices = dailyPrices.sublist(dailyPrices.length - period.days);
+      newCoin = state.requireValue.copyWith(dailyPrices: newPrices);
+    } else {
+      final newPrices = hourlyPrices.sublist(
+        hourlyPrices.length - period.days * 24,
+      );
+      newCoin = state.requireValue.copyWith(hourlyPrices: newPrices);
+    }
+    state = .data(newCoin);
     ref.read(coinDetailsPeriodProvider.notifier).state = period;
   }
 }
@@ -53,4 +90,3 @@ enum CoinDetailsPeriod {
 
   const CoinDetailsPeriod(this.days);
 }
-

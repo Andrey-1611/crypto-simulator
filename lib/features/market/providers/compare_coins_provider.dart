@@ -37,10 +37,17 @@ class CompareCoinsNotifier extends AsyncNotifier<List<CoinFullData>> {
       final coinDetails = await ref
           .read(cryptoRepositoryProvider)
           .getCoinDetailsBySymbol(coin);
-      final coinPrices = await ref
+      final dailyPrices = await ref
           .read(cryptoRepositoryProvider)
-          .getCoinPriceHistoryBySymbol(coin.symbol);
-      final coinData = CoinFullData(coin: coinDetails, prices: coinPrices);
+          .getCoinPriceDailyHistory(coin.symbol);
+      final hourlyPrices = await ref
+          .read(cryptoRepositoryProvider)
+          .getCoinPriceDailyHistory(coin.symbol);
+      final coinData = CoinFullData(
+        coin: coinDetails,
+        dailyPrices: dailyPrices,
+        hourlyPrices: hourlyPrices,
+      );
       final allCoins = ref.read(_coinsAllHistoryProvider.notifier);
       allCoins.state = [...allCoins.state, coinData];
       return [...coins, coinData];
@@ -62,9 +69,20 @@ class CompareCoinsNotifier extends AsyncNotifier<List<CoinFullData>> {
 
   void changePeriod(CompareCoinsPeriod period) {
     final allCoins = ref.read(_coinsAllHistoryProvider);
+    late final CoinFullData newCoin;
     final updated = allCoins.map((c) {
-      final newPrices = c.prices.sublist(c.prices.length - period.days);
-      return c.copyWith(prices: newPrices);
+      if (period.days >= 90) {
+        final newPrices = c.dailyPrices.sublist(
+          c.dailyPrices.length - period.days,
+        );
+        newCoin = c.copyWith(dailyPrices: newPrices);
+      } else {
+        final newPrices = c.hourlyPrices.sublist(
+          c.hourlyPrices.length - period.days * 24,
+        );
+        newCoin = c.copyWith(hourlyPrices: newPrices);
+      }
+      return newCoin;
     }).toList();
     state = .data(updated);
     ref.read(compareCoinsPeriodProvider.notifier).state = period;

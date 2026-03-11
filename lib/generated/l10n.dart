@@ -1033,6 +1033,91 @@ class S {
       args: [],
     );
   }
+
+  /// `Search`
+  String get searching {
+    return Intl.message('Search', name: 'searching', desc: '', args: []);
+  }
+
+  /// `Compare`
+  String get compare {
+    return Intl.message('Compare', name: 'compare', desc: '', args: []);
+  }
+
+  /// `Average trade`
+  String get avg_trade {
+    return Intl.message('Average trade', name: 'avg_trade', desc: '', args: []);
+  }
+
+  /// `Largest trade`
+  String get largest_trade {
+    return Intl.message(
+      'Largest trade',
+      name: 'largest_trade',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Trades (7 days)`
+  String get trades_7d {
+    return Intl.message(
+      'Trades (7 days)',
+      name: 'trades_7d',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Spent (7 days)`
+  String get spent_7d {
+    return Intl.message('Spent (7 days)', name: 'spent_7d', desc: '', args: []);
+  }
+
+  /// `Trades (24h)`
+  String get trades_24h {
+    return Intl.message('Trades (24h)', name: 'trades_24h', desc: '', args: []);
+  }
+
+  /// `Spent (24h)`
+  String get spent_24h {
+    return Intl.message('Spent (24h)', name: 'spent_24h', desc: '', args: []);
+  }
+
+  /// `Coins bought (7d)`
+  String get num_coins_purchased_7d {
+    return Intl.message(
+      'Coins bought (7d)',
+      name: 'num_coins_purchased_7d',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Coins bought (24h)`
+  String get num_coins_purchased_24h {
+    return Intl.message(
+      'Coins bought (24h)',
+      name: 'num_coins_purchased_24h',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First Trade`
+  String get first_trade {
+    return Intl.message('First Trade', name: 'first_trade', desc: '', args: []);
+  }
+
+  /// `Last Trade`
+  String get last_trade {
+    return Intl.message('Last Trade', name: 'last_trade', desc: '', args: []);
+  }
+
+  /// `Rate`
+  String get rate {
+    return Intl.message('Rate', name: 'rate', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

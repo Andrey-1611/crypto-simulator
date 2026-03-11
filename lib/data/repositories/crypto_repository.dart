@@ -31,5 +31,7 @@ abstract interface class CryptoRepository {
 
   Future<List<CoinPrice>> searchCoins(String query);
 
-  Future<List<PricePoint>> getCoinPriceHistoryBySymbol(String symbol);
+  Future<List<PricePoint>> getCoinPriceDailyHistory(String symbol);
+
+  Future<List<PricePoint>> getCoinPriceHourlyHistory(String symbol);
 }

@@ -10,6 +10,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../app/router/app_router.dart';
 import '../../../core/utils/extensions.dart';
 import '../../../generated/l10n.dart';
 import '../providers/search_coins_provider.dart';
@@ -31,20 +32,28 @@ class _SearchCoinsPageState extends ConsumerState<SearchCoinsPage> {
   @override
   void initState() {
     searchController.text = ref.read(queryProvider);
-    ref.listenManual(compareCoinsNotifierProvider, (_, state) {
-      state.when(
-        data: (_) {
-          context.pop();
-          context.pop();
-        },
-        error: (_, _)  {
-          context.pop();
-          ToastHelper.unknownError();
-        },
-        loading: () => DialogHelper.loading(context),
-      );
-    });
+    if (isFromCompare(context)) {
+      ref.listenManual(compareCoinsNotifierProvider, (_, state) {
+        state.when(
+          data: (_) {
+            context.pop();
+            context.pop();
+          },
+          error: (_, _) {
+            context.pop();
+            ToastHelper.unknownError();
+          },
+          loading: () => DialogHelper.loading(context),
+        );
+      });
+    }
     super.initState();
+  }
+
+  bool isFromCompare(BuildContext context) {
+    final stack = context.router.stack;
+    return stack.length >= 2 &&
+        stack[stack.length - 2].name == CompareCoinsRoute.name;
   }
 
   @override

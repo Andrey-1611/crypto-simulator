@@ -139,6 +139,22 @@ class EmailVerificationRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [FavouriteCoinsPage]
+class FavouriteCoinsRoute extends PageRouteInfo<void> {
+  const FavouriteCoinsRoute({List<PageRouteInfo>? children})
+    : super(FavouriteCoinsRoute.name, initialChildren: children);
+
+  static const String name = 'FavouriteCoinsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const FavouriteCoinsPage();
+    },
+  );
+}
+
+/// generated route for
 /// [HistoryPage]
 class HistoryRoute extends PageRouteInfo<HistoryRouteArgs> {
   HistoryRoute({Key? key, AppUserDetails? user, List<PageRouteInfo>? children})

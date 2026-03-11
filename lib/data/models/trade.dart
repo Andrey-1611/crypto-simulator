@@ -67,31 +67,23 @@ class Trade {
         final matchesName = trade.coin.name.toLowerCase().contains(query);
         final matchesSymbol = trade.coin.symbol.toLowerCase().contains(query);
         if (!matchesName && !matchesSymbol) return false;
-      }
-
-      if (filter.tradeType != TradeType.all && trade.type != filter.tradeType) {
+      } else if (filter.tradeType != TradeType.all &&
+          trade.type != filter.tradeType) {
         return false;
-      }
-
-      if (filter.dateRange case final range?) {
+      } else if (filter.dateRange case final range?) {
         if (trade.createdAt.isBefore(range.start) ||
             trade.createdAt.isAfter(range.end)) {
           return false;
         }
-      }
-
-      if (filter.totalPriceRange case final range?) {
+      } else if (filter.totalPriceRange case final range?) {
         if (trade.totalPrice < range.start || trade.totalPrice > range.end) {
           return false;
         }
-      }
-
-      if (filter.amountRange case final range?) {
+      } else if (filter.amountRange case final range?) {
         if (trade.amount < range.start || trade.amount > range.end) {
           return false;
         }
       }
-
       return true;
     }).toList();
   }

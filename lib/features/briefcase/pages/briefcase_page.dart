@@ -72,6 +72,8 @@ class BriefcasePage extends ConsumerWidget {
                   ),
           ],
           bottom: TabBar(
+            indicatorSize: .tab,
+            dividerColor: Colors.transparent,
             tabs: [
               Tab(text: s.balance),
               Tab(text: s.coins),

@@ -1,3 +1,4 @@
+import 'package:Bitmark/core/utils/trades_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/widgets/info_bloc.dart';
@@ -24,6 +25,7 @@ class BalancePage extends ConsumerWidget {
         final user = data.user;
         final trades = data.trades;
         final balance = data.coinsBalance;
+        final tradesUtils = TradesUtils(trades: trades);
         return ListView(
           children: [
             InfoBloc(
@@ -40,13 +42,36 @@ class BalancePage extends ConsumerWidget {
             InfoBloc(
               title: s.transaction_info,
               children: [
+                InfoRow(title: s.avg_trade, value: tradesUtils.avgTrade.price4),
                 InfoRow(
-                  title: s.num_transactions,
-                  value: trades.length.toString(),
+                  title: s.largest_trade,
+                  value: tradesUtils.maxTrade.price4,
+                ),
+                InfoRow(
+                  title: s.first_trade,
+                  value: tradesUtils.firstTrade?.hourFormat ?? '-',
+                ),
+                InfoRow(
+                  title: s.last_trade,
+                  value: tradesUtils.lastTrade?.hourFormat ?? '-',
                 ),
                 InfoRow(
                   title: s.total_spent,
                   value: trades.tradesTotalPrice.price4,
+                ),
+                InfoRow(title: s.spent_7d, value: tradesUtils.spent7d.price4),
+                InfoRow(title: s.spent_24h, value: tradesUtils.spent24h.price4),
+                InfoRow(
+                  title: s.num_transactions,
+                  value: tradesUtils.tradesLength.toString(),
+                ),
+                InfoRow(
+                  title: s.trades_7d,
+                  value: tradesUtils.trades7d.toString(),
+                ),
+                InfoRow(
+                  title: s.trades_24h,
+                  value: tradesUtils.trades24h.toString(),
                 ),
               ],
             ),
@@ -58,12 +83,20 @@ class BalancePage extends ConsumerWidget {
                   value: user.coins.length.toString(),
                 ),
                 InfoRow(
+                  title: s.num_coins,
+                  value: user.allCoinsLength.toString(),
+                ),
+                InfoRow(
                   title: s.num_coins_purchased,
                   value: trades.boughtCoinsLength.toString(),
                 ),
                 InfoRow(
-                  title: s.num_coins,
-                  value: user.allCoinsLength.toString(),
+                  title: s.num_coins_purchased_7d,
+                  value: tradesUtils.coins7d.toString(),
+                ),
+                InfoRow(
+                  title: s.num_coins_purchased_24h,
+                  value: tradesUtils.coins24h.toString(),
                 ),
               ],
             ),

@@ -14,7 +14,7 @@ extension EmailValidator on String {
 }
 
 extension DateFormatter on DateTime {
-  String get format => DateFormat('dd.MM.yyyy HH:mm').format(this);
+  String get hourFormat => DateFormat('dd.MM.yyyy HH:mm').format(this);
 
   String get dayFormat => DateFormat('dd.MM.yyyy').format(this);
 }
@@ -35,16 +35,29 @@ extension ContextX on BuildContext {
 }
 
 extension PriceFormatter on double {
-  String get price4 => '${toStringAsFixed(4)} \$';
+  String get price4 => this != 0.0 ? '${toStringAsFixed(4)} \$' : '0 \$';
 
   String get price2 => '${toStringAsFixed(2)} \$';
 
   String get price => '${toStringAsFixed(0)} \$';
 
+  String get priceA {
+    final value = switch (this) {
+      >= 1000 => 0,
+      >= 1 => 2,
+      >= 0.01 => 4,
+      >= 0.0001 => 6,
+      _ => 8,
+    };
+    return '${toStringAsFixed(value)} \$';
+  }
+
   String get percent {
     final sign = this > 0 ? '+' : '';
     return '$sign${toStringAsFixed(2)} %';
   }
+
+  String get inPercent => '${toStringAsFixed(2)} %';
 
   String get toCryptoPrice {
     return switch (this) {

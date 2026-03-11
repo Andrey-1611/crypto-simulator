@@ -6,14 +6,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/widgets/size_box.dart';
 import '../../../core/utils/extensions.dart';
 import '../../../data/models/crypto_coin_details.dart';
-import '../providers/filter_providers.dart';
+import '../providers/sort_market_provider.dart';
 
 class MarketSortSheet extends ConsumerWidget {
   const MarketSortSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sort = ref.watch(sortCryptoCoinsProvider);
+    final sort = ref.watch(sortMarketProvider);
     final theme = context.theme;
     final s = S.of(context);
     return Padding(
@@ -27,7 +27,7 @@ class MarketSortSheet extends ConsumerWidget {
           RadioGroup<SortType>(
             groupValue: sort,
             onChanged: (sortType) {
-              ref.read(sortCryptoCoinsProvider.notifier).state = sortType!;
+              ref.read(sortMarketProvider.notifier).state = sortType!;
               ref.read(marketNotifierProvider.notifier).changeSort(sortType);
             },
             child: Column(
