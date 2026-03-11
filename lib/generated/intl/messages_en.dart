@@ -168,8 +168,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "num_coins_purchased": MessageLookupByLibrary.simpleMessage(
       "Number of Coins Purchased",
     ),
-    "num_coins_purchased_24h": MessageLookupByLibrary.simpleMessage(""),
-    "num_coins_purchased_7d": MessageLookupByLibrary.simpleMessage(""),
+    "num_coins_purchased_24h": MessageLookupByLibrary.simpleMessage(
+      "Coins bought (24h)",
+    ),
+    "num_coins_purchased_7d": MessageLookupByLibrary.simpleMessage(
+      "Coins bought (7d)",
+    ),
     "num_transactions": MessageLookupByLibrary.simpleMessage(
       "Number of Transactions",
     ),
@@ -183,6 +187,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "price_p": MessageLookupByLibrary.simpleMessage("Price"),
     "profit": MessageLookupByLibrary.simpleMessage("Profit"),
     "profit_percent": MessageLookupByLibrary.simpleMessage("Profit %"),
+    "rate": MessageLookupByLibrary.simpleMessage("Rate"),
     "rating": MessageLookupByLibrary.simpleMessage("Rating"),
     "resend": MessageLookupByLibrary.simpleMessage("Resend"),
     "reset": MessageLookupByLibrary.simpleMessage("Reset"),

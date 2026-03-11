@@ -1084,15 +1084,20 @@ class S {
     return Intl.message('Spent (24h)', name: 'spent_24h', desc: '', args: []);
   }
 
-  /// ``
+  /// `Coins bought (7d)`
   String get num_coins_purchased_7d {
-    return Intl.message('', name: 'num_coins_purchased_7d', desc: '', args: []);
+    return Intl.message(
+      'Coins bought (7d)',
+      name: 'num_coins_purchased_7d',
+      desc: '',
+      args: [],
+    );
   }
 
-  /// ``
+  /// `Coins bought (24h)`
   String get num_coins_purchased_24h {
     return Intl.message(
-      '',
+      'Coins bought (24h)',
       name: 'num_coins_purchased_24h',
       desc: '',
       args: [],
@@ -1107,6 +1112,11 @@ class S {
   /// `Last Trade`
   String get last_trade {
     return Intl.message('Last Trade', name: 'last_trade', desc: '', args: []);
+  }
+
+  /// `Rate`
+  String get rate {
+    return Intl.message('Rate', name: 'rate', desc: '', args: []);
   }
 }
 

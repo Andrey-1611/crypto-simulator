@@ -1,4 +1,5 @@
 import 'package:Bitmark/app/runner/app_dependencies.dart';
+import 'package:Bitmark/core/utils/url_util.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:Bitmark/app/router/app_router.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     children: [
                       InfoRow(title: s.name, value: user.name),
                       InfoRow(title: s.email, value: user.email),
-                      InfoRow(title: s.created, value: user.createdAt.hourFormat),
+                      InfoRow(
+                        title: s.created,
+                        value: user.createdAt.hourFormat,
+                      ),
                     ],
                   );
                 },
@@ -103,6 +107,16 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     onChanged: () => ref
                         .read(settingsNotifierProvider.notifier)
                         .setLanguage(!settings.language),
+                  ),
+                  Card(
+                    child: ListTile(
+                      onTap: () => ref.read(urlUtilProvider).openInRustore(),
+                      title:  Text(s.rate),
+                      trailing: Icon(
+                        Icons.favorite,
+                        color: theme.colorScheme.error,
+                      ),
+                    ),
                   ),
                 ],
               ),

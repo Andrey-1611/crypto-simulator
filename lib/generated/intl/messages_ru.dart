@@ -186,6 +186,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "price_p": MessageLookupByLibrary.simpleMessage("Цена"),
     "profit": MessageLookupByLibrary.simpleMessage("Прибыль"),
     "profit_percent": MessageLookupByLibrary.simpleMessage("Прибыль в %"),
+    "rate": MessageLookupByLibrary.simpleMessage("Оценить"),
     "rating": MessageLookupByLibrary.simpleMessage("Рейтинг"),
     "resend": MessageLookupByLibrary.simpleMessage("Отправить повторно"),
     "reset": MessageLookupByLibrary.simpleMessage("Сбросить"),
