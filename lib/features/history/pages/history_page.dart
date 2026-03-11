@@ -122,7 +122,7 @@ class _TradesList extends StatelessWidget {
               '${trade.type.type} ${trade.amount} ${trade.coin.name}',
               overflow: TextOverflow.ellipsis,
             ),
-            subtitle: Text(trade.createdAt.format),
+            subtitle: Text(trade.createdAt.hourFormat),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.pushRoute(TradeRoute(trade: trade)),
           ),

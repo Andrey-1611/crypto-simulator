@@ -79,7 +79,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     children: [
                       InfoRow(title: s.name, value: user.name),
                       InfoRow(title: s.email, value: user.email),
-                      InfoRow(title: s.created, value: user.createdAt.format),
+                      InfoRow(title: s.created, value: user.createdAt.hourFormat),
                     ],
                   );
                 },

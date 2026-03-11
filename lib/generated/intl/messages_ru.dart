@@ -26,7 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "${Intl.plural(amount, one: '1 монета', few: '${amount} монеты', other: '${amount} монет')}";
 
   static String m2(userExists) =>
-      "${Intl.select(userExists, {'true': 'Нет операций', 'other': 'У вас еще нет операций'})}";
+      "${Intl.select(userExists, {'true': 'Нет сделок', 'other': 'У вас еще нет сделок'})}";
 
   static String m3(userExists) =>
       "${Intl.select(userExists, {'true': 'Нет монет', 'other': 'У вас еще нет монет'})}";
@@ -41,6 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "amount": MessageLookupByLibrary.simpleMessage("Количество"),
     "apply": MessageLookupByLibrary.simpleMessage("Применить"),
+    "avg_trade": MessageLookupByLibrary.simpleMessage("Средняя сделка"),
     "balance": MessageLookupByLibrary.simpleMessage("Баланс"),
     "balance_error": MessageLookupByLibrary.simpleMessage(
       "На балансе недостаточно средств!",
@@ -107,6 +108,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "english_language": MessageLookupByLibrary.simpleMessage("Английский язык"),
     "favourite": MessageLookupByLibrary.simpleMessage("Избранное"),
     "filters": MessageLookupByLibrary.simpleMessage("Фильтры"),
+    "first_trade": MessageLookupByLibrary.simpleMessage("Первая сделка"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage(
       "Забыли пароль? Сбросить пароль",
     ),
@@ -128,6 +130,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "hourly_data": MessageLookupByLibrary.simpleMessage("Данные за час"),
     "id": MessageLookupByLibrary.simpleMessage("ID"),
     "information": MessageLookupByLibrary.simpleMessage("Информация"),
+    "largest_trade": MessageLookupByLibrary.simpleMessage("Крупнейшая сделка"),
+    "last_trade": MessageLookupByLibrary.simpleMessage("Последняя сделка"),
     "loading": MessageLookupByLibrary.simpleMessage("Загрузка..."),
     "low_24h": MessageLookupByLibrary.simpleMessage("Минимум 24ч"),
     "low_day": MessageLookupByLibrary.simpleMessage("Минимум за день"),
@@ -154,17 +158,23 @@ class MessageLookup extends MessageLookupByLibrary {
       "Нет подключения к интернету",
     ),
     "no_operations_found": MessageLookupByLibrary.simpleMessage(
-      "Операций не найдено",
+      "Сделок не найдено",
     ),
     "num_coin_types": MessageLookupByLibrary.simpleMessage(
       "Количество типов монет",
     ),
     "num_coins": MessageLookupByLibrary.simpleMessage("Количество монет"),
     "num_coins_purchased": MessageLookupByLibrary.simpleMessage(
-      "Количество купленых монет",
+      "Куплено монет",
+    ),
+    "num_coins_purchased_24h": MessageLookupByLibrary.simpleMessage(
+      "Куплено монет за 24 часа",
+    ),
+    "num_coins_purchased_7d": MessageLookupByLibrary.simpleMessage(
+      "Куплено монет за 7 дней",
     ),
     "num_transactions": MessageLookupByLibrary.simpleMessage(
-      "Количество операций",
+      "Количество сделок",
     ),
     "oldest_first": MessageLookupByLibrary.simpleMessage("Сначала старые"),
     "open_24h": MessageLookupByLibrary.simpleMessage("Открытие за 24ч"),
@@ -197,6 +207,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "signUp": MessageLookupByLibrary.simpleMessage("Зарегистрироваться"),
     "sort": MessageLookupByLibrary.simpleMessage("Сортировка"),
     "sorting": MessageLookupByLibrary.simpleMessage("Сортировка"),
+    "spent_24h": MessageLookupByLibrary.simpleMessage("Потрачено за 24 часа"),
+    "spent_7d": MessageLookupByLibrary.simpleMessage(
+      "Всего потрачено за 7 дней",
+    ),
     "start_searching_coins": MessageLookupByLibrary.simpleMessage(
       "Начните искать монеты",
     ),
@@ -212,10 +226,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "total_price": MessageLookupByLibrary.simpleMessage("Общая цена"),
     "total_spent": MessageLookupByLibrary.simpleMessage("Всего потрачено"),
     "trade": MessageLookupByLibrary.simpleMessage("Сделка"),
-    "trade_details": MessageLookupByLibrary.simpleMessage("Детали сделаки"),
-    "trades": MessageLookupByLibrary.simpleMessage("Операции"),
+    "trade_details": MessageLookupByLibrary.simpleMessage("Детали сделки"),
+    "trades": MessageLookupByLibrary.simpleMessage("Сделки"),
+    "trades_24h": MessageLookupByLibrary.simpleMessage(
+      "Количество сделок за 24 часа",
+    ),
+    "trades_7d": MessageLookupByLibrary.simpleMessage(
+      "Количество сделок за 7 дней",
+    ),
     "transaction_info": MessageLookupByLibrary.simpleMessage(
-      "Данных об операциях",
+      "Данных о сделках",
     ),
     "try_again": MessageLookupByLibrary.simpleMessage("Попробовать еще раз"),
     "type": MessageLookupByLibrary.simpleMessage("Тип"),

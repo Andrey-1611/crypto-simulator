@@ -48,7 +48,7 @@ class TradePage extends ConsumerWidget {
                         title: s.total_price,
                         value: trade.totalPrice.price4,
                       ),
-                      InfoRow(title: s.date, value: trade.createdAt.format),
+                      InfoRow(title: s.date, value: trade.createdAt.hourFormat),
                     ],
                   ),
                   InfoBloc(

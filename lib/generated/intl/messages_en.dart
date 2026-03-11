@@ -41,6 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "amount": MessageLookupByLibrary.simpleMessage("Amount"),
     "apply": MessageLookupByLibrary.simpleMessage("Apply"),
+    "avg_trade": MessageLookupByLibrary.simpleMessage("Average trade"),
     "balance": MessageLookupByLibrary.simpleMessage("Balance"),
     "balance_error": MessageLookupByLibrary.simpleMessage(
       "Insufficient balance!",
@@ -112,6 +113,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "favourite": MessageLookupByLibrary.simpleMessage("Favourite"),
     "filters": MessageLookupByLibrary.simpleMessage("Filters"),
+    "first_trade": MessageLookupByLibrary.simpleMessage("First Trade"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage(
       "Forgot password? Reset password",
     ),
@@ -131,6 +133,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "hourly_data": MessageLookupByLibrary.simpleMessage("Hourly Data"),
     "id": MessageLookupByLibrary.simpleMessage("ID"),
     "information": MessageLookupByLibrary.simpleMessage("Information"),
+    "largest_trade": MessageLookupByLibrary.simpleMessage("Largest trade"),
+    "last_trade": MessageLookupByLibrary.simpleMessage("Last Trade"),
     "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
     "low_24h": MessageLookupByLibrary.simpleMessage("Low (24h)"),
     "low_day": MessageLookupByLibrary.simpleMessage("Low Day"),
@@ -164,6 +168,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "num_coins_purchased": MessageLookupByLibrary.simpleMessage(
       "Number of Coins Purchased",
     ),
+    "num_coins_purchased_24h": MessageLookupByLibrary.simpleMessage(""),
+    "num_coins_purchased_7d": MessageLookupByLibrary.simpleMessage(""),
     "num_transactions": MessageLookupByLibrary.simpleMessage(
       "Number of Transactions",
     ),
@@ -198,6 +204,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "signUp": MessageLookupByLibrary.simpleMessage("Sign Up"),
     "sort": MessageLookupByLibrary.simpleMessage("Sorting"),
     "sorting": MessageLookupByLibrary.simpleMessage("Sorting"),
+    "spent_24h": MessageLookupByLibrary.simpleMessage("Spent (24h)"),
+    "spent_7d": MessageLookupByLibrary.simpleMessage("Spent (7 days)"),
     "start_searching_coins": MessageLookupByLibrary.simpleMessage(
       "Start searching coins",
     ),
@@ -215,6 +223,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "trade": MessageLookupByLibrary.simpleMessage("Trade"),
     "trade_details": MessageLookupByLibrary.simpleMessage("Trade Details"),
     "trades": MessageLookupByLibrary.simpleMessage("Trades"),
+    "trades_24h": MessageLookupByLibrary.simpleMessage("Trades (24h)"),
+    "trades_7d": MessageLookupByLibrary.simpleMessage("Trades (7 days)"),
     "transaction_info": MessageLookupByLibrary.simpleMessage(
       "Transaction Information",
     ),
