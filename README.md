@@ -40,6 +40,14 @@
 
 ---
 
+## 📲 Скачать приложение
+
+Приложение доступно в RuStore:
+
+https://www.rustore.ru/catalog/app/com.example.crypto_simulator
+
+---
+
 ## 📂 Установка и запуск
 
 1️⃣ Клонирование репозитория
