@@ -25,23 +25,12 @@ class CoinDetailsNotifier extends AsyncNotifier<CoinFullData> {
 
   @override
   Future<CoinFullData> build() async {
-    final details = await ref
+    CoinFullData coinData = await ref
         .read(cryptoRepositoryProvider)
-        .getCoinDetailsBySymbol(coin);
-    final dailyPrices = await ref
-        .read(cryptoRepositoryProvider)
-        .getCoinPriceDailyHistory(coin.symbol);
-    final hourlyPrices = await ref
-        .read(cryptoRepositoryProvider)
-        .getCoinPriceHourlyHistory(coin.symbol);
-    final coinData = CoinFullData(
-      coin: details,
-      dailyPrices: dailyPrices,
-      hourlyPrices: hourlyPrices,
-    );
+        .getCoinFullDataById(coin);
     ref.read(compareCoinsNotifierProvider.notifier).setFirstCoin(coinData);
-    ref.read(_dailyHistory.notifier).state = dailyPrices;
-    ref.read(_hourlyHistory.notifier).state = hourlyPrices;
+    ref.read(_dailyHistory.notifier).state = coinData.dailyPrices;
+    ref.read(_hourlyHistory.notifier).state = coinData.hourlyPrices;
     final period = ref.read(coinDetailsPeriodProvider);
     if (period != .year) {
       if (period.days >= 90) {
