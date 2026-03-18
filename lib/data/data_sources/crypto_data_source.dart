@@ -1,3 +1,4 @@
+import 'package:Bitmark/data/models/coin_full_data.dart';
 import 'package:Bitmark/data/models/coin_price.dart';
 import 'package:Bitmark/data/models/price_point.dart';
 import 'package:dio/dio.dart';
@@ -15,7 +16,7 @@ class CryptoDataSource implements CryptoRepository {
 
   @override
   Future<CryptoCoinDetails> getCoinDetailsBySymbol(CryptoCoin coin) async {
-    final response = await _dio.get(ApiConstants.coinsBySimbol(coin.symbol));
+    final response = await _dio.get(ApiConstants.coinsBySymbol(coin.symbol));
     final data =
         response.data['RAW'][coin.symbol]['USD'] as Map<String, dynamic>;
     return CryptoCoinDetails.fromAPI(map: data, coin: coin);
@@ -140,5 +141,17 @@ class CryptoDataSource implements CryptoRepository {
     final response = await _dio.get(ApiConstants.hourlyPair(symbol));
     final data = response.data['Data']['Data'] as List;
     return data.map((m) => PricePoint.fromApi(m)).toList();
+  }
+
+  @override
+  Future<CoinFullData> getCoinFullDataById(CryptoCoin coin) async {
+    final coinDetails = await getCoinDetailsBySymbol(coin);
+    final dailyPrices = await getCoinPriceDailyHistory(coin.symbol);
+    final hourlyPrices = await getCoinPriceHourlyHistory(coin.symbol);
+    return CoinFullData(
+      coin: coinDetails,
+      dailyPrices: dailyPrices,
+      hourlyPrices: hourlyPrices,
+    );
   }
 }

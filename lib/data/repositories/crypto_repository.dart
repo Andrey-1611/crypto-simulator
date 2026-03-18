@@ -1,5 +1,6 @@
 import 'package:Bitmark/app/runner/app_dependencies.dart';
 import 'package:Bitmark/data/data_sources/crypto_data_source.dart';
+import 'package:Bitmark/data/models/coin_full_data.dart';
 import 'package:Bitmark/data/models/coin_price.dart';
 import 'package:Bitmark/data/models/crypto_coin.dart';
 import 'package:Bitmark/data/models/crypto_coin_details.dart';
@@ -34,4 +35,6 @@ abstract interface class CryptoRepository {
   Future<List<PricePoint>> getCoinPriceDailyHistory(String symbol);
 
   Future<List<PricePoint>> getCoinPriceHourlyHistory(String symbol);
+
+  Future<CoinFullData> getCoinFullDataById(CryptoCoin coin);
 }

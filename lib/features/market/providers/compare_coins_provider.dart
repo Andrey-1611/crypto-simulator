@@ -31,25 +31,32 @@ class CompareCoinsNotifier extends AsyncNotifier<List<CoinFullData>> {
     final coins = state.requireValue;
     state = const .loading();
     state = await .guard(() async {
-      if (coins.map((c) => c.coin.info.symbol).toList().contains(coin.symbol)) {
+      if (coins.map((c) => c.coin.info.symbol).contains(coin.symbol)) {
         return coins;
       }
-      final coinDetails = await ref
+      CoinFullData coinData = await ref
           .read(cryptoRepositoryProvider)
-          .getCoinDetailsBySymbol(coin);
-      final dailyPrices = await ref
-          .read(cryptoRepositoryProvider)
-          .getCoinPriceDailyHistory(coin.symbol);
-      final hourlyPrices = await ref
-          .read(cryptoRepositoryProvider)
-          .getCoinPriceDailyHistory(coin.symbol);
-      final coinData = CoinFullData(
-        coin: coinDetails,
-        dailyPrices: dailyPrices,
-        hourlyPrices: hourlyPrices,
-      );
+          .getCoinFullDataById(coin);
       final allCoins = ref.read(_coinsAllHistoryProvider.notifier);
       allCoins.state = [...allCoins.state, coinData];
+      final period = ref.read(compareCoinsPeriodProvider);
+      if (period.days >= 90) {
+        final start = (coinData.dailyPrices.length - period.days).clamp(
+          0,
+          coinData.dailyPrices.length,
+        );
+        coinData = coinData.copyWith(
+          dailyPrices: coinData.dailyPrices.sublist(start),
+        );
+      } else {
+        final start = (coinData.hourlyPrices.length - period.days * 24).clamp(
+          0,
+          coinData.hourlyPrices.length,
+        );
+        coinData = coinData.copyWith(
+          hourlyPrices: coinData.hourlyPrices.sublist(start),
+        );
+      }
       return [...coins, coinData];
     });
   }
@@ -69,20 +76,20 @@ class CompareCoinsNotifier extends AsyncNotifier<List<CoinFullData>> {
 
   void changePeriod(CompareCoinsPeriod period) {
     final allCoins = ref.read(_coinsAllHistoryProvider);
-    late final CoinFullData newCoin;
     final updated = allCoins.map((c) {
       if (period.days >= 90) {
-        final newPrices = c.dailyPrices.sublist(
-          c.dailyPrices.length - period.days,
+        final start = (c.dailyPrices.length - period.days).clamp(
+          0,
+          c.dailyPrices.length,
         );
-        newCoin = c.copyWith(dailyPrices: newPrices);
+        return c.copyWith(dailyPrices: c.dailyPrices.sublist(start));
       } else {
-        final newPrices = c.hourlyPrices.sublist(
-          c.hourlyPrices.length - period.days * 24,
+        final start = (c.hourlyPrices.length - period.days * 24).clamp(
+          0,
+          c.hourlyPrices.length,
         );
-        newCoin = c.copyWith(hourlyPrices: newPrices);
+        return c.copyWith(hourlyPrices: c.hourlyPrices.sublist(start));
       }
-      return newCoin;
     }).toList();
     state = .data(updated);
     ref.read(compareCoinsPeriodProvider.notifier).state = period;
