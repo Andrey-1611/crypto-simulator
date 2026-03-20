@@ -41,12 +41,14 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "amount": MessageLookupByLibrary.simpleMessage("Amount"),
     "apply": MessageLookupByLibrary.simpleMessage("Apply"),
+    "average_price": MessageLookupByLibrary.simpleMessage("Average Price"),
     "avg_trade": MessageLookupByLibrary.simpleMessage("Average trade"),
     "balance": MessageLookupByLibrary.simpleMessage("Balance"),
     "balance_error": MessageLookupByLibrary.simpleMessage(
       "Insufficient balance!",
     ),
     "balance_info": MessageLookupByLibrary.simpleMessage("Balance Information"),
+    "bought": MessageLookupByLibrary.simpleMessage("Bought"),
     "briefcase": MessageLookupByLibrary.simpleMessage("Briefcase"),
     "buy": MessageLookupByLibrary.simpleMessage("Buy"),
     "buy_coin": m0,
@@ -113,6 +115,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "favourite": MessageLookupByLibrary.simpleMessage("Favourite"),
     "filters": MessageLookupByLibrary.simpleMessage("Filters"),
+    "financial_data": MessageLookupByLibrary.simpleMessage("Financial Data"),
     "first_trade": MessageLookupByLibrary.simpleMessage("First Trade"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage(
       "Forgot password? Reset password",
@@ -161,6 +164,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "no_operations_found": MessageLookupByLibrary.simpleMessage(
       "No operations found",
     ),
+    "no_trades": MessageLookupByLibrary.simpleMessage(
+      "No trades for this coin",
+    ),
     "num_coin_types": MessageLookupByLibrary.simpleMessage(
       "Number of Coin Types",
     ),
@@ -187,8 +193,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "price_p": MessageLookupByLibrary.simpleMessage("Price"),
     "profit": MessageLookupByLibrary.simpleMessage("Profit"),
     "profit_percent": MessageLookupByLibrary.simpleMessage("Profit %"),
+    "profitability": MessageLookupByLibrary.simpleMessage("Profitability"),
     "rate": MessageLookupByLibrary.simpleMessage("Rate"),
     "rating": MessageLookupByLibrary.simpleMessage("Rating"),
+    "received": MessageLookupByLibrary.simpleMessage("Received"),
     "resend": MessageLookupByLibrary.simpleMessage("Resend"),
     "reset": MessageLookupByLibrary.simpleMessage("Reset"),
     "resetPassword": MessageLookupByLibrary.simpleMessage("Reset password"),
@@ -207,8 +215,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Are you sure you want to sign out?",
     ),
     "signUp": MessageLookupByLibrary.simpleMessage("Sign Up"),
+    "sold": MessageLookupByLibrary.simpleMessage("Sold"),
     "sort": MessageLookupByLibrary.simpleMessage("Sorting"),
     "sorting": MessageLookupByLibrary.simpleMessage("Sorting"),
+    "spent": MessageLookupByLibrary.simpleMessage("Spent"),
     "spent_24h": MessageLookupByLibrary.simpleMessage("Spent (24h)"),
     "spent_7d": MessageLookupByLibrary.simpleMessage("Spent (7 days)"),
     "start_searching_coins": MessageLookupByLibrary.simpleMessage(
@@ -226,6 +236,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "total_price": MessageLookupByLibrary.simpleMessage("Total Price"),
     "total_spent": MessageLookupByLibrary.simpleMessage("Total Spent"),
     "trade": MessageLookupByLibrary.simpleMessage("Trade"),
+    "trade_data": MessageLookupByLibrary.simpleMessage("Trade Data"),
     "trade_details": MessageLookupByLibrary.simpleMessage("Trade Details"),
     "trades": MessageLookupByLibrary.simpleMessage("Trades"),
     "trades_24h": MessageLookupByLibrary.simpleMessage("Trades (24h)"),

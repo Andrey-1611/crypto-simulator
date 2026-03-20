@@ -147,5 +147,14 @@
   "num_coins_purchased_24h": "Coins bought (24h)",
   "first_trade": "First Trade",
   "last_trade": "Last Trade",
-  "rate": "Rate"
+  "rate": "Rate",
+  "no_trades": "No trades for this coin",
+  "trade_data": "Trade Data",
+  "bought": "Bought",
+  "sold": "Sold",
+  "financial_data": "Financial Data",
+  "spent": "Spent",
+  "received": "Received",
+  "average_price": "Average Price",
+  "profitability": "Profitability"
 }

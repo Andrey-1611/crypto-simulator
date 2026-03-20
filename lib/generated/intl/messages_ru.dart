@@ -41,12 +41,14 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "amount": MessageLookupByLibrary.simpleMessage("Количество"),
     "apply": MessageLookupByLibrary.simpleMessage("Применить"),
+    "average_price": MessageLookupByLibrary.simpleMessage("Средняя цена"),
     "avg_trade": MessageLookupByLibrary.simpleMessage("Средняя сделка"),
     "balance": MessageLookupByLibrary.simpleMessage("Баланс"),
     "balance_error": MessageLookupByLibrary.simpleMessage(
       "На балансе недостаточно средств!",
     ),
     "balance_info": MessageLookupByLibrary.simpleMessage("Данные о балансе"),
+    "bought": MessageLookupByLibrary.simpleMessage("Куплено"),
     "briefcase": MessageLookupByLibrary.simpleMessage("Портфель"),
     "buy": MessageLookupByLibrary.simpleMessage("Купить"),
     "buy_coin": m0,
@@ -108,6 +110,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "english_language": MessageLookupByLibrary.simpleMessage("Английский язык"),
     "favourite": MessageLookupByLibrary.simpleMessage("Избранное"),
     "filters": MessageLookupByLibrary.simpleMessage("Фильтры"),
+    "financial_data": MessageLookupByLibrary.simpleMessage("Данные о финансах"),
     "first_trade": MessageLookupByLibrary.simpleMessage("Первая сделка"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage(
       "Забыли пароль? Сбросить пароль",
@@ -160,6 +163,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "no_operations_found": MessageLookupByLibrary.simpleMessage(
       "Сделок не найдено",
     ),
+    "no_trades": MessageLookupByLibrary.simpleMessage(
+      "Нет сделок с этой монетой",
+    ),
     "num_coin_types": MessageLookupByLibrary.simpleMessage(
       "Количество типов монет",
     ),
@@ -186,8 +192,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "price_p": MessageLookupByLibrary.simpleMessage("Цена"),
     "profit": MessageLookupByLibrary.simpleMessage("Прибыль"),
     "profit_percent": MessageLookupByLibrary.simpleMessage("Прибыль в %"),
+    "profitability": MessageLookupByLibrary.simpleMessage("Доходность"),
     "rate": MessageLookupByLibrary.simpleMessage("Оценить"),
     "rating": MessageLookupByLibrary.simpleMessage("Рейтинг"),
+    "received": MessageLookupByLibrary.simpleMessage("Получено"),
     "resend": MessageLookupByLibrary.simpleMessage("Отправить повторно"),
     "reset": MessageLookupByLibrary.simpleMessage("Сбросить"),
     "resetPassword": MessageLookupByLibrary.simpleMessage("Сброс пароля"),
@@ -206,8 +214,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Вы уверены, что хотите выйти из акканта?",
     ),
     "signUp": MessageLookupByLibrary.simpleMessage("Зарегистрироваться"),
+    "sold": MessageLookupByLibrary.simpleMessage("Продано"),
     "sort": MessageLookupByLibrary.simpleMessage("Сортировка"),
     "sorting": MessageLookupByLibrary.simpleMessage("Сортировка"),
+    "spent": MessageLookupByLibrary.simpleMessage("Потрачено"),
     "spent_24h": MessageLookupByLibrary.simpleMessage("Потрачено за 24 часа"),
     "spent_7d": MessageLookupByLibrary.simpleMessage(
       "Всего потрачено за 7 дней",
@@ -227,6 +237,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "total_price": MessageLookupByLibrary.simpleMessage("Общая цена"),
     "total_spent": MessageLookupByLibrary.simpleMessage("Всего потрачено"),
     "trade": MessageLookupByLibrary.simpleMessage("Сделка"),
+    "trade_data": MessageLookupByLibrary.simpleMessage("Данные о сделках"),
     "trade_details": MessageLookupByLibrary.simpleMessage("Детали сделки"),
     "trades": MessageLookupByLibrary.simpleMessage("Сделки"),
     "trades_24h": MessageLookupByLibrary.simpleMessage(

@@ -61,10 +61,10 @@ extension PriceFormatter on double {
 
   String get toCryptoPrice {
     return switch (this) {
-      >= 1e10 => '${(this / 1e9).toStringAsFixed(3)}B \$',
-      >= 1e7 => '${(this / 1e6).toStringAsFixed(3)}M \$',
-      >= 1e4 => '${(this / 1e3).toStringAsFixed(3)}K \$',
-      _ => '${toStringAsFixed(2)} \$',
+      >= 1e10 => '${(this / 1e9).toStringAsFixed(4)}B \$',
+      >= 1e7 => '${(this / 1e6).toStringAsFixed(4)}M \$',
+      >= 1e4 => '${(this / 1e3).toStringAsFixed(4)}K \$',
+      _ => '${toStringAsFixed(4)} \$',
     };
   }
 }

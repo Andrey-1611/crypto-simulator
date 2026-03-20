@@ -68,6 +68,11 @@ class CoinDetailsPage extends ConsumerWidget {
                     ),
                     IconButton(
                       onPressed: () =>
+                          context.pushRoute(CoinHistoryRoute(coin: coin)),
+                      icon: const Icon(Icons.hourglass_bottom),
+                    ),
+                    IconButton(
+                      onPressed: () =>
                           context.pushRoute(const CompareCoinsRoute()),
                       icon: const Icon(Icons.compare_arrows),
                     ),
