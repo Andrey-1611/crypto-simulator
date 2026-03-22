@@ -30,7 +30,7 @@ class _FilterTradesSheetState extends ConsumerState<FilterTradesSheet> {
 
   Future<DateTime?> showPicker(DateTime? date) async => await showDatePicker(
     context: context,
-    initialDate: date ?? DateTime.now(),
+    initialDate: date ?? .now(),
     firstDate: DateTime(2020),
     lastDate: DateTime.now(),
   );

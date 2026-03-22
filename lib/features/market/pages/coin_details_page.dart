@@ -37,7 +37,6 @@ class CoinDetailsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final coinP = ref.watch(coinDetailsNotifierProvider(coin));
-    final favouriteP = ref.watch(favouriteNotifierProvider);
     final theme = Theme.of(context);
     final isShort = ref.watch(coinDetailsPeriodProvider).days < 90;
     return Scaffold(
@@ -50,9 +49,11 @@ class CoinDetailsPage extends ConsumerWidget {
           ],
         ),
         actions: [
-          coinP.when(
-            data: (data) => favouriteP.when(
-              data: (coins) {
+          ref.watchWhenData(
+            coinDetailsNotifierProvider(coin),
+            builder: (data) => ref.watchWhenData(
+              favouriteNotifierProvider,
+              builder: (coins) {
                 final coin = data.coin;
                 final ids = coins.map((c) => c.coin.id);
                 final isFavourite = ids.contains(data.coin.info.id);
@@ -79,11 +80,7 @@ class CoinDetailsPage extends ConsumerWidget {
                   ],
                 );
               },
-              loading: () => const SizedBox.shrink(),
-              error: (_, _) => const SizedBox.shrink(),
             ),
-            loading: () => const SizedBox.shrink(),
-            error: (_, _) => const SizedBox.shrink(),
           ),
         ],
       ),
