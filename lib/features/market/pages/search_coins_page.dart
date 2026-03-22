@@ -5,7 +5,6 @@ import 'package:Bitmark/app/widgets/unknown_error.dart';
 import 'package:Bitmark/core/utils/dialog_helper.dart';
 import 'package:Bitmark/core/utils/toast_helper.dart';
 import 'package:Bitmark/features/market/providers/compare_coins_provider.dart';
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,7 +31,7 @@ class _SearchCoinsPageState extends ConsumerState<SearchCoinsPage> {
   @override
   void initState() {
     searchController.text = ref.read(queryProvider);
-    if (isFromCompare(context)) {
+    if (context.fromRoute(const CompareCoinsRoute())) {
       ref.listenManual(compareCoinsNotifierProvider, (_, state) {
         state.when(
           data: (_) {
@@ -48,12 +47,6 @@ class _SearchCoinsPageState extends ConsumerState<SearchCoinsPage> {
       });
     }
     super.initState();
-  }
-
-  bool isFromCompare(BuildContext context) {
-    final stack = context.router.stack;
-    return stack.length >= 2 &&
-        stack[stack.length - 2].name == CompareCoinsRoute.name;
   }
 
   @override
@@ -72,6 +65,7 @@ class _SearchCoinsPageState extends ConsumerState<SearchCoinsPage> {
                 Expanded(
                   child: SearchField(
                     controller: searchController,
+                    onSubmitted: (_) => search,
                     reset: () => searchController.clear(),
                   ),
                 ),
@@ -79,10 +73,8 @@ class _SearchCoinsPageState extends ConsumerState<SearchCoinsPage> {
                   onPressed: search,
                   icon: const Icon(Icons.search),
                   style: ButtonStyle(
-                    shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.sp),
-                      ),
+                    shape: .all(
+                      RoundedRectangleBorder(borderRadius: .circular(8.sp)),
                     ),
                   ),
                 ),
@@ -122,7 +114,7 @@ class _EmptyList extends ConsumerWidget {
     final s = S.of(context);
     final isSearch = ref.watch(queryProvider) != '';
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: .center,
       children: [
         Text(
           isSearch ? s.no_coins_found : s.start_searching_coins,

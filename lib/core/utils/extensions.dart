@@ -1,7 +1,10 @@
 import 'dart:math';
 
 import 'package:Bitmark/generated/l10n.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart';
 import 'package:intl/intl.dart';
 
 extension StringCheck on String? {
@@ -17,6 +20,8 @@ extension DateFormatter on DateTime {
   String get hourFormat => DateFormat('dd.MM.yyyy HH:mm').format(this);
 
   String get dayFormat => DateFormat('dd.MM.yyyy').format(this);
+
+  String get csvFormat => DateFormat('yyyy-MM-dd HH:mm').format(this);
 }
 
 extension BoolToggle on bool {
@@ -32,6 +37,11 @@ extension ContextX on BuildContext {
   ThemeData get theme => Theme.of(this);
 
   S get s => S.of(this);
+
+  bool fromRoute(PageRouteInfo route) {
+    final stack = router.stack;
+    return stack.length >= 2 && stack[stack.length - 2].name == route.routeName;
+  }
 }
 
 extension PriceFormatter on double {
@@ -108,5 +118,19 @@ extension ColorRandom on Color {
   static Color random(int index) {
     final r = Random(index);
     return .fromARGB(255, r.nextInt(256), r.nextInt(256), r.nextInt(256));
+  }
+}
+
+extension WidgetRefX on WidgetRef {
+  Widget watchWhenData<T>(
+    ProviderListenable<AsyncValue<T>> provider, {
+    required Widget Function(T data) builder,
+  }) {
+    final asyncValue = watch(provider);
+    return asyncValue.when(
+      data: (data) => builder(data),
+      loading: () => const SizedBox.shrink(),
+      error: (_, _) => const SizedBox.shrink(),
+    );
   }
 }

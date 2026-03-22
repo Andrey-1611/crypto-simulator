@@ -1,4 +1,5 @@
 import 'package:Bitmark/app/widgets/coin_card.dart';
+import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:Bitmark/features/briefcase/providers/favourite_provider.dart';
 import 'package:Bitmark/generated/l10n.dart';
 import 'package:auto_route/annotations.dart';
@@ -61,7 +62,7 @@ class _FavouriteCoinsPageState extends ConsumerState<FavouriteCoinsPage> {
   @override
   void initState() {
     super.initState();
-    if (isFromCompare(context)) {
+    if (context.fromRoute(const CompareCoinsRoute())) {
       ref.listenManual(compareCoinsNotifierProvider, (_, state) {
         state.when(
           data: (_) {
@@ -78,17 +79,11 @@ class _FavouriteCoinsPageState extends ConsumerState<FavouriteCoinsPage> {
     }
   }
 
-  bool isFromCompare(BuildContext context) {
-    final stack = context.router.stack;
-    return stack.length >= 2 &&
-        stack[stack.length - 2].name == CompareCoinsRoute.name;
-  }
-
   @override
   Widget build(BuildContext context) {
     final favouriteP = ref.watch(favouriteNotifierProvider);
     final s = S.of(context);
-    final fromCompare = isFromCompare(context);
+    final fromCompare = context.fromRoute(const CompareCoinsRoute());
     return fromCompare
         ? Scaffold(
             appBar: AppBar(title: Text(s.favourite)),

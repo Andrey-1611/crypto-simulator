@@ -1,4 +1,5 @@
 import 'package:Bitmark/app/router/app_router.dart';
+import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:Bitmark/features/market/providers/sort_market_provider.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:Bitmark/app/widgets/coin_card.dart';
@@ -29,7 +30,7 @@ class _MarketPageState extends ConsumerState<MarketPage> {
   @override
   void initState() {
     super.initState();
-    if (isFromCompare(context)) {
+    if (context.fromRoute(const CompareCoinsRoute())) {
       ref.listenManual(compareCoinsNotifierProvider, (_, state) {
         state.when(
           data: (_) {
@@ -54,12 +55,6 @@ class _MarketPageState extends ConsumerState<MarketPage> {
     }
   }
 
-  bool isFromCompare(BuildContext context) {
-    final stack = context.router.stack;
-    return stack.length >= 2 &&
-        stack[stack.length - 2].name == CompareCoinsRoute.name;
-  }
-
   void getCoins(WidgetRef ref) {
     ref.read(sortMarketProvider.notifier).update((state) => .marketCap);
     ref.read(marketNotifierProvider.notifier).getCryptoCoins();
@@ -76,7 +71,7 @@ class _MarketPageState extends ConsumerState<MarketPage> {
   Widget build(BuildContext context) {
     final cryptoCoinsP = ref.watch(marketNotifierProvider);
     final s = S.of(context);
-    final fromCompare = isFromCompare(context);
+    final fromCompare = context.fromRoute(const CompareCoinsRoute());
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: fromCompare,

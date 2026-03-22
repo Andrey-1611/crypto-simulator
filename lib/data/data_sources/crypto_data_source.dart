@@ -138,8 +138,12 @@ class CryptoDataSource implements CryptoRepository {
 
   @override
   Future<List<PricePoint>> getCoinPriceHourlyHistory(String symbol) async {
-    final response = await _dio.get(ApiConstants.hourlyPair(symbol));
-    final data = response.data['Data']['Data'] as List;
+    dynamic response = await _dio.get(ApiConstants.hourlyPair(symbol));
+    var data = response.data['Data']['Data'];
+    while (data == null || data is! List) {
+      response = await _dio.get(ApiConstants.hourlyPair(symbol));
+      data = response.data['Data']['Data'];
+    }
     return data.map((m) => PricePoint.fromApi(m)).toList();
   }
 
@@ -148,7 +152,7 @@ class CryptoDataSource implements CryptoRepository {
     final coinDetails = await getCoinDetailsBySymbol(coin);
     final dailyPrices = await getCoinPriceDailyHistory(coin.symbol);
     final hourlyPrices = await getCoinPriceHourlyHistory(coin.symbol);
-    return CoinFullData(
+    return .new(
       coin: coinDetails,
       dailyPrices: dailyPrices,
       hourlyPrices: hourlyPrices,

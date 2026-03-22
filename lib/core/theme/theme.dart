@@ -27,8 +27,8 @@ final darkTheme = ThemeData(
   outlinedButtonTheme: _outlineButtonTheme,
   hintColor: _hintColor,
   dialogTheme: _dialogTheme,
-  segmentedButtonTheme: _segmentedButtonTheme,
-  colorScheme: const ColorScheme.dark(primary: _primary, error: Colors.red),
+  segmentedButtonTheme: _segmentedButtonTheme(Colors.white),
+  colorScheme: const .dark(primary: _primary, error: Colors.red),
 );
 
 final lightTheme = ThemeData(
@@ -49,8 +49,8 @@ final lightTheme = ThemeData(
   bottomSheetTheme: _bottomSheetTheme(_lightBackground),
   hintColor: _hintColor,
   dialogTheme: _dialogTheme,
-  segmentedButtonTheme: _segmentedButtonTheme,
-  colorScheme: const ColorScheme.light(primary: _primary, error: Colors.red),
+  segmentedButtonTheme: _segmentedButtonTheme(Colors.black),
+  colorScheme: const .light(primary: _primary, error: Colors.red),
 );
 
 final _textTheme = TextTheme(
@@ -77,17 +77,14 @@ InputDecorationTheme _inputDecorationTheme(Color color) => InputDecorationTheme(
   filled: true,
   fillColor: color,
   hintStyle: TextStyle(fontSize: 15.sp, color: _hintColor),
-  contentPadding: EdgeInsets.all(12.sp),
-  border: OutlineInputBorder(
-    borderSide: BorderSide.none,
-    borderRadius: BorderRadius.circular(8.sp),
-  ),
+  contentPadding: .all(12.sp),
+  border: OutlineInputBorder(borderSide: .none, borderRadius: .circular(8.sp)),
 );
 
 final _listTileTheme = ListTileThemeData(
-  contentPadding: EdgeInsets.symmetric(vertical: 4.sp, horizontal: 8.sp),
+  contentPadding: .symmetric(vertical: 4.sp, horizontal: 8.sp),
   subtitleTextStyle: TextStyle(
-    fontWeight: FontWeight.w400,
+    fontWeight: .w400,
     fontSize: 14.sp,
     color: _hintColor,
   ),
@@ -95,9 +92,9 @@ final _listTileTheme = ListTileThemeData(
 
 CardThemeData _cardTheme(Color color) => CardThemeData(
   color: color,
-  margin: EdgeInsets.all(8.sp),
+  margin: .all(8.sp),
   shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(8.sp),
+    borderRadius: .circular(8.sp),
     side: BorderSide.none,
   ),
 );
@@ -107,7 +104,7 @@ AppBarTheme _appBarTheme(Color color, Color titleColor) => AppBarTheme(
   backgroundColor: color,
   titleTextStyle: TextStyle(
     fontSize: 26.sp,
-    fontWeight: FontWeight.bold,
+    fontWeight: .bold,
     color: titleColor,
   ),
   surfaceTintColor: Colors.transparent,
@@ -117,7 +114,7 @@ NavigationBarThemeData _navigationBarTheme(Color color, Color iconColor) =>
     NavigationBarThemeData(
       backgroundColor: color,
       indicatorColor: _primary,
-      iconTheme: WidgetStateProperty.all(IconThemeData(color: iconColor)),
+      iconTheme: .all(IconThemeData(color: iconColor)),
     );
 
 final _textButtonTheme = TextButtonThemeData(
@@ -160,13 +157,13 @@ final _dialogTheme = DialogThemeData(
   titleTextStyle: TextStyle(fontSize: 18.sp),
 );
 
-final _segmentedButtonTheme = SegmentedButtonThemeData(
-  style: ButtonStyle(
-    backgroundColor: .resolveWith((states) {
-      if (states.contains(WidgetState.selected)) {
-        return _primary;
-      }
-      return _darkCard;
-    }),
-  ),
-);
+SegmentedButtonThemeData _segmentedButtonTheme(Color textColor) =>
+    SegmentedButtonThemeData(
+      style: ButtonStyle(
+        foregroundColor: .all(textColor),
+        backgroundColor: .resolveWith(
+          (states) =>
+              states.contains(WidgetState.selected) ? _primary : _darkCard,
+        ),
+      ),
+    );

@@ -1,5 +1,6 @@
 import 'package:Bitmark/app/widgets/settings_button.dart';
 import 'package:Bitmark/app/widgets/trade_card.dart';
+import 'package:Bitmark/core/utils/export_service.dart';
 import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:Bitmark/data/models/trade.dart';
 import 'package:Bitmark/features/history/providers/filter_trades_provider.dart';
@@ -67,13 +68,33 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   bool get userIsNull => user == null;
 
+  void export(WidgetRef ref, List<Trade> trades) =>
+      ref.read(exportServiceProvider).exportTrades(trades);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final s = S.of(context);
     return AppBar(
       automaticallyImplyLeading: !userIsNull,
       title: Text(s.history),
+      leading: userIsNull
+          ? ref.watchWhenData(
+              tradesProvider(user),
+              builder: (data) => IconButton(
+                onPressed: () => export(ref, data.trades),
+                icon: const Icon(Icons.share),
+              ),
+            )
+          : null,
       actions: [
+        if (!userIsNull)
+          ref.watchWhenData(
+            tradesProvider(user),
+            builder: (data) => IconButton(
+              onPressed: () => export(ref, data.trades),
+              icon: const Icon(Icons.share),
+            ),
+          ),
         PopupMenuButton<PopupMenuType>(
           icon: const Icon(Icons.more_vert),
           onSelected: (value) => switch (value) {
