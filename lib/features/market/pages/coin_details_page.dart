@@ -36,7 +36,6 @@ class CoinDetailsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final coinP = ref.watch(coinDetailsNotifierProvider(coin));
     final theme = Theme.of(context);
     final isShort = ref.watch(coinDetailsPeriodProvider).days < 90;
     return Scaffold(
@@ -86,8 +85,9 @@ class CoinDetailsPage extends ConsumerWidget {
       ),
       body: Padding(
         padding: .all(16.0.sp),
-        child: coinP.when(
-          data: (data) {
+        child: ref.watchWhen(
+          coinDetailsNotifierProvider(coin),
+          builder: (data) {
             final coin = data.coin;
             return Column(
               children: [
@@ -119,8 +119,6 @@ class CoinDetailsPage extends ConsumerWidget {
               ],
             );
           },
-          error: (e, _) => UnknownError(error: e),
-          loading: () => const Loader(),
         ),
       ),
     );
@@ -422,7 +420,7 @@ class _ActionsButtons extends ConsumerWidget {
                   )
                 : const SizedBox.shrink();
           },
-          error: (e, _) => UnknownError(error: e),
+          error: (e, _) => UnknownError(e: e),
           loading: () => const Loader(),
         ),
       ],

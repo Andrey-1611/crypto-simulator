@@ -1,9 +1,7 @@
 import 'package:Bitmark/app/widgets/info_bloc.dart';
 import 'package:Bitmark/app/widgets/info_row.dart';
-import 'package:Bitmark/app/widgets/loader.dart';
 import 'package:Bitmark/app/widgets/size_box.dart';
 import 'package:Bitmark/app/widgets/trade_card.dart';
-import 'package:Bitmark/app/widgets/unknown_error.dart';
 import 'package:Bitmark/core/utils/coin_trades_utils.dart';
 import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:Bitmark/data/models/crypto_coin_details.dart';
@@ -23,14 +21,14 @@ class CoinHistoryPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final s = context.s;
-    final tradesP = ref.watch(briefcaseNotifierProvider(null));
     return Scaffold(
       appBar: AppBar(title: Text('${s.history} ${coin.info.name}')),
       body: Padding(
         padding: .all(16.r),
         child: Center(
-          child: tradesP.when(
-            data: (data) {
+          child: ref.watchWhen(
+            briefcaseNotifierProvider(null),
+            builder: (data) {
               final coinTrades = data.trades
                   .where((t) => t.coin.id == coin.info.id)
                   .toList();
@@ -51,8 +49,6 @@ class CoinHistoryPage extends ConsumerWidget {
                     )
                   : const _EmptyList();
             },
-            error: (e, _) => UnknownError(error: e),
-            loading: () => const Loader(),
           ),
         ),
       ),

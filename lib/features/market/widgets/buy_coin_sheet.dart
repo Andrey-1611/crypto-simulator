@@ -1,8 +1,6 @@
 import 'package:Bitmark/app/widgets/size_box.dart';
 import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:Bitmark/app/widgets/loader.dart';
-import 'package:Bitmark/app/widgets/unknown_error.dart';
 import 'package:Bitmark/core/utils/toast_helper.dart';
 import 'package:Bitmark/data/models/trade.dart';
 import 'package:Bitmark/features/market/widgets/coins_text_field.dart';
@@ -74,7 +72,6 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
-    final userP = ref.watch(briefcaseNotifierProvider(null));
     final s = S.of(context);
     final size = MediaQuery.of(context);
     return Padding(
@@ -84,8 +81,9 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
         top: 32.sp,
         bottom: size.viewInsets.bottom + 32.sp,
       ),
-      child: userP.when(
-        data: (data) => Column(
+      child: ref.watchWhen(
+        briefcaseNotifierProvider(null),
+        builder: (data) => Column(
           mainAxisAlignment: .center,
           mainAxisSize: .min,
           children: [
@@ -107,8 +105,6 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
             const SizeBox(height: 0.06),
           ],
         ),
-        error: (e, _) => UnknownError(error: e),
-        loading: () => const Loader(),
       ),
     );
   }

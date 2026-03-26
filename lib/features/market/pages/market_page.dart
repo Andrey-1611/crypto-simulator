@@ -6,9 +6,7 @@ import 'package:Bitmark/app/widgets/coin_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../app/widgets/loader.dart';
 import '../../../app/widgets/settings_button.dart';
-import '../../../app/widgets/unknown_error.dart';
 import '../../../core/utils/dialog_helper.dart';
 import '../../../core/utils/toast_helper.dart';
 import '../../../generated/l10n.dart';
@@ -67,23 +65,27 @@ class _MarketPageState extends ConsumerState<MarketPage> {
     );
   }
 
+  Future<void> refresh() async =>
+      ref.read(marketNotifierProvider.notifier).updateCoinsPrices();
+
   @override
   Widget build(BuildContext context) {
-    final cryptoCoinsP = ref.watch(marketNotifierProvider);
     final s = S.of(context);
-    final fromCompare = context.fromRoute(const CompareCoinsRoute());
+    final needToSelect =
+        context.fromRoute(const CompareCoinsRoute()) ||
+        context.fromRoute(const TradesSimulatorRoute());
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: fromCompare,
+        automaticallyImplyLeading: needToSelect,
         title: Text(s.market),
-        leading: !fromCompare
+        leading: !needToSelect
             ? IconButton(
                 onPressed: () => context.pushRoute(const SearchCoinsRoute()),
                 icon: const Icon(Icons.search),
               )
             : null,
         actions: [
-          fromCompare
+          needToSelect
               ? IconButton(
                   onPressed: () => showMarketFilters(context),
                   icon: const Icon(Icons.swap_vert),
@@ -93,33 +95,41 @@ class _MarketPageState extends ConsumerState<MarketPage> {
                   onSelected: (value) => switch (value) {
                     .sort => showMarketFilters(context),
                     .compare => context.pushRoute(const CompareCoinsRoute()),
+                    .simulator => context.pushRoute(
+                      const TradesSimulatorRoute(),
+                    ),
                   },
                   itemBuilder: (context) => [
                     PopupMenuItem(value: .sort, child: Text(s.sort)),
                     PopupMenuItem(value: .compare, child: Text(s.compare)),
+                    const PopupMenuItem(
+                      value: .simulator,
+                      child: Text('Симулятор'),
+                    ),
                   ],
                 ),
-          if (!fromCompare) const SettingsButton(),
+          if (!needToSelect) const SettingsButton(),
         ],
       ),
       body: Padding(
         padding: .all(16.sp),
-        child: cryptoCoinsP.when(
-          data: (coins) => ListView.builder(
-            controller: _scrollController,
-            itemCount: coins.length,
-            itemBuilder: (context, index) {
-              final coin = coins[index];
-              return CoinCard(coin: coin.coin, price: coin.price);
-            },
+        child: ref.watchWhen(
+          marketNotifierProvider,
+          builder: (coins) => RefreshIndicator(
+            onRefresh: refresh,
+            child: ListView.builder(
+              controller: _scrollController,
+              itemCount: coins.length,
+              itemBuilder: (context, index) {
+                final coin = coins[index];
+                return CoinCard(coin: coin.coin, price: coin.price);
+              },
+            ),
           ),
-          loading: () => const Loader(),
-          error: (e, _) =>
-              UnknownError(onPressed: () => getCoins(ref), error: e),
         ),
       ),
     );
   }
 }
 
-enum MarketPopup { sort, compare }
+enum MarketPopup { sort, compare, simulator }

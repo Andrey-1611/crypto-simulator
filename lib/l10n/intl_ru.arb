@@ -157,5 +157,9 @@
   "spent": "Потрачено",
   "received": "Получено",
   "average_price": "Средняя цена",
-  "profitability": "Доходность"
+  "profitability": "Доходность",
+  "simulator_trades": "Симулятор сделок",
+  "buy_date": "Дата покупки",
+  "sell_date": "Дата продажи",
+  "calculate": "Посчитать"
 }

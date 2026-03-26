@@ -1183,6 +1183,31 @@ class S {
       args: [],
     );
   }
+
+  /// `Trades Simulator`
+  String get simulator_trades {
+    return Intl.message(
+      'Trades Simulator',
+      name: 'simulator_trades',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Buy Date`
+  String get buy_date {
+    return Intl.message('Buy Date', name: 'buy_date', desc: '', args: []);
+  }
+
+  /// `Sell Date`
+  String get sell_date {
+    return Intl.message('Sell Date', name: 'sell_date', desc: '', args: []);
+  }
+
+  /// `Calculate`
+  String get calculate {
+    return Intl.message('Calculate', name: 'calculate', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

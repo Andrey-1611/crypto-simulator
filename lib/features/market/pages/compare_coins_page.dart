@@ -1,7 +1,5 @@
 import 'package:Bitmark/app/router/app_router.dart';
 import 'package:Bitmark/app/widgets/coin_card.dart';
-import 'package:Bitmark/app/widgets/loader.dart';
-import 'package:Bitmark/app/widgets/unknown_error.dart';
 import 'package:Bitmark/data/models/price_point.dart';
 import 'package:Bitmark/features/market/providers/compare_coins_provider.dart';
 import 'package:Bitmark/generated/l10n.dart';
@@ -32,7 +30,6 @@ class CompareCoinsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final compareCoinsP = ref.watch(compareCoinsNotifierProvider);
     final s = S.of(context);
     final theme = context.theme;
     return Scaffold(
@@ -59,8 +56,9 @@ class CompareCoinsPage extends ConsumerWidget {
       body: Padding(
         padding: .all(16.sp),
         child: Center(
-          child: compareCoinsP.when(
-            data: (coins) => coins.isNotEmpty
+          child: ref.watchWhen(
+            compareCoinsNotifierProvider,
+            builder: (coins) => coins.isNotEmpty
                 ? Column(
                     children: [
                       SegmentedButton<CompareCoinsPeriod>(
@@ -125,8 +123,6 @@ class CompareCoinsPage extends ConsumerWidget {
                     ],
                   )
                 : Text(s.no_coins(true), style: theme.textTheme.displayLarge),
-            error: (e, _) => UnknownError(error: e),
-            loading: () => const Loader(),
           ),
         ),
       ),

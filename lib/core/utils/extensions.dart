@@ -7,6 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:intl/intl.dart';
 
+import '../../app/widgets/loader.dart';
+import '../../app/widgets/unknown_error.dart';
+
 extension StringCheck on String? {
   bool get isNullOrEmpty => this == null || this!.trim().isEmpty;
 }
@@ -71,9 +74,9 @@ extension PriceFormatter on double {
 
   String get toCryptoPrice {
     return switch (this) {
-      >= 1e10 => '${(this / 1e9).toStringAsFixed(4)}B \$',
-      >= 1e7 => '${(this / 1e6).toStringAsFixed(4)}M \$',
-      >= 1e4 => '${(this / 1e3).toStringAsFixed(4)}K \$',
+      >= 1e10 => '${(this / 1e9).toStringAsFixed(3)}B \$',
+      >= 1e7 => '${(this / 1e6).toStringAsFixed(3)}M \$',
+      >= 1e4 => '${(this / 1e3).toStringAsFixed(3)}K \$',
       _ => '${toStringAsFixed(4)} \$',
     };
   }
@@ -126,11 +129,21 @@ extension WidgetRefX on WidgetRef {
     ProviderListenable<AsyncValue<T>> provider, {
     required Widget Function(T data) builder,
   }) {
-    final asyncValue = watch(provider);
-    return asyncValue.when(
+    return watch(provider).when(
       data: (data) => builder(data),
       loading: () => const SizedBox.shrink(),
       error: (_, _) => const SizedBox.shrink(),
+    );
+  }
+
+  Widget watchWhen<T>(
+    ProviderListenable<AsyncValue<T>> provider, {
+    required Widget Function(T data) builder,
+  }) {
+    return watch(provider).when(
+      data: (data) => builder(data),
+      loading: () => const Loader(),
+      error: (e, _) => UnknownError(e: e),
     );
   }
 }

@@ -54,23 +54,19 @@ final lightTheme = ThemeData(
 );
 
 final _textTheme = TextTheme(
-  titleLarge: TextStyle(fontWeight: FontWeight.bold, fontSize: 56.sp),
-  titleMedium: TextStyle(fontWeight: FontWeight.w800, fontSize: 42.sp),
-  displayLarge: TextStyle(fontWeight: FontWeight.bold, fontSize: 28.sp),
-  displayMedium: TextStyle(fontWeight: FontWeight.w800, fontSize: 20.sp),
-  displaySmall: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.sp),
-  bodyLarge: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),
+  titleLarge: TextStyle(fontWeight: .bold, fontSize: 56.sp),
+  titleMedium: TextStyle(fontWeight: .w800, fontSize: 42.sp),
+  displayLarge: TextStyle(fontWeight: .bold, fontSize: 28.sp),
+  displayMedium: TextStyle(fontWeight: .w800, fontSize: 20.sp),
+  displaySmall: TextStyle(fontWeight: .w600, fontSize: 16.sp),
+  bodyLarge: TextStyle(fontWeight: .w600, fontSize: 15.sp),
   bodyMedium: TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: 16.sp,
+    fontSize: 15.sp,
     color: _hintColor,
   ),
-  bodySmall: TextStyle(
-    fontWeight: FontWeight.w400,
-    fontSize: 14.sp,
-    color: _hintColor,
-  ),
-  labelLarge: TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp),
+  bodySmall: TextStyle(fontWeight: .w400, fontSize: 14.sp, color: _hintColor),
+  labelLarge: TextStyle(fontWeight: .w500, fontSize: 13.sp),
 );
 
 InputDecorationTheme _inputDecorationTheme(Color color) => InputDecorationTheme(
@@ -119,7 +115,7 @@ NavigationBarThemeData _navigationBarTheme(Color color, Color iconColor) =>
 
 final _textButtonTheme = TextButtonThemeData(
   style: TextButton.styleFrom(
-    textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.sp),
+    textStyle: TextStyle(fontWeight: .w600, fontSize: 16.sp),
     foregroundColor: _primary,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
   ),
@@ -154,13 +150,14 @@ BottomSheetThemeData _bottomSheetTheme(Color color) =>
     BottomSheetThemeData(backgroundColor: color);
 
 final _dialogTheme = DialogThemeData(
-  titleTextStyle: TextStyle(fontSize: 18.sp),
+  titleTextStyle: TextStyle(fontWeight: .w600, fontSize: 18.sp),
 );
 
 SegmentedButtonThemeData _segmentedButtonTheme(Color textColor) =>
     SegmentedButtonThemeData(
       style: ButtonStyle(
         foregroundColor: .all(textColor),
+        side: .all(.none),
         backgroundColor: .resolveWith(
           (states) =>
               states.contains(WidgetState.selected) ? _primary : _darkCard,

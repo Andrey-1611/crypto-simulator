@@ -5,17 +5,17 @@ import '../../generated/l10n.dart';
 
 class UnknownError extends StatelessWidget {
   final VoidCallback? onPressed;
-  final Object error;
+  final Object e;
 
-  const UnknownError({super.key, this.onPressed, required this.error});
+  const UnknownError({super.key, this.onPressed, required this.e});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final s = S.of(context);
-    final dioError = error is DioException
-        ? (error as DioException).error
-        : error;
+    final dioError = e is DioException
+        ? (e as DioException).error
+        : e;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

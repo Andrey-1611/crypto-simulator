@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/utils/extensions.dart';
 import '../../data/models/crypto_coin.dart';
+import '../../features/market/providers/profit_provider.dart';
 
 class CoinCard extends ConsumerWidget {
   final CryptoCoin coin;
@@ -21,10 +22,13 @@ class CoinCard extends ConsumerWidget {
   });
 
   void push(BuildContext context, WidgetRef ref) {
-    final stack = context.router.stack;
-    final prevRoute = stack.length > 1 ? stack[stack.length - 2] : null;
-    if (prevRoute != null && prevRoute.name == CompareCoinsRoute.name) {
+    if (context.fromRoute(const CompareCoinsRoute())) {
       ref.read(compareCoinsNotifierProvider.notifier).addCoin(coin);
+    } else if (context.fromRoute(const TradesSimulatorRoute())) {
+      ref.read(profitStateProvider.notifier).state = ref
+          .read(profitStateProvider)
+          .copyWith(coinSymbol: coin.symbol);
+      context.pop();
     } else {
       context.pushRoute(CoinDetailsRoute(coin: coin));
     }

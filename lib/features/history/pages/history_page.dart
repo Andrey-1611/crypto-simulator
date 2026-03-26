@@ -8,13 +8,11 @@ import 'package:Bitmark/features/history/providers/trades_provider.dart';
 import 'package:Bitmark/features/history/widgets/filter_trades_sheet.dart';
 import 'package:Bitmark/features/history/widgets/sort_trades_sheet.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:Bitmark/app/widgets/unknown_error.dart';
 import 'package:Bitmark/data/models/app_user_details.dart';
 import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../app/widgets/loader.dart';
 
 @RoutePage()
 class HistoryPage extends ConsumerWidget {
@@ -24,19 +22,17 @@ class HistoryPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tradesP = ref.watch(tradesProvider(user));
     final size = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: _AppBar(size: .fromHeight(size.height * 0.07), user: user),
       body: Center(
         child: Padding(
           padding: .all(16.sp),
-          child: tradesP.when(
-            data: (data) => data.trades.isNotEmpty
+          child: ref.watchWhen(
+            tradesProvider(user),
+            builder: (data) => data.trades.isNotEmpty
                 ? _TradesList(trades: data.trades)
                 : _EmptyList(user: user, isFiltered: data.isFilterd),
-            error: (e, _) => UnknownError(error: e),
-            loading: () => const Loader(),
           ),
         ),
       ),

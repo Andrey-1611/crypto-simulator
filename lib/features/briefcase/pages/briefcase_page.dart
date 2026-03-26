@@ -55,14 +55,24 @@ class BriefcasePage extends ConsumerWidget {
         appBar: AppBar(
           title: Text(s.briefcase),
           automaticallyImplyLeading: !isCurrentUser,
+          leading: isCurrentUser
+              ? ref.watchWhenData(
+                  cryptoCoinsProvider(user),
+                  builder: (data) => IconButton(
+                    onPressed: () => export(ref, data.coins),
+                    icon: const Icon(Icons.share),
+                  ),
+                )
+              : null,
           actions: [
-            ref.watchWhenData(
-              cryptoCoinsProvider(user),
-              builder: (data) => IconButton(
-                onPressed: () => export(ref, data.coins),
-                icon: const Icon(Icons.share),
+            if (!isCurrentUser)
+              ref.watchWhenData(
+                cryptoCoinsProvider(user),
+                builder: (data) => IconButton(
+                  onPressed: () => export(ref, data.coins),
+                  icon: const Icon(Icons.share),
+                ),
               ),
-            ),
             PopupMenuButton<PopupMenuType>(
               icon: const Icon(Icons.more_vert),
               onSelected: (value) => switch (value) {

@@ -37,4 +37,6 @@ abstract interface class CryptoRepository {
   Future<List<PricePoint>> getCoinPriceHourlyHistory(String symbol);
 
   Future<CoinFullData> getCoinFullDataById(CryptoCoin coin);
+
+  Future<PricePoint> getCoinHistoryPrice(String symbol, DateTime date);
 }

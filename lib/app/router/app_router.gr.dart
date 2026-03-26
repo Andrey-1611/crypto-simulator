@@ -418,3 +418,19 @@ class TradeRouteArgs {
   @override
   int get hashCode => key.hashCode ^ trade.hashCode;
 }
+
+/// generated route for
+/// [TradesSimulatorPage]
+class TradesSimulatorRoute extends PageRouteInfo<void> {
+  const TradesSimulatorRoute({List<PageRouteInfo>? children})
+    : super(TradesSimulatorRoute.name, initialChildren: children);
+
+  static const String name = 'TradesSimulatorRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const TradesSimulatorPage();
+    },
+  );
+}

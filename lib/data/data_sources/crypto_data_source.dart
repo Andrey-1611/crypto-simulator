@@ -149,13 +149,31 @@ class CryptoDataSource implements CryptoRepository {
 
   @override
   Future<CoinFullData> getCoinFullDataById(CryptoCoin coin) async {
-    final coinDetails = await getCoinDetailsBySymbol(coin);
-    final dailyPrices = await getCoinPriceDailyHistory(coin.symbol);
-    final hourlyPrices = await getCoinPriceHourlyHistory(coin.symbol);
-    return .new(
+    final results = await Future.wait([
+      getCoinDetailsBySymbol(coin),
+      getCoinPriceDailyHistory(coin.symbol),
+      getCoinPriceHourlyHistory(coin.symbol),
+    ]);
+    final coinDetails = results[0] as CryptoCoinDetails;
+    final dailyPrices = results[1] as List<PricePoint>;
+    final hourlyPrices = results[2] as List<PricePoint>;
+    return CoinFullData(
       coin: coinDetails,
       dailyPrices: dailyPrices,
       hourlyPrices: hourlyPrices,
     );
+  }
+
+  @override
+  Future<PricePoint> getCoinHistoryPrice(String symbol, DateTime date) async {
+    final now = DateTime.now();
+    final diff = now.difference(date).inDays;
+    final toTs = date.millisecondsSinceEpoch ~/ 1000;
+    final url = diff <= 7
+        ? ApiConstants.historyMinutePrice(symbol, toTs)
+        : ApiConstants.historyHourPrice(symbol, toTs);
+    final response = await _dio.get(url);
+    final data = response.data['Data']['Data'] as List;
+    return .fromApi(data.first);
   }
 }

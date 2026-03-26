@@ -156,5 +156,9 @@
   "spent": "Spent",
   "received": "Received",
   "average_price": "Average Price",
-  "profitability": "Profitability"
+  "profitability": "Profitability",
+  "simulator_trades": "Trades Simulator",
+  "buy_date": "Buy Date",
+  "sell_date": "Sell Date",
+  "calculate": "Calculate"
 }

@@ -1,7 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:Bitmark/app/router/app_router.dart';
-import 'package:Bitmark/app/widgets/loader.dart';
-import 'package:Bitmark/app/widgets/unknown_error.dart';
 import 'package:Bitmark/core/utils/validator.dart';
 import 'package:Bitmark/features/rating/providers/rating_provider.dart';
 import 'package:Bitmark/generated/l10n.dart';
@@ -18,7 +16,6 @@ class RatingPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final s = S.of(context);
-    final usersP = ref.watch(ratingProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(s.rating),
@@ -28,13 +25,12 @@ class RatingPage extends ConsumerWidget {
       body: Padding(
         padding: .all(16.sp),
         child: Center(
-          child: usersP.when(
-            data: (users) => RefreshIndicator(
+          child: ref.watchWhen(
+            ratingProvider,
+            builder: (users) => RefreshIndicator(
               onRefresh: () async => ref.refresh(ratingProvider),
               child: _UsersList(users: users),
             ),
-            error: (e, _) => UnknownError(error: e),
-            loading: () => const Loader(),
           ),
         ),
       ),

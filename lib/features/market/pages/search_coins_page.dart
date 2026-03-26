@@ -1,7 +1,5 @@
 import 'package:Bitmark/app/widgets/coin_card.dart';
-import 'package:Bitmark/app/widgets/loader.dart';
 import 'package:Bitmark/app/widgets/search_field.dart';
-import 'package:Bitmark/app/widgets/unknown_error.dart';
 import 'package:Bitmark/core/utils/dialog_helper.dart';
 import 'package:Bitmark/core/utils/toast_helper.dart';
 import 'package:Bitmark/features/market/providers/compare_coins_provider.dart';
@@ -51,7 +49,6 @@ class _SearchCoinsPageState extends ConsumerState<SearchCoinsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final searchCoinsP = ref.watch(searchCoinProvider);
     final s = S.of(context);
     return Scaffold(
       appBar: AppBar(
@@ -86,8 +83,9 @@ class _SearchCoinsPageState extends ConsumerState<SearchCoinsPage> {
       body: Padding(
         padding: .all(16.sp),
         child: Center(
-          child: searchCoinsP.when(
-            data: (coins) => coins.isNotEmpty
+          child: ref.watchWhen(
+            searchCoinProvider,
+            builder: (coins) => coins.isNotEmpty
                 ? ListView.builder(
                     itemCount: coins.length,
                     itemBuilder: (context, index) {
@@ -96,8 +94,6 @@ class _SearchCoinsPageState extends ConsumerState<SearchCoinsPage> {
                     },
                   )
                 : const _EmptyList(),
-            error: (e, _) => UnknownError(error: e),
-            loading: () => const Loader(),
           ),
         ),
       ),
