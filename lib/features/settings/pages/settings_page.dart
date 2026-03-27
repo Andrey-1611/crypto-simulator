@@ -52,8 +52,6 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
-    final userP = ref.watch(briefcaseNotifierProvider(null));
-    final settingsP = ref.watch(settingsNotifierProvider);
     final s = S.of(context);
     final packageInfo = ref.read(packageProvider).requireValue;
     return Scaffold(
@@ -72,8 +70,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
           children: [
             SizeBox(
               height: 0.23,
-              child: userP.when(
-                data: (data) {
+              child: ref.watchWhen(
+                briefcaseNotifierProvider(null),
+                builder: (data) {
                   final user = data.user;
                   return InfoBloc(
                     title: s.user_data,
@@ -87,12 +86,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     ],
                   );
                 },
-                error: (e, _) => UnknownError(error: e),
-                loading: () => const Loader(),
               ),
             ),
-            settingsP.when(
-              data: (settings) => Column(
+            ref.watchWhen(
+              settingsNotifierProvider,
+              builder: (settings) => Column(
                 children: [
                   SwitchCard(
                     title: s.dark_theme,
@@ -111,7 +109,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   Card(
                     child: ListTile(
                       onTap: () => ref.read(urlUtilProvider).openInRustore(),
-                      title:  Text(s.rate),
+                      title: Text(s.rate),
                       trailing: Icon(
                         Icons.favorite,
                         color: theme.colorScheme.error,
@@ -120,8 +118,6 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   ),
                 ],
               ),
-              error: (e, _) => UnknownError(error: e),
-              loading: () => const Loader(),
             ),
             const Spacer(),
             Text(

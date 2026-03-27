@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/app_user_details.dart';
 import '../../data/models/crypto_coin.dart';
+import '../../data/models/crypto_coin_details.dart';
 import '../../data/models/trade.dart';
 import '../../features/auth/pages/email_verification_page.dart';
 import '../../features/auth/pages/reset_password_page.dart';
@@ -14,9 +15,11 @@ import '../../features/history/pages/history_page.dart';
 import '../../features/history/pages/trade_page.dart';
 import '../../features/home/home_page.dart';
 import '../../features/market/pages/coin_details_page.dart';
+import '../../features/market/pages/coin_history_page.dart';
 import '../../features/market/pages/compare_coins_page.dart';
 import '../../features/market/pages/market_page.dart';
 import '../../features/market/pages/search_coins_page.dart';
+import '../../features/market/pages/trades_simulator_page.dart';
 import '../../features/rating/pages/rating_page.dart';
 import '../../features/settings/pages/settings_page.dart';
 import 'auth_guard.dart';
@@ -47,13 +50,16 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: RatingRoute.page),
       ],
     ),
+    AutoRoute(page: MarketRoute.page),
     AutoRoute(page: FavouriteCoinsRoute.page),
     AutoRoute(page: SettingsRoute.page),
     AutoRoute(page: SearchCoinsRoute.page),
     AutoRoute(page: CompareCoinsRoute.page),
     AutoRoute(page: CoinDetailsRoute.page),
+    AutoRoute(page: TradesSimulatorRoute.page),
     AutoRoute(page: TradeRoute.page),
     AutoRoute(page: BriefcaseRoute.page),
+    AutoRoute(page: CoinHistoryRoute.page),
     AutoRoute(page: HistoryRoute.page),
     AutoRoute(page: SignInRoute.page),
     AutoRoute(page: SignUpRoute.page),

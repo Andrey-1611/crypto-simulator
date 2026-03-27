@@ -2,8 +2,6 @@ import 'package:Bitmark/data/models/crypto_coin_details.dart';
 import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:Bitmark/app/widgets/loader.dart';
-import 'package:Bitmark/app/widgets/unknown_error.dart';
 import 'package:Bitmark/core/utils/toast_helper.dart';
 import 'package:Bitmark/data/models/trade.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -77,7 +75,6 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
-    final userP = ref.watch(briefcaseNotifierProvider(null));
     final size = MediaQuery.of(context);
     final s = S.of(context);
     return Padding(
@@ -87,8 +84,9 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
         right: 32.sp,
         bottom: size.viewInsets.bottom + 32.sp,
       ),
-      child: userP.when(
-        data: (data) {
+      child: ref.watchWhen(
+          briefcaseNotifierProvider(null),
+        builder: (data) {
           final user = data.user;
           final userCoinsAmount = user.coins
               .firstWhere(
@@ -122,8 +120,6 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
             ],
           );
         },
-        error: (e, _) => UnknownError(error: e),
-        loading: () => const Loader(),
       ),
     );
   }

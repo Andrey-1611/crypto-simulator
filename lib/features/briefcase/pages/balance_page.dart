@@ -18,10 +18,10 @@ class BalancePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userP = ref.watch(briefcaseNotifierProvider(user));
     final s = S.of(context);
-    return userP.when(
-      data: (data) {
+    return ref.watchWhen(
+      briefcaseNotifierProvider(user),
+      builder: (data) {
         final user = data.user;
         final trades = data.trades;
         final balance = data.coinsBalance;
@@ -103,12 +103,6 @@ class BalancePage extends ConsumerWidget {
           ],
         );
       },
-      error: (e, _) => UnknownError(
-        onPressed: () =>
-            ref.read(briefcaseNotifierProvider(user).notifier).build(),
-        error: e,
-      ),
-      loading: () => const Loader(),
     );
   }
 }

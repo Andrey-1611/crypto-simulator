@@ -18,10 +18,10 @@ class CryptoCoinsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
-    final coinsP = ref.watch(cryptoCoinsProvider(user));
     final s = S.of(context);
-    return coinsP.when(
-      data: (data) {
+    return ref.watchWhen(
+      cryptoCoinsProvider(user),
+      builder: (data) {
         final coins = data.coins;
         return coins.isNotEmpty
             ? ListView.builder(
@@ -47,11 +47,6 @@ class CryptoCoinsPage extends ConsumerWidget {
               )
             : _EmptyList(user: user, isFiltered: data.isFiltered);
       },
-      error: (e, _) => UnknownError(
-        onPressed: () => ref.refresh(cryptoCoinsProvider(user)),
-        error: e,
-      ),
-      loading: () => const Loader(),
     );
   }
 }

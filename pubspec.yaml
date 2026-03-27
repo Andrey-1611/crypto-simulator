@@ -2,7 +2,7 @@ name: Bitmark
 description: "A new Flutter project."
 publish_to: 'none'
 
-version: 1.4.1+8
+version: 1.5.0+9
 
 
 
@@ -39,6 +39,9 @@ dependencies:
   sqflite: ^2.4.2
   fl_chart: ^1.1.1
   url_launcher: ^6.3.2
+  csv: ^8.0.0
+  share_plus: ^12.0.1
+  path_provider: ^2.1.2
 
 dev_dependencies:
   flutter_test:

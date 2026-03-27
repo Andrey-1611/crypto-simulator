@@ -2,8 +2,6 @@ import 'package:Bitmark/app/widgets/info_bloc.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:Bitmark/app/widgets/coin_card.dart';
 import 'package:Bitmark/app/widgets/info_row.dart';
-import 'package:Bitmark/app/widgets/loader.dart';
-import 'package:Bitmark/app/widgets/unknown_error.dart';
 import 'package:Bitmark/data/models/trade.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,14 +19,14 @@ class TradePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final s = S.of(context);
-    final tradeP = ref.watch(tradeProvider(trade));
     return Scaffold(
       appBar: AppBar(title: Text(s.trade_details)),
       body: Padding(
         padding: .all(16.sp),
         child: Center(
-          child: tradeP.when(
-            data: (data) {
+          child: ref.watchWhen(
+            tradeProvider(trade),
+            builder: (data) {
               final currentPrice = data.coin.price;
               return Column(
                 children: [
@@ -75,8 +73,6 @@ class TradePage extends ConsumerWidget {
                 ],
               );
             },
-            error: (e, _) => UnknownError(error: e),
-            loading: () => const Loader(),
           ),
         ),
       ),

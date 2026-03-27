@@ -1,4 +1,6 @@
 import 'package:Bitmark/app/widgets/settings_button.dart';
+import 'package:Bitmark/app/widgets/trade_card.dart';
+import 'package:Bitmark/core/utils/export_service.dart';
 import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:Bitmark/data/models/trade.dart';
 import 'package:Bitmark/features/history/providers/filter_trades_provider.dart';
@@ -6,15 +8,11 @@ import 'package:Bitmark/features/history/providers/trades_provider.dart';
 import 'package:Bitmark/features/history/widgets/filter_trades_sheet.dart';
 import 'package:Bitmark/features/history/widgets/sort_trades_sheet.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:Bitmark/app/router/app_router.dart';
-import 'package:Bitmark/app/widgets/unknown_error.dart';
 import 'package:Bitmark/data/models/app_user_details.dart';
 import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../app/widgets/loader.dart';
-import '../../../app/widgets/size_box.dart';
 
 @RoutePage()
 class HistoryPage extends ConsumerWidget {
@@ -24,19 +22,17 @@ class HistoryPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tradesP = ref.watch(tradesProvider(user));
     final size = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: _AppBar(size: .fromHeight(size.height * 0.07), user: user),
       body: Center(
         child: Padding(
           padding: .all(16.sp),
-          child: tradesP.when(
-            data: (data) => data.trades.isNotEmpty
+          child: ref.watchWhen(
+            tradesProvider(user),
+            builder: (data) => data.trades.isNotEmpty
                 ? _TradesList(trades: data.trades)
                 : _EmptyList(user: user, isFiltered: data.isFilterd),
-            error: (e, _) => UnknownError(error: e),
-            loading: () => const Loader(),
           ),
         ),
       ),
@@ -68,13 +64,33 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   bool get userIsNull => user == null;
 
+  void export(WidgetRef ref, List<Trade> trades) =>
+      ref.read(exportServiceProvider).exportTrades(trades);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final s = S.of(context);
     return AppBar(
       automaticallyImplyLeading: !userIsNull,
       title: Text(s.history),
+      leading: userIsNull
+          ? ref.watchWhenData(
+              tradesProvider(user),
+              builder: (data) => IconButton(
+                onPressed: () => export(ref, data.trades),
+                icon: const Icon(Icons.share),
+              ),
+            )
+          : null,
       actions: [
+        if (!userIsNull)
+          ref.watchWhenData(
+            tradesProvider(user),
+            builder: (data) => IconButton(
+              onPressed: () => export(ref, data.trades),
+              icon: const Icon(Icons.share),
+            ),
+          ),
         PopupMenuButton<PopupMenuType>(
           icon: const Icon(Icons.more_vert),
           onSelected: (value) => switch (value) {
@@ -108,25 +124,7 @@ class _TradesList extends StatelessWidget {
       itemCount: trades.length,
       itemBuilder: (context, index) {
         final trade = trades[index];
-        return Card(
-          child: ListTile(
-            leading: GestureDetector(
-              onTap: () =>
-                  context.pushRoute(CoinDetailsRoute(coin: trade.coin)),
-              child: SizeBox.square(
-                size: 0.14,
-                child: Image.network(trade.coin.fullImageUrl),
-              ),
-            ),
-            title: Text(
-              '${trade.type.type} ${trade.amount} ${trade.coin.name}',
-              overflow: TextOverflow.ellipsis,
-            ),
-            subtitle: Text(trade.createdAt.hourFormat),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.pushRoute(TradeRoute(trade: trade)),
-          ),
-        );
+        return TradeCard(trade: trade);
       },
     );
   }

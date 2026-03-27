@@ -138,20 +138,42 @@ class CryptoDataSource implements CryptoRepository {
 
   @override
   Future<List<PricePoint>> getCoinPriceHourlyHistory(String symbol) async {
-    final response = await _dio.get(ApiConstants.hourlyPair(symbol));
-    final data = response.data['Data']['Data'] as List;
+    dynamic response = await _dio.get(ApiConstants.hourlyPair(symbol));
+    var data = response.data['Data']['Data'];
+    while (data == null || data is! List) {
+      response = await _dio.get(ApiConstants.hourlyPair(symbol));
+      data = response.data['Data']['Data'];
+    }
     return data.map((m) => PricePoint.fromApi(m)).toList();
   }
 
   @override
   Future<CoinFullData> getCoinFullDataById(CryptoCoin coin) async {
-    final coinDetails = await getCoinDetailsBySymbol(coin);
-    final dailyPrices = await getCoinPriceDailyHistory(coin.symbol);
-    final hourlyPrices = await getCoinPriceHourlyHistory(coin.symbol);
+    final results = await Future.wait([
+      getCoinDetailsBySymbol(coin),
+      getCoinPriceDailyHistory(coin.symbol),
+      getCoinPriceHourlyHistory(coin.symbol),
+    ]);
+    final coinDetails = results[0] as CryptoCoinDetails;
+    final dailyPrices = results[1] as List<PricePoint>;
+    final hourlyPrices = results[2] as List<PricePoint>;
     return CoinFullData(
       coin: coinDetails,
       dailyPrices: dailyPrices,
       hourlyPrices: hourlyPrices,
     );
+  }
+
+  @override
+  Future<PricePoint> getCoinHistoryPrice(String symbol, DateTime date) async {
+    final now = DateTime.now();
+    final diff = now.difference(date).inDays;
+    final toTs = date.millisecondsSinceEpoch ~/ 1000;
+    final url = diff <= 7
+        ? ApiConstants.historyMinutePrice(symbol, toTs)
+        : ApiConstants.historyHourPrice(symbol, toTs);
+    final response = await _dio.get(url);
+    final data = response.data['Data']['Data'] as List;
+    return .fromApi(data.first);
   }
 }

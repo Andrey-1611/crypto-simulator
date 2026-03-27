@@ -27,8 +27,8 @@ final darkTheme = ThemeData(
   outlinedButtonTheme: _outlineButtonTheme,
   hintColor: _hintColor,
   dialogTheme: _dialogTheme,
-  segmentedButtonTheme: _segmentedButtonTheme,
-  colorScheme: const ColorScheme.dark(primary: _primary, error: Colors.red),
+  segmentedButtonTheme: _segmentedButtonTheme(Colors.white),
+  colorScheme: const .dark(primary: _primary, error: Colors.red),
 );
 
 final lightTheme = ThemeData(
@@ -49,45 +49,38 @@ final lightTheme = ThemeData(
   bottomSheetTheme: _bottomSheetTheme(_lightBackground),
   hintColor: _hintColor,
   dialogTheme: _dialogTheme,
-  segmentedButtonTheme: _segmentedButtonTheme,
-  colorScheme: const ColorScheme.light(primary: _primary, error: Colors.red),
+  segmentedButtonTheme: _segmentedButtonTheme(Colors.black),
+  colorScheme: const .light(primary: _primary, error: Colors.red),
 );
 
 final _textTheme = TextTheme(
-  titleLarge: TextStyle(fontWeight: FontWeight.bold, fontSize: 56.sp),
-  titleMedium: TextStyle(fontWeight: FontWeight.w800, fontSize: 42.sp),
-  displayLarge: TextStyle(fontWeight: FontWeight.bold, fontSize: 28.sp),
-  displayMedium: TextStyle(fontWeight: FontWeight.w800, fontSize: 20.sp),
-  displaySmall: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.sp),
-  bodyLarge: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),
+  titleLarge: TextStyle(fontWeight: .bold, fontSize: 56.sp),
+  titleMedium: TextStyle(fontWeight: .w800, fontSize: 42.sp),
+  displayLarge: TextStyle(fontWeight: .bold, fontSize: 28.sp),
+  displayMedium: TextStyle(fontWeight: .w800, fontSize: 20.sp),
+  displaySmall: TextStyle(fontWeight: .w600, fontSize: 16.sp),
+  bodyLarge: TextStyle(fontWeight: .w600, fontSize: 15.sp),
   bodyMedium: TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: 16.sp,
+    fontSize: 15.sp,
     color: _hintColor,
   ),
-  bodySmall: TextStyle(
-    fontWeight: FontWeight.w400,
-    fontSize: 14.sp,
-    color: _hintColor,
-  ),
-  labelLarge: TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp),
+  bodySmall: TextStyle(fontWeight: .w400, fontSize: 14.sp, color: _hintColor),
+  labelLarge: TextStyle(fontWeight: .w500, fontSize: 13.sp),
 );
 
 InputDecorationTheme _inputDecorationTheme(Color color) => InputDecorationTheme(
   filled: true,
   fillColor: color,
   hintStyle: TextStyle(fontSize: 15.sp, color: _hintColor),
-  contentPadding: EdgeInsets.all(12.sp),
-  border: OutlineInputBorder(
-    borderSide: BorderSide.none,
-    borderRadius: BorderRadius.circular(8.sp),
-  ),
+  contentPadding: .all(12.sp),
+  border: OutlineInputBorder(borderSide: .none, borderRadius: .circular(8.sp)),
 );
 
 final _listTileTheme = ListTileThemeData(
-  contentPadding: EdgeInsets.symmetric(vertical: 4.sp, horizontal: 8.sp),
+  contentPadding: .symmetric(vertical: 4.sp, horizontal: 8.sp),
   subtitleTextStyle: TextStyle(
-    fontWeight: FontWeight.w400,
+    fontWeight: .w400,
     fontSize: 14.sp,
     color: _hintColor,
   ),
@@ -95,9 +88,9 @@ final _listTileTheme = ListTileThemeData(
 
 CardThemeData _cardTheme(Color color) => CardThemeData(
   color: color,
-  margin: EdgeInsets.all(8.sp),
+  margin: .all(8.sp),
   shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(8.sp),
+    borderRadius: .circular(8.sp),
     side: BorderSide.none,
   ),
 );
@@ -107,7 +100,7 @@ AppBarTheme _appBarTheme(Color color, Color titleColor) => AppBarTheme(
   backgroundColor: color,
   titleTextStyle: TextStyle(
     fontSize: 26.sp,
-    fontWeight: FontWeight.bold,
+    fontWeight: .bold,
     color: titleColor,
   ),
   surfaceTintColor: Colors.transparent,
@@ -117,12 +110,12 @@ NavigationBarThemeData _navigationBarTheme(Color color, Color iconColor) =>
     NavigationBarThemeData(
       backgroundColor: color,
       indicatorColor: _primary,
-      iconTheme: WidgetStateProperty.all(IconThemeData(color: iconColor)),
+      iconTheme: .all(IconThemeData(color: iconColor)),
     );
 
 final _textButtonTheme = TextButtonThemeData(
   style: TextButton.styleFrom(
-    textStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.sp),
+    textStyle: TextStyle(fontWeight: .w600, fontSize: 16.sp),
     foregroundColor: _primary,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
   ),
@@ -157,16 +150,17 @@ BottomSheetThemeData _bottomSheetTheme(Color color) =>
     BottomSheetThemeData(backgroundColor: color);
 
 final _dialogTheme = DialogThemeData(
-  titleTextStyle: TextStyle(fontSize: 18.sp),
+  titleTextStyle: TextStyle(fontWeight: .w600, fontSize: 18.sp),
 );
 
-final _segmentedButtonTheme = SegmentedButtonThemeData(
-  style: ButtonStyle(
-    backgroundColor: .resolveWith((states) {
-      if (states.contains(WidgetState.selected)) {
-        return _primary;
-      }
-      return _darkCard;
-    }),
-  ),
-);
+SegmentedButtonThemeData _segmentedButtonTheme(Color textColor) =>
+    SegmentedButtonThemeData(
+      style: ButtonStyle(
+        foregroundColor: .all(textColor),
+        side: .all(.none),
+        backgroundColor: .resolveWith(
+          (states) =>
+              states.contains(WidgetState.selected) ? _primary : _darkCard,
+        ),
+      ),
+    );

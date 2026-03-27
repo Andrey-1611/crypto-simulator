@@ -148,5 +148,18 @@
   "num_coins_purchased_24h": "Куплено монет за 24 часа",
   "first_trade": "Первая сделка",
   "last_trade": "Последняя сделка",
-  "rate": "Оценить"
+  "rate": "Оценить",
+  "no_trades": "Нет сделок с этой монетой",
+  "trade_data": "Данные о сделках",
+  "bought": "Куплено",
+  "sold": "Продано",
+  "financial_data": "Данные о финансах",
+  "spent": "Потрачено",
+  "received": "Получено",
+  "average_price": "Средняя цена",
+  "profitability": "Доходность",
+  "simulator_trades": "Симулятор сделок",
+  "buy_date": "Дата покупки",
+  "sell_date": "Дата продажи",
+  "calculate": "Посчитать"
 }

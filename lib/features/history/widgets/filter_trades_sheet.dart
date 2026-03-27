@@ -30,9 +30,9 @@ class _FilterTradesSheetState extends ConsumerState<FilterTradesSheet> {
 
   Future<DateTime?> showPicker(DateTime? date) async => await showDatePicker(
     context: context,
-    initialDate: date ?? DateTime.now(),
+    initialDate: date ?? .now(),
     firstDate: DateTime(2020),
-    lastDate: DateTime.now(),
+    lastDate: .now(),
   );
 
   Future<void> pickDateRange() async {
@@ -42,7 +42,7 @@ class _FilterTradesSheetState extends ConsumerState<FilterTradesSheet> {
       initialEntryMode: .calendarOnly,
       initialDateRange: notifier.state.dateRange,
       firstDate: DateTime(2020),
-      lastDate: DateTime.now(),
+      lastDate: .now(),
       builder: (context, child) {
         final theme = Theme.of(context);
         return Theme(

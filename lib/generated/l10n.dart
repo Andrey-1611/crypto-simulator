@@ -1118,6 +1118,96 @@ class S {
   String get rate {
     return Intl.message('Rate', name: 'rate', desc: '', args: []);
   }
+
+  /// `No trades for this coin`
+  String get no_trades {
+    return Intl.message(
+      'No trades for this coin',
+      name: 'no_trades',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Trade Data`
+  String get trade_data {
+    return Intl.message('Trade Data', name: 'trade_data', desc: '', args: []);
+  }
+
+  /// `Bought`
+  String get bought {
+    return Intl.message('Bought', name: 'bought', desc: '', args: []);
+  }
+
+  /// `Sold`
+  String get sold {
+    return Intl.message('Sold', name: 'sold', desc: '', args: []);
+  }
+
+  /// `Financial Data`
+  String get financial_data {
+    return Intl.message(
+      'Financial Data',
+      name: 'financial_data',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Spent`
+  String get spent {
+    return Intl.message('Spent', name: 'spent', desc: '', args: []);
+  }
+
+  /// `Received`
+  String get received {
+    return Intl.message('Received', name: 'received', desc: '', args: []);
+  }
+
+  /// `Average Price`
+  String get average_price {
+    return Intl.message(
+      'Average Price',
+      name: 'average_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profitability`
+  String get profitability {
+    return Intl.message(
+      'Profitability',
+      name: 'profitability',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Trades Simulator`
+  String get simulator_trades {
+    return Intl.message(
+      'Trades Simulator',
+      name: 'simulator_trades',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Buy Date`
+  String get buy_date {
+    return Intl.message('Buy Date', name: 'buy_date', desc: '', args: []);
+  }
+
+  /// `Sell Date`
+  String get sell_date {
+    return Intl.message('Sell Date', name: 'sell_date', desc: '', args: []);
+  }
+
+  /// `Calculate`
+  String get calculate {
+    return Intl.message('Calculate', name: 'calculate', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

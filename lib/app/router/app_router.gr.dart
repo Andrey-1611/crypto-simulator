@@ -107,6 +107,53 @@ class CoinDetailsRouteArgs {
 }
 
 /// generated route for
+/// [CoinHistoryPage]
+class CoinHistoryRoute extends PageRouteInfo<CoinHistoryRouteArgs> {
+  CoinHistoryRoute({
+    Key? key,
+    required CryptoCoinDetails coin,
+    List<PageRouteInfo>? children,
+  }) : super(
+         CoinHistoryRoute.name,
+         args: CoinHistoryRouteArgs(key: key, coin: coin),
+         initialChildren: children,
+       );
+
+  static const String name = 'CoinHistoryRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<CoinHistoryRouteArgs>();
+      return CoinHistoryPage(key: args.key, coin: args.coin);
+    },
+  );
+}
+
+class CoinHistoryRouteArgs {
+  const CoinHistoryRouteArgs({this.key, required this.coin});
+
+  final Key? key;
+
+  final CryptoCoinDetails coin;
+
+  @override
+  String toString() {
+    return 'CoinHistoryRouteArgs{key: $key, coin: $coin}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! CoinHistoryRouteArgs) return false;
+    return key == other.key && coin == other.coin;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ coin.hashCode;
+}
+
+/// generated route for
 /// [CompareCoinsPage]
 class CompareCoinsRoute extends PageRouteInfo<void> {
   const CompareCoinsRoute({List<PageRouteInfo>? children})
@@ -370,4 +417,20 @@ class TradeRouteArgs {
 
   @override
   int get hashCode => key.hashCode ^ trade.hashCode;
+}
+
+/// generated route for
+/// [TradesSimulatorPage]
+class TradesSimulatorRoute extends PageRouteInfo<void> {
+  const TradesSimulatorRoute({List<PageRouteInfo>? children})
+    : super(TradesSimulatorRoute.name, initialChildren: children);
+
+  static const String name = 'TradesSimulatorRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const TradesSimulatorPage();
+    },
+  );
 }

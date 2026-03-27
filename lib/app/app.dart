@@ -43,7 +43,7 @@ class App extends ConsumerWidget {
               ),
         ),
         error: (e, _) => MaterialApp(
-          home: Scaffold(body: UnknownError(error: e)),
+          home: Scaffold(body: UnknownError(e: e)),
         ),
         loading: () => const Loader(),
       ),

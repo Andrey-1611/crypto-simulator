@@ -34,5 +34,11 @@ abstract class ApiConstants {
   static String hourlyPair(String symbol) =>
       '/data/v2/histohour?fsym=$symbol&tsym=USD&limit=730';
 
+  static String historyHourPrice(String symbol, int toTs) =>
+      '/data/v2/histohour?fsym=$symbol&tsym=USD&limit=1&toTs=$toTs';
+
+  static String historyMinutePrice(String symbol, int toTs) =>
+      '/data/v2/histominute?fsym=$symbol&tsym=USD&limit=1&toTs=$toTs';
+
   static const imagesHost = 'https://www.cryptocompare.com';
 }

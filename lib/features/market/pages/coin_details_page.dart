@@ -36,8 +36,6 @@ class CoinDetailsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final coinP = ref.watch(coinDetailsNotifierProvider(coin));
-    final favouriteP = ref.watch(favouriteNotifierProvider);
     final theme = Theme.of(context);
     final isShort = ref.watch(coinDetailsPeriodProvider).days < 90;
     return Scaffold(
@@ -50,9 +48,11 @@ class CoinDetailsPage extends ConsumerWidget {
           ],
         ),
         actions: [
-          coinP.when(
-            data: (data) => favouriteP.when(
-              data: (coins) {
+          ref.watchWhenData(
+            coinDetailsNotifierProvider(coin),
+            builder: (data) => ref.watchWhenData(
+              favouriteNotifierProvider,
+              builder: (coins) {
                 final coin = data.coin;
                 final ids = coins.map((c) => c.coin.id);
                 final isFavourite = ids.contains(data.coin.info.id);
@@ -68,24 +68,26 @@ class CoinDetailsPage extends ConsumerWidget {
                     ),
                     IconButton(
                       onPressed: () =>
+                          context.pushRoute(CoinHistoryRoute(coin: coin)),
+                      icon: const Icon(Icons.hourglass_bottom),
+                    ),
+                    IconButton(
+                      onPressed: () =>
                           context.pushRoute(const CompareCoinsRoute()),
                       icon: const Icon(Icons.compare_arrows),
                     ),
                   ],
                 );
               },
-              loading: () => const SizedBox.shrink(),
-              error: (_, _) => const SizedBox.shrink(),
             ),
-            loading: () => const SizedBox.shrink(),
-            error: (_, _) => const SizedBox.shrink(),
           ),
         ],
       ),
       body: Padding(
         padding: .all(16.0.sp),
-        child: coinP.when(
-          data: (data) {
+        child: ref.watchWhen(
+          coinDetailsNotifierProvider(coin),
+          builder: (data) {
             final coin = data.coin;
             return Column(
               children: [
@@ -117,8 +119,6 @@ class CoinDetailsPage extends ConsumerWidget {
               ],
             );
           },
-          error: (e, _) => UnknownError(error: e),
-          loading: () => const Loader(),
         ),
       ),
     );
@@ -420,7 +420,7 @@ class _ActionsButtons extends ConsumerWidget {
                   )
                 : const SizedBox.shrink();
           },
-          error: (e, _) => UnknownError(error: e),
+          error: (e, _) => UnknownError(e: e),
           loading: () => const Loader(),
         ),
       ],
