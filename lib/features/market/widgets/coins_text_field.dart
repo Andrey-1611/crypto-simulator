@@ -6,12 +6,14 @@ class CoinsTextField extends StatelessWidget {
   final TextEditingController coinsController;
   final bool autofocus;
   final void Function(String)? onChanged;
+  final int? maxLength;
 
   const CoinsTextField({
     super.key,
     required this.coinsController,
     this.autofocus = true,
     this.onChanged,
+    this.maxLength,
   });
 
   @override
@@ -22,8 +24,9 @@ class CoinsTextField extends StatelessWidget {
       autofocus: autofocus,
       keyboardType: .number,
       onChanged: onChanged,
+      maxLength: maxLength,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      decoration: InputDecoration(hintText: s.num_coins),
+      decoration: InputDecoration(hintText: s.num_coins, counterText: ''),
     );
   }
 }

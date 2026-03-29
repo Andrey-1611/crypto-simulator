@@ -53,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buy": MessageLookupByLibrary.simpleMessage("Buy"),
     "buy_coin": m0,
     "buy_date": MessageLookupByLibrary.simpleMessage("Buy Date"),
+    "buy_price": MessageLookupByLibrary.simpleMessage("Coin purchase price"),
     "by_change_24h": MessageLookupByLibrary.simpleMessage("24h change"),
     "by_market_cap": MessageLookupByLibrary.simpleMessage(
       "By market capitalization",
@@ -89,6 +90,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "compare": MessageLookupByLibrary.simpleMessage("Compare"),
     "compare_coins": MessageLookupByLibrary.simpleMessage("Compare Coins"),
     "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+    "create_trade": MessageLookupByLibrary.simpleMessage("Create a trade"),
     "created": MessageLookupByLibrary.simpleMessage("Created"),
     "current_indicators": MessageLookupByLibrary.simpleMessage(
       "Current Indicators",
@@ -194,6 +196,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "price": MessageLookupByLibrary.simpleMessage("Current Price"),
     "price_p": MessageLookupByLibrary.simpleMessage("Price"),
     "profit": MessageLookupByLibrary.simpleMessage("Profit"),
+    "profit_data": MessageLookupByLibrary.simpleMessage("Profit data"),
+    "profit_per_coin": MessageLookupByLibrary.simpleMessage("Profit per coin"),
+    "profit_per_coin_pct": MessageLookupByLibrary.simpleMessage(
+      "Profit per coin (%)",
+    ),
+    "profit_per_day": MessageLookupByLibrary.simpleMessage("Profit per day"),
+    "profit_per_hour": MessageLookupByLibrary.simpleMessage("Profit per hour"),
+    "profit_per_month": MessageLookupByLibrary.simpleMessage(
+      "Profit per month",
+    ),
     "profit_percent": MessageLookupByLibrary.simpleMessage("Profit %"),
     "profitability": MessageLookupByLibrary.simpleMessage("Profitability"),
     "rate": MessageLookupByLibrary.simpleMessage("Rate"),
@@ -212,6 +224,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sell": MessageLookupByLibrary.simpleMessage("Sell"),
     "sell_coin_a": m4,
     "sell_date": MessageLookupByLibrary.simpleMessage("Sell Date"),
+    "sell_price": MessageLookupByLibrary.simpleMessage("Coin selling price"),
     "settings": MessageLookupByLibrary.simpleMessage("Settings"),
     "signIn": MessageLookupByLibrary.simpleMessage("Sign In"),
     "signOutConfirm": MessageLookupByLibrary.simpleMessage(

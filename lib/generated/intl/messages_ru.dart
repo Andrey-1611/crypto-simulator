@@ -53,6 +53,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "buy": MessageLookupByLibrary.simpleMessage("Купить"),
     "buy_coin": m0,
     "buy_date": MessageLookupByLibrary.simpleMessage("Дата покупки"),
+    "buy_price": MessageLookupByLibrary.simpleMessage(
+      "Цена монеты при покупке",
+    ),
     "by_change_24h": MessageLookupByLibrary.simpleMessage("Изменение за 24ч"),
     "by_market_cap": MessageLookupByLibrary.simpleMessage("По капитализации"),
     "by_price": MessageLookupByLibrary.simpleMessage("По цене"),
@@ -85,6 +88,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "compare": MessageLookupByLibrary.simpleMessage("Сравнение"),
     "compare_coins": MessageLookupByLibrary.simpleMessage("Сравнение монет"),
     "confirm": MessageLookupByLibrary.simpleMessage("Подтвердить"),
+    "create_trade": MessageLookupByLibrary.simpleMessage("Создайте сделку"),
     "created": MessageLookupByLibrary.simpleMessage("Создан"),
     "current_indicators": MessageLookupByLibrary.simpleMessage(
       "Текущие показатели",
@@ -193,6 +197,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "price": MessageLookupByLibrary.simpleMessage("Текущая цена"),
     "price_p": MessageLookupByLibrary.simpleMessage("Цена"),
     "profit": MessageLookupByLibrary.simpleMessage("Прибыль"),
+    "profit_data": MessageLookupByLibrary.simpleMessage("Данные о прибыли"),
+    "profit_per_coin": MessageLookupByLibrary.simpleMessage(
+      "Прибыль за монету",
+    ),
+    "profit_per_coin_pct": MessageLookupByLibrary.simpleMessage(
+      "Прибыль в % за монету",
+    ),
+    "profit_per_day": MessageLookupByLibrary.simpleMessage("Прибыль за день"),
+    "profit_per_hour": MessageLookupByLibrary.simpleMessage("Прибыль за час"),
+    "profit_per_month": MessageLookupByLibrary.simpleMessage(
+      "Прибыль за месяц",
+    ),
     "profit_percent": MessageLookupByLibrary.simpleMessage("Прибыль в %"),
     "profitability": MessageLookupByLibrary.simpleMessage("Доходность"),
     "rate": MessageLookupByLibrary.simpleMessage("Оценить"),
@@ -211,6 +227,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "sell": MessageLookupByLibrary.simpleMessage("Продать"),
     "sell_coin_a": m4,
     "sell_date": MessageLookupByLibrary.simpleMessage("Дата продажи"),
+    "sell_price": MessageLookupByLibrary.simpleMessage(
+      "Цена монеты при продаже",
+    ),
     "settings": MessageLookupByLibrary.simpleMessage("Настройки"),
     "signIn": MessageLookupByLibrary.simpleMessage("Войти"),
     "signOutConfirm": MessageLookupByLibrary.simpleMessage(

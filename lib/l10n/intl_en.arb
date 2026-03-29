@@ -160,5 +160,14 @@
   "simulator_trades": "Trades Simulator",
   "buy_date": "Buy Date",
   "sell_date": "Sell Date",
-  "calculate": "Calculate"
+  "calculate": "Calculate",
+  "profit_data": "Profit data",
+  "buy_price": "Coin purchase price",
+  "sell_price": "Coin selling price",
+  "profit_per_coin": "Profit per coin",
+  "profit_per_coin_pct": "Profit per coin (%)",
+  "profit_per_hour": "Profit per hour",
+  "profit_per_day": "Profit per day",
+  "profit_per_month": "Profit per month",
+  "create_trade": "Create a trade"
 }

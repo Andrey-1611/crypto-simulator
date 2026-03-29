@@ -65,14 +65,6 @@ class BriefcasePage extends ConsumerWidget {
                 )
               : null,
           actions: [
-            if (!isCurrentUser)
-              ref.watchWhenData(
-                cryptoCoinsProvider(user),
-                builder: (data) => IconButton(
-                  onPressed: () => export(ref, data.coins),
-                  icon: const Icon(Icons.share),
-                ),
-              ),
             PopupMenuButton<PopupMenuType>(
               icon: const Icon(Icons.more_vert),
               onSelected: (value) => switch (value) {

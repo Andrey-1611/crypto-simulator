@@ -83,14 +83,6 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
             )
           : null,
       actions: [
-        if (!userIsNull)
-          ref.watchWhenData(
-            tradesProvider(user),
-            builder: (data) => IconButton(
-              onPressed: () => export(ref, data.trades),
-              icon: const Icon(Icons.share),
-            ),
-          ),
         PopupMenuButton<PopupMenuType>(
           icon: const Icon(Icons.more_vert),
           onSelected: (value) => switch (value) {

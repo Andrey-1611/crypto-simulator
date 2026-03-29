@@ -1,3 +1,5 @@
+import 'package:Bitmark/app/widgets/info_bloc.dart';
+import 'package:Bitmark/app/widgets/info_row.dart';
 import 'package:Bitmark/app/widgets/loader.dart';
 import 'package:Bitmark/core/utils/datetime_service.dart';
 import 'package:Bitmark/core/utils/extensions.dart';
@@ -65,7 +67,6 @@ class _TradesSimulatorPageState extends ConsumerState<TradesSimulatorPage> {
   @override
   Widget build(BuildContext context) {
     final s = context.s;
-    final theme = context.theme;
     final state = ref.watch(profitStateProvider);
     return Scaffold(
       appBar: AppBar(
@@ -78,12 +79,12 @@ class _TradesSimulatorPageState extends ConsumerState<TradesSimulatorPage> {
         ],
       ),
       body: Padding(
-        padding: .symmetric(horizontal: 16.r, vertical: 64.r),
+        padding: .all(16.r),
         child: Center(
           child: Column(
-            mainAxisAlignment: .center,
             children: [
-              const Spacer(),
+              const _InfoBloc(),
+              SizedBox(height: 40.h),
               TextField(
                 readOnly: true,
                 controller: TextEditingController(text: state.coinSymbol),
@@ -113,6 +114,7 @@ class _TradesSimulatorPageState extends ConsumerState<TradesSimulatorPage> {
               CoinsTextField(
                 coinsController: _amountController,
                 autofocus: false,
+                maxLength: 12,
                 onChanged: update,
               ),
               SizedBox(height: 15.h),
@@ -143,14 +145,6 @@ class _TradesSimulatorPageState extends ConsumerState<TradesSimulatorPage> {
                         child: Text(s.calculate),
                       ),
               ),
-              const Spacer(),
-              ref.watchWhen(
-                profitProvider,
-                builder: (profit) => Text(
-                  '${s.profit}: ${profit.toCryptoPrice}',
-                  style: theme.textTheme.displayLarge,
-                ),
-              ),
             ],
           ),
         ),
@@ -160,3 +154,60 @@ class _TradesSimulatorPageState extends ConsumerState<TradesSimulatorPage> {
 }
 
 enum SelectCoinPopup { market, search, favourite }
+
+class _InfoBloc extends ConsumerWidget {
+  const _InfoBloc();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final s = context.s;
+    final theme = context.theme;
+    return SizedBox(
+      height: 410.h,
+      child: ref.watchWhen(
+        profitProvider,
+        builder: (data) => data != null
+            ? InfoBloc(
+                title: s.profit_data,
+                children: [
+                  InfoRow(
+                    title: s.buy_price,
+                    value: data.buyPrice.compactPrice,
+                  ),
+                  InfoRow(
+                    title: s.sell_price,
+                    value: data.sellPrice.compactPrice,
+                  ),
+                  InfoRow(title: s.profit, value: data.profit.compactPrice),
+                  InfoRow(
+                    title: s.profit_percent,
+                    value: data.profitPct.percent,
+                  ),
+                  InfoRow(
+                    title: s.profit_per_coin,
+                    value: data.profitPerCoin.compactPrice,
+                  ),
+                  InfoRow(
+                    title: s.profit_per_hour,
+                    value: data.profitPerHour.compactPrice,
+                  ),
+                  InfoRow(
+                    title: s.profit_per_day,
+                    value: data.profitPerDay.compactPrice,
+                  ),
+                  InfoRow(
+                    title: s.profit_per_month,
+                    value: data.profitPerMonth.compactPrice,
+                  ),
+                ],
+              )
+            : Center(
+                child: Text(
+                  s.create_trade,
+                  style: theme.textTheme.displayLarge,
+                ),
+              ),
+      ),
+    );
+  }
+}
