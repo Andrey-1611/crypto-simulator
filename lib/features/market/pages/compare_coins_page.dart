@@ -37,19 +37,21 @@ class CompareCoinsPage extends ConsumerWidget {
         title: Text(s.compare_coins),
         actions: [
           PopupMenuButton<CompareCoinsPopup>(
-            icon: const Icon(Icons.more_vert),
+            icon: const Icon(Icons.add),
             onSelected: (value) => switch (value) {
               .market => context.pushRoute(const MarketRoute()),
               .search => context.pushRoute(const SearchCoinsRoute()),
               .favourite => context.pushRoute(const FavouriteCoinsRoute()),
-              .deleteAll => removeAll(ref),
             },
             itemBuilder: (context) => [
               PopupMenuItem(value: .market, child: Text(s.market)),
               PopupMenuItem(value: .search, child: Text(s.searching)),
               PopupMenuItem(value: .favourite, child: Text(s.favourite)),
-              PopupMenuItem(value: .deleteAll, child: Text(s.reset)),
             ],
+          ),
+          IconButton(
+            onPressed: () => removeAll(ref),
+            icon: const Icon(Icons.delete_forever),
           ),
         ],
       ),
@@ -64,6 +66,7 @@ class CompareCoinsPage extends ConsumerWidget {
                       SegmentedButton<CompareCoinsPeriod>(
                         showSelectedIcon: false,
                         segments: const [
+                          ButtonSegment(value: .day, label: Text('1D')),
                           ButtonSegment(value: .week, label: Text('1W')),
                           ButtonSegment(value: .month, label: Text('1M')),
                           ButtonSegment(value: .threeMonths, label: Text('3M')),
@@ -148,7 +151,7 @@ class _ChartRound extends StatelessWidget {
   }
 }
 
-enum CompareCoinsPopup { market, search, favourite, deleteAll }
+enum CompareCoinsPopup { market, search, favourite }
 
 class _CompareCoinsChart extends ConsumerWidget {
   final List<CoinFullData> coins;

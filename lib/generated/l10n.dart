@@ -1208,6 +1208,91 @@ class S {
   String get calculate {
     return Intl.message('Calculate', name: 'calculate', desc: '', args: []);
   }
+
+  /// `Profit data`
+  String get profit_data {
+    return Intl.message('Profit data', name: 'profit_data', desc: '', args: []);
+  }
+
+  /// `Coin purchase price`
+  String get buy_price {
+    return Intl.message(
+      'Coin purchase price',
+      name: 'buy_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Coin selling price`
+  String get sell_price {
+    return Intl.message(
+      'Coin selling price',
+      name: 'sell_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profit per coin`
+  String get profit_per_coin {
+    return Intl.message(
+      'Profit per coin',
+      name: 'profit_per_coin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profit per coin (%)`
+  String get profit_per_coin_pct {
+    return Intl.message(
+      'Profit per coin (%)',
+      name: 'profit_per_coin_pct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profit per hour`
+  String get profit_per_hour {
+    return Intl.message(
+      'Profit per hour',
+      name: 'profit_per_hour',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profit per day`
+  String get profit_per_day {
+    return Intl.message(
+      'Profit per day',
+      name: 'profit_per_day',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profit per month`
+  String get profit_per_month {
+    return Intl.message(
+      'Profit per month',
+      name: 'profit_per_month',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create a trade`
+  String get create_trade {
+    return Intl.message(
+      'Create a trade',
+      name: 'create_trade',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

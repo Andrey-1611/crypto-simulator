@@ -50,4 +50,18 @@ class CryptoCoin {
 
   factory CryptoCoin.empty() =>
       const CryptoCoin(id: '', symbol: '', name: '', imageUrl: '');
+
+  CryptoCoin copyWith({
+    String? id,
+    String? symbol,
+    String? name,
+    String? imageUrl,
+  }) {
+    return CryptoCoin(
+      id: id ?? this.id,
+      symbol: symbol ?? this.symbol,
+      name: name ?? this.name,
+      imageUrl: imageUrl ?? this.imageUrl,
+    );
+  }
 }

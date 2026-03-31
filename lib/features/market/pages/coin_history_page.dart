@@ -93,13 +93,13 @@ class _InfoBlocs extends StatelessWidget {
         InfoBloc(
           title: s.financial_data,
           children: [
-            InfoRow(title: s.spent, value: util.totalSpent.toCryptoPrice),
-            InfoRow(title: s.received, value: util.totalReceived.toCryptoPrice),
+            InfoRow(title: s.spent, value: util.totalSpent.compactPrice),
+            InfoRow(title: s.received, value: util.totalReceived.compactPrice),
             InfoRow(
               title: s.average_price,
-              value: util.avgBuyPrice.toCryptoPrice,
+              value: util.avgBuyPrice.compactPrice,
             ),
-            InfoRow(title: s.profit, value: util.pnl.toCryptoPrice),
+            InfoRow(title: s.profit, value: util.pnl.compactPrice),
             InfoRow(title: s.profitability, value: util.pnlPercent.percent),
           ],
         ),

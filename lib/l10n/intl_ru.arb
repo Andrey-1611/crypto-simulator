@@ -161,5 +161,14 @@
   "simulator_trades": "Симулятор сделок",
   "buy_date": "Дата покупки",
   "sell_date": "Дата продажи",
-  "calculate": "Посчитать"
+  "calculate": "Посчитать",
+  "profit_data": "Данные о прибыли",
+  "buy_price": "Цена монеты при покупке",
+  "sell_price": "Цена монеты при продаже",
+  "profit_per_coin": "Прибыль за монету",
+  "profit_per_coin_pct": "Прибыль в % за монету",
+  "profit_per_hour": "Прибыль за час",
+  "profit_per_day": "Прибыль за день",
+  "profit_per_month": "Прибыль за месяц",
+  "create_trade": "Создайте сделку"
 }

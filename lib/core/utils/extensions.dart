@@ -66,13 +66,15 @@ extension PriceFormatter on double {
   }
 
   String get percent {
+    if (this == .infinity) return '+∞ %';
+    if (this == .negativeInfinity) return '-∞ %';
     final sign = this > 0 ? '+' : '';
     return '$sign${toStringAsFixed(2)} %';
   }
 
   String get inPercent => '${toStringAsFixed(2)} %';
 
-  String get toCryptoPrice {
+  String get compactPrice {
     return switch (this) {
       >= 1e10 => '${(this / 1e9).toStringAsFixed(3)}B \$',
       >= 1e7 => '${(this / 1e6).toStringAsFixed(3)}M \$',
@@ -145,5 +147,21 @@ extension WidgetRefX on WidgetRef {
       loading: () => const Loader(),
       error: (e, _) => UnknownError(e: e),
     );
+  }
+}
+
+extension IntCompact on int {
+  String get compact {
+    if (this >= 1e12) {
+      return '${(this / 1e12).toStringAsFixed(3)}T';
+    } else if (this >= 1e9) {
+      return '${(this / 1e9).toStringAsFixed(3)}B';
+    } else if (this >= 1e6) {
+      return '${(this / 1e6).toStringAsFixed(3)}M';
+    } else if (this >= 1e3) {
+      return '${(this / 1e3).toStringAsFixed(3)}K';
+    } else {
+      return toString();
+    }
   }
 }

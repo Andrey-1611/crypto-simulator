@@ -23,4 +23,19 @@ class CoinFullData {
       hourlyPrices: hourlyPrices ?? this.hourlyPrices,
     );
   }
+
+  CoinFullData updatePrice(double price) {
+    return CoinFullData(
+      coin: .new(
+        info: coin.info,
+        priceData: coin.priceData.copyWith(price: price),
+        hourlyData: coin.hourlyData,
+        dailyData: coin.dailyData,
+        volumeData: coin.volumeData,
+        supplyData: coin.supplyData,
+      ),
+      dailyPrices: dailyPrices,
+      hourlyPrices: hourlyPrices,
+    );
+  }
 }

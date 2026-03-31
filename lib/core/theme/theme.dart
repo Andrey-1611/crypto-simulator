@@ -27,6 +27,7 @@ final darkTheme = ThemeData(
   outlinedButtonTheme: _outlineButtonTheme,
   hintColor: _hintColor,
   dialogTheme: _dialogTheme,
+  chipTheme: _chipTheme(_darkCard),
   segmentedButtonTheme: _segmentedButtonTheme(Colors.white),
   colorScheme: const .dark(primary: _primary, error: Colors.red),
 );
@@ -49,6 +50,7 @@ final lightTheme = ThemeData(
   bottomSheetTheme: _bottomSheetTheme(_lightBackground),
   hintColor: _hintColor,
   dialogTheme: _dialogTheme,
+  chipTheme: _chipTheme(Colors.white),
   segmentedButtonTheme: _segmentedButtonTheme(Colors.black),
   colorScheme: const .light(primary: _primary, error: Colors.red),
 );
@@ -164,3 +166,10 @@ SegmentedButtonThemeData _segmentedButtonTheme(Color textColor) =>
         ),
       ),
     );
+
+ChipThemeData _chipTheme(Color cardColor) => ChipThemeData(
+  side: .none,
+  selectedColor: _primary,
+  showCheckmark: false,
+  backgroundColor: cardColor,
+);

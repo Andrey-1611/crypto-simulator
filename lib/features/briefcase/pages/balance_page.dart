@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/widgets/info_bloc.dart';
 import '../../../app/widgets/info_row.dart';
-import '../../../app/widgets/loader.dart';
-import '../../../app/widgets/unknown_error.dart';
 import '../../../core/utils/extensions.dart';
 import '../../../data/models/app_user_details.dart';
 import '../../../data/models/trade.dart';
@@ -31,21 +29,24 @@ class BalancePage extends ConsumerWidget {
             InfoBloc(
               title: s.balance_info,
               children: [
-                InfoRow(title: s.balance, value: user.balance.price4),
-                InfoRow(title: s.coin_balance, value: balance.price4),
+                InfoRow(title: s.balance, value: user.balance.compactPrice),
+                InfoRow(title: s.coin_balance, value: balance.compactPrice),
                 InfoRow(
                   title: s.total_balance,
-                  value: (user.balance + balance).price4,
+                  value: (user.balance + balance).compactPrice,
                 ),
               ],
             ),
             InfoBloc(
               title: s.transaction_info,
               children: [
-                InfoRow(title: s.avg_trade, value: tradesUtils.avgTrade.price4),
+                InfoRow(
+                  title: s.avg_trade,
+                  value: tradesUtils.avgTrade.compactPrice,
+                ),
                 InfoRow(
                   title: s.largest_trade,
-                  value: tradesUtils.maxTrade.price4,
+                  value: tradesUtils.maxTrade.compactPrice,
                 ),
                 InfoRow(
                   title: s.first_trade,
@@ -57,21 +58,27 @@ class BalancePage extends ConsumerWidget {
                 ),
                 InfoRow(
                   title: s.total_spent,
-                  value: trades.tradesTotalPrice.price4,
+                  value: trades.tradesTotalPrice.compactPrice,
                 ),
-                InfoRow(title: s.spent_7d, value: tradesUtils.spent7d.price4),
-                InfoRow(title: s.spent_24h, value: tradesUtils.spent24h.price4),
+                InfoRow(
+                  title: s.spent_7d,
+                  value: tradesUtils.spent7d.compactPrice,
+                ),
+                InfoRow(
+                  title: s.spent_24h,
+                  value: tradesUtils.spent24h.compactPrice,
+                ),
                 InfoRow(
                   title: s.num_transactions,
-                  value: tradesUtils.tradesLength.toString(),
+                  value: tradesUtils.tradesLength.compact,
                 ),
                 InfoRow(
                   title: s.trades_7d,
-                  value: tradesUtils.trades7d.toString(),
+                  value: tradesUtils.trades7d.compact,
                 ),
                 InfoRow(
                   title: s.trades_24h,
-                  value: tradesUtils.trades24h.toString(),
+                  value: tradesUtils.trades24h.compact,
                 ),
               ],
             ),
@@ -80,23 +87,20 @@ class BalancePage extends ConsumerWidget {
               children: [
                 InfoRow(
                   title: s.num_coin_types,
-                  value: user.coins.length.toString(),
+                  value: user.coins.length.compact,
                 ),
-                InfoRow(
-                  title: s.num_coins,
-                  value: user.allCoinsLength.toString(),
-                ),
+                InfoRow(title: s.num_coins, value: user.allCoinsLength.compact),
                 InfoRow(
                   title: s.num_coins_purchased,
-                  value: trades.boughtCoinsLength.toString(),
+                  value: trades.boughtCoinsLength.compact,
                 ),
                 InfoRow(
                   title: s.num_coins_purchased_7d,
-                  value: tradesUtils.coins7d.toString(),
+                  value: tradesUtils.coins7d.compact,
                 ),
                 InfoRow(
                   title: s.num_coins_purchased_24h,
-                  value: tradesUtils.coins24h.toString(),
+                  value: tradesUtils.coins24h.compact,
                 ),
               ],
             ),

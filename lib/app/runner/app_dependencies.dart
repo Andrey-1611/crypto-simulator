@@ -13,11 +13,11 @@ final dioProvider = Provider((_) => Dio());
 final firestoreProvider = Provider((ref) => FirebaseFirestore.instance);
 final authProvider = Provider((_) => FirebaseAuth.instance);
 final prefsProvider = FutureProvider(
-  (ref) async => await SharedPreferences.getInstance(),
+      (ref) async => await SharedPreferences.getInstance(),
 );
 final googleProvider = Provider((_) => GoogleSignIn());
 final packageProvider = FutureProvider(
-  (_) async => await PackageInfo.fromPlatform(),
+      (_) async => await PackageInfo.fromPlatform(),
 );
 
 final shareProvider = Provider((_) => SharePlus.instance);

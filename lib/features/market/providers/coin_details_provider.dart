@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:Bitmark/data/models/coin_full_data.dart';
 import 'package:Bitmark/data/models/price_point.dart';
 import 'package:Bitmark/features/market/providers/compare_coins_provider.dart';
@@ -20,6 +22,7 @@ final coinDetailsPeriodProvider = StateProvider<CoinDetailsPeriod>(
 
 class CoinDetailsNotifier extends AsyncNotifier<CoinFullData> {
   final CryptoCoin coin;
+  late final Timer _timer;
 
   CoinDetailsNotifier({required this.coin});
 
@@ -47,7 +50,18 @@ class CoinDetailsNotifier extends AsyncNotifier<CoinFullData> {
         );
       }
     }
+    _startPriceUpdates(coinData);
     return coinData;
+  }
+
+  void _startPriceUpdates(CoinFullData data) {
+    ref.onDispose(() => _timer.cancel());
+    _timer = .periodic(const Duration(seconds: 10), (_) async {
+      final price = await ref
+          .read(cryptoRepositoryProvider)
+          .getCoinPriceBySymbol(coin.symbol);
+      state = .data(data.updatePrice(price));
+    });
   }
 
   void changePeriod(CoinDetailsPeriod period) {
@@ -69,6 +83,7 @@ class CoinDetailsNotifier extends AsyncNotifier<CoinFullData> {
 }
 
 enum CoinDetailsPeriod {
+  day(1),
   week(7),
   month(30),
   threeMonths(90),

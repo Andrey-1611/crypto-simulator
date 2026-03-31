@@ -98,6 +98,7 @@ class CoinDetailsPage extends ConsumerWidget {
                       SegmentedButton<CoinDetailsPeriod>(
                         showSelectedIcon: false,
                         segments: const [
+                          ButtonSegment(value: .day, label: Text('1D')),
                           ButtonSegment(value: .week, label: Text('1W')),
                           ButtonSegment(value: .month, label: Text('1M')),
                           ButtonSegment(value: .threeMonths, label: Text('3M')),
@@ -261,14 +262,14 @@ class _DataBlocs extends StatelessWidget {
         InfoBloc(
           title: s.market_data,
           children: [
-            InfoRow(title: s.price, value: coin.priceData.price.toCryptoPrice),
+            InfoRow(title: s.price, value: coin.priceData.price.compactPrice),
             InfoRow(
               title: s.open_24h,
-              value: coin.priceData.open24h.toCryptoPrice,
+              value: coin.priceData.open24h.compactPrice,
             ),
             InfoRow(
               title: s.change_24h,
-              value: coin.priceData.change24h.toCryptoPrice,
+              value: coin.priceData.change24h.compactPrice,
             ),
             InfoRow(
               title: s.change_24h_pct,
@@ -276,11 +277,11 @@ class _DataBlocs extends StatelessWidget {
             ),
             InfoRow(
               title: s.high_24h,
-              value: coin.priceData.high24h.toCryptoPrice,
+              value: coin.priceData.high24h.compactPrice,
             ),
             InfoRow(
               title: s.low_24h,
-              value: coin.priceData.low24h.toCryptoPrice,
+              value: coin.priceData.low24h.compactPrice,
             ),
           ],
         ),
@@ -289,19 +290,19 @@ class _DataBlocs extends StatelessWidget {
           children: [
             InfoRow(
               title: s.open_day,
-              value: coin.dailyData.openDay.toCryptoPrice,
+              value: coin.dailyData.openDay.compactPrice,
             ),
             InfoRow(
               title: s.high_day,
-              value: coin.dailyData.highDay.toCryptoPrice,
+              value: coin.dailyData.highDay.compactPrice,
             ),
             InfoRow(
               title: s.low_day,
-              value: coin.dailyData.lowDay.toCryptoPrice,
+              value: coin.dailyData.lowDay.compactPrice,
             ),
             InfoRow(
               title: s.day_change,
-              value: coin.dailyData.changeDay.toCryptoPrice,
+              value: coin.dailyData.changeDay.compactPrice,
             ),
             InfoRow(
               title: s.day_change_pct,
@@ -314,19 +315,19 @@ class _DataBlocs extends StatelessWidget {
           children: [
             InfoRow(
               title: s.volume_hour,
-              value: coin.volumeData.volumeHour.toCryptoPrice,
+              value: coin.volumeData.volumeHour.compactPrice,
             ),
             InfoRow(
               title: s.volume_24h,
-              value: coin.volumeData.volume24h.toCryptoPrice,
+              value: coin.volumeData.volume24h.compactPrice,
             ),
             InfoRow(
               title: s.top_tier_volume_24h,
-              value: coin.volumeData.topTierVolume24h.toCryptoPrice,
+              value: coin.volumeData.topTierVolume24h.compactPrice,
             ),
             InfoRow(
               title: s.volume_day,
-              value: coin.volumeData.volumeDay.toCryptoPrice,
+              value: coin.volumeData.volumeDay.compactPrice,
             ),
           ],
         ),
@@ -340,11 +341,11 @@ class _DataBlocs extends StatelessWidget {
             ),
             InfoRow(
               title: s.market_cap,
-              value: coin.supplyData.marketCap.toCryptoPrice,
+              value: coin.supplyData.marketCap.compactPrice,
             ),
             InfoRow(
               title: s.circulating_supply_cap,
-              value: coin.supplyData.circulatingSupplyMarketCap.toCryptoPrice,
+              value: coin.supplyData.circulatingSupplyMarketCap.compactPrice,
             ),
           ],
         ),

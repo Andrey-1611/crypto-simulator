@@ -43,10 +43,12 @@ class BriefcaseNotifier extends AsyncNotifier<BriefcaseState> {
 
   Future<void> createTrade({
     required CryptoCoin coin,
-    required double coinPrice,
     required int amount,
     required TradeType type,
   }) async {
+    final coinPrice = await ref
+        .read(cryptoRepositoryProvider)
+        .getCoinPriceBySymbol(coin.symbol);
     final trade = Trade.create(
       coin: coin,
       coinPrice: coinPrice,
@@ -60,7 +62,7 @@ class BriefcaseNotifier extends AsyncNotifier<BriefcaseState> {
       final user = await ref
           .read(remoteRepositoryProvider)
           .getUserById(authUser.id);
-      final updatedUser = trade.type == TradeType.buy
+      final updatedUser = trade.type == .buy
           ? AppUserDetails.buyCoins(user, trade)
           : AppUserDetails.sellCoins(user, trade);
       final balance = updatedUser.updateCoinsBalance(

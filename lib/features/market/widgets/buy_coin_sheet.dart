@@ -60,7 +60,6 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
           .read(briefcaseNotifierProvider(null).notifier)
           .createTrade(
             coin: coin.info,
-            coinPrice: coin.priceData.price,
             amount: int.tryParse(_coinsController.text) ?? 0,
             type: TradeType.buy,
           );
