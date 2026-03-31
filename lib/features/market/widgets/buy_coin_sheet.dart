@@ -68,6 +68,11 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
     }
   }
 
+  void addAll(double balance, double price) {
+    final amount = balance ~/ price;
+    _coinsController.text = amount.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
@@ -91,7 +96,10 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
               style: theme.textTheme.displayMedium,
             ),
             const SizeBox(height: 0.06),
-            CoinsTextField(coinsController: _coinsController),
+            CoinsTextField(
+              coinsController: _coinsController,
+              addAll: () => addAll(data.user.balance, coin.priceData.price),
+            ),
             const SizeBox(height: 0.01),
             InfoCard(title: s.balance, value: data.user.balance.price4),
             InfoCard(title: S.of(context).trade, value: _totalPrice.price4),

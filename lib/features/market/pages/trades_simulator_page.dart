@@ -5,9 +5,9 @@ import 'package:Bitmark/core/utils/datetime_service.dart';
 import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:Bitmark/data/models/trade.dart';
 import 'package:Bitmark/features/market/providers/profit_provider.dart';
-import 'package:Bitmark/features/market/widgets/coins_text_field.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/router/app_router.dart';
@@ -111,11 +111,17 @@ class _TradesSimulatorPageState extends ConsumerState<TradesSimulatorPage> {
                 ),
               ),
               SizedBox(height: 15.h),
-              CoinsTextField(
-                coinsController: _amountController,
+              TextField(
+                controller: _amountController,
                 autofocus: false,
+                keyboardType: .number,
                 maxLength: 12,
                 onChanged: update,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                decoration: InputDecoration(
+                  hintText: s.num_coins,
+                  counterText: '',
+                ),
               ),
               SizedBox(height: 15.h),
               TextField(

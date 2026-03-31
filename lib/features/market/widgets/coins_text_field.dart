@@ -4,16 +4,12 @@ import 'package:flutter/services.dart';
 
 class CoinsTextField extends StatelessWidget {
   final TextEditingController coinsController;
-  final bool autofocus;
-  final void Function(String)? onChanged;
-  final int? maxLength;
+  final VoidCallback addAll;
 
   const CoinsTextField({
     super.key,
     required this.coinsController,
-    this.autofocus = true,
-    this.onChanged,
-    this.maxLength,
+    required this.addAll,
   });
 
   @override
@@ -21,12 +17,16 @@ class CoinsTextField extends StatelessWidget {
     final s = S.of(context);
     return TextField(
       controller: coinsController,
-      autofocus: autofocus,
       keyboardType: .number,
-      onChanged: onChanged,
-      maxLength: maxLength,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      decoration: InputDecoration(hintText: s.num_coins, counterText: ''),
+      decoration: InputDecoration(
+        hintText: s.num_coins,
+        counterText: '',
+        suffixIcon: IconButton(
+          onPressed: addAll,
+          icon: const Icon(Icons.expand_less),
+        ),
+      ),
     );
   }
 }
