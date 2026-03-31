@@ -6,6 +6,7 @@ import 'package:Bitmark/generated/l10n.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/utils/extensions.dart';
 
 class FilterTradesSheet extends ConsumerStatefulWidget {
@@ -83,7 +84,7 @@ class _FilterTradesSheetState extends ConsumerState<FilterTradesSheet> {
     final notifier = ref.read(filterTradesOnSheetProvider.notifier);
     coinController.value = coinController.value.copyWith(text: filter.coinName);
     return Padding(
-      padding: const .only(bottom: 64, left: 16, right: 16, top: 16),
+      padding: .only(bottom: 64.h, left: 16.w, right: 16.w, top: 16.h),
       child: Column(
         mainAxisSize: .min,
         children: [
@@ -121,9 +122,8 @@ class _FilterTradesSheetState extends ConsumerState<FilterTradesSheet> {
             children: TradeType.values.map((type) {
               final selected = filter.tradeType == type;
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+                padding: .symmetric(horizontal: 8.w),
                 child: ChoiceChip(
-                  selectedColor: theme.primaryColor,
                   label: Text(type.type),
                   selected: selected,
                   onSelected: (_) =>

@@ -61,6 +61,24 @@ class PriceData {
       low24h: (json['LOW24HOUR'] as num).toDouble(),
     );
   }
+
+  PriceData copyWith({
+    double? price,
+    double? open24h,
+    double? change24h,
+    double? changePct24h,
+    double? high24h,
+    double? low24h,
+  }) {
+    return PriceData(
+      price: price ?? this.price,
+      open24h: open24h ?? this.open24h,
+      change24h: change24h ?? this.change24h,
+      changePct24h: changePct24h ?? this.changePct24h,
+      high24h: high24h ?? this.high24h,
+      low24h: low24h ?? this.low24h,
+    );
+  }
 }
 
 class DailyData {

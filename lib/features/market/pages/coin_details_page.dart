@@ -98,6 +98,7 @@ class CoinDetailsPage extends ConsumerWidget {
                       SegmentedButton<CoinDetailsPeriod>(
                         showSelectedIcon: false,
                         segments: const [
+                          ButtonSegment(value: .day, label: Text('1D')),
                           ButtonSegment(value: .week, label: Text('1W')),
                           ButtonSegment(value: .month, label: Text('1M')),
                           ButtonSegment(value: .threeMonths, label: Text('3M')),

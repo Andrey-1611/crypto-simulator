@@ -97,6 +97,7 @@ class CompareCoinsNotifier extends AsyncNotifier<List<CoinFullData>> {
 }
 
 enum CompareCoinsPeriod {
+  day(1),
   week(7),
   month(30),
   threeMonths(90),
