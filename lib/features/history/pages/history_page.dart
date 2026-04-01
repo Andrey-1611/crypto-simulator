@@ -135,14 +135,13 @@ class _EmptyList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = context.theme;
     final s = S.of(context);
     return Column(
       mainAxisAlignment: .center,
       children: [
         Text(
           isFiltered ? s.no_operations_found : s.empty_trades(user != null),
-          style: theme.textTheme.displayLarge,
+          style: context.displayLarge,
         ),
         isFiltered
             ? TextButton(onPressed: () => reset(ref), child: Text(s.reset))

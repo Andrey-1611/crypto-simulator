@@ -95,12 +95,11 @@ class _EmptyList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final s = S.of(context);
-    final theme = Theme.of(context);
+    final s = context.s;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(s.no_favourite_coins, style: theme.textTheme.displayLarge),
+        Text(s.no_favourite_coins, style: context.displayLarge),
       ],
     );
   }

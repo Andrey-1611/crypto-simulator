@@ -106,7 +106,6 @@ class _EmptyList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = context.theme;
     final s = S.of(context);
     final isSearch = ref.watch(queryProvider) != '';
     return Column(
@@ -114,7 +113,7 @@ class _EmptyList extends ConsumerWidget {
       children: [
         Text(
           isSearch ? s.no_coins_found : s.start_searching_coins,
-          style: theme.textTheme.displayLarge,
+          style: context.displayLarge,
         ),
       ],
     );

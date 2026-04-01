@@ -1,4 +1,5 @@
 import 'package:Bitmark/app/widgets/info_bloc.dart';
+import 'package:Bitmark/core/utils/dialog_helper.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:Bitmark/app/widgets/coin_card.dart';
 import 'package:Bitmark/app/widgets/info_row.dart';
@@ -16,11 +17,35 @@ class TradePage extends ConsumerWidget {
 
   const TradePage({super.key, required this.trade});
 
+  void showTradeDialog(BuildContext context) {
+    trade.type == .buy
+        ? DialogHelper.buyCoin(
+            context: context,
+            coin: trade.coin,
+            coinPrice: trade.coinPrice,
+            amount: trade.amount,
+          )
+        : DialogHelper.sellCoin(
+            context: context,
+            coin: trade.coin,
+            coinPrice: trade.coinPrice,
+            amount: trade.amount,
+          );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final s = S.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(s.trade_details)),
+      appBar: AppBar(
+        title: Text(s.trade_details),
+        actions: [
+          IconButton(
+            onPressed: () => showTradeDialog(context),
+            icon: const Icon(Icons.refresh),
+          ),
+        ],
+      ),
       body: Padding(
         padding: .all(16.sp),
         child: Center(
