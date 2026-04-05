@@ -1293,6 +1293,21 @@ class S {
       args: [],
     );
   }
+
+  /// `Coin removed from favorites`
+  String get coin_removed {
+    return Intl.message(
+      'Coin removed from favorites',
+      name: 'coin_removed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Undo`
+  String get undo {
+    return Intl.message('Undo', name: 'undo', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

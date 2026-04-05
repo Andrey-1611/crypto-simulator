@@ -14,7 +14,6 @@ class MarketSortSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sort = ref.watch(sortMarketProvider);
-    final theme = context.theme;
     final s = S.of(context);
     return Padding(
       padding: .all(16.sp),
@@ -22,7 +21,7 @@ class MarketSortSheet extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(s.sort, style: theme.textTheme.displaySmall),
+          Text(s.sort, style: context.displaySmall),
           const SizeBox(height: 0.02),
           RadioGroup<SortType>(
             groupValue: sort,

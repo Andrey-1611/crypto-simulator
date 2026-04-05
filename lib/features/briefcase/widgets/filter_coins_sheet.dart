@@ -40,7 +40,7 @@ class _FilterTradesSheetState extends ConsumerState<FilterCoinsSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final s = context.s;
     final filter = ref.watch(filterCoinsOnSheetProvider);
     final notifier = ref.read(filterCoinsOnSheetProvider.notifier);
     coinController.value = coinController.value.copyWith(text: filter.coinName);
@@ -52,7 +52,7 @@ class _FilterTradesSheetState extends ConsumerState<FilterCoinsSheet> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Фильтры', style: theme.textTheme.displayMedium),
+              Text(s.filters, style: context.displayMedium),
               IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: () => context.pop(context),
@@ -67,7 +67,7 @@ class _FilterTradesSheetState extends ConsumerState<FilterCoinsSheet> {
                 notifier.state = notifier.state.copyWith(coinName: value),
             decoration: InputDecoration(
               prefixIcon: const Icon(Icons.search),
-              hintText: 'Поиск монеты',
+              hintText: s.search_coin,
               suffixIcon: IconButton(
                 onPressed: () {
                   coinController.clear();
@@ -78,7 +78,7 @@ class _FilterTradesSheetState extends ConsumerState<FilterCoinsSheet> {
             ),
           ),
           const SizeBox(height: 0.02),
-          const Text('Цена за монету'),
+          Text(s.coin_price),
           RangeSlider(
             values: filter.priceRange ?? const RangeValues(0, 1000),
             min: 0,
@@ -93,7 +93,7 @@ class _FilterTradesSheetState extends ConsumerState<FilterCoinsSheet> {
             },
           ),
           const SizeBox(height: 0.02),
-          const Text('Общая цена'),
+          Text(s.total_price),
           RangeSlider(
             values: filter.totalPriceRange ?? const RangeValues(0, 2000),
             min: 0,
@@ -108,7 +108,7 @@ class _FilterTradesSheetState extends ConsumerState<FilterCoinsSheet> {
             },
           ),
           const SizeBox(height: 0.02),
-          const Text('Количество монет'),
+          Text(s.coin_amount),
           RangeSlider(
             values: filter.amountRange ?? const RangeValues(0, 3000),
             min: 0,
@@ -126,17 +126,11 @@ class _FilterTradesSheetState extends ConsumerState<FilterCoinsSheet> {
           Row(
             children: [
               Expanded(
-                child: OutlinedButton(
-                  onPressed: () => reset(),
-                  child: const Text('Сбросить'),
-                ),
+                child: OutlinedButton(onPressed: reset, child: Text(s.reset)),
               ),
               const SizeBox(width: 0.05),
               Expanded(
-                child: ElevatedButton(
-                  onPressed: () => apply(),
-                  child: const Text('Применить'),
-                ),
+                child: ElevatedButton(onPressed: apply, child: Text(s.apply)),
               ),
             ],
           ),

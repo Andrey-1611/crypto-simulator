@@ -45,7 +45,6 @@ class _UsersList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.theme;
     return ListView.builder(
       itemCount: users.users.length,
       itemBuilder: (context, index) {
@@ -54,12 +53,12 @@ class _UsersList extends StatelessWidget {
         return Card(
           shape: RoundedRectangleBorder(
             side: isCurrentUser
-                ? BorderSide(color: theme.primaryColor, width: 2.0)
+                ? BorderSide(color: context.primaryColor, width: 2.w)
                 : BorderSide.none,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: .circular(8.r),
           ),
           child: ListTile(
-            leading: Text('${index + 1}', style: theme.textTheme.displayMedium),
+            leading: Text('${index + 1}', style: context.displayMedium),
             title: Text(user.user.name),
             subtitle: Text(user.fullBalance.price4),
             trailing: !isCurrentUser ? const Icon(Icons.chevron_right) : null,

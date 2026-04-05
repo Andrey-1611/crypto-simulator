@@ -9,14 +9,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/widgets/info_card.dart';
 import '../../../core/utils/dialog_helper.dart';
-import '../../../data/models/crypto_coin_details.dart';
+import '../../../data/models/crypto_coin.dart';
 import '../../../generated/l10n.dart';
 import '../../briefcase/providers/briefcase_provider.dart';
 
 class BuyCryptoCoinSheet extends ConsumerStatefulWidget {
-  final CryptoCoinDetails coin;
+  final CryptoCoin coin;
+  final double coinPrice;
+  final int? amount;
 
-  const BuyCryptoCoinSheet({super.key, required this.coin});
+  const BuyCryptoCoinSheet({
+    super.key,
+    required this.coin,
+    required this.coinPrice,
+    this.amount,
+  });
 
   @override
   ConsumerState createState() => _BuyCryptoCoinSheetState();
@@ -27,7 +34,9 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
 
   double _totalPrice = 0;
 
-  CryptoCoinDetails get coin => widget.coin;
+  CryptoCoin get coin => widget.coin;
+
+  double get coinPrice => widget.coinPrice;
 
   @override
   void initState() {
@@ -35,9 +44,12 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
     _coinsController.addListener(() {
       final coins = int.tryParse(_coinsController.text) ?? 0;
       setState(() {
-        _totalPrice = coins * coin.priceData.price;
+        _totalPrice = coins * coinPrice;
       });
     });
+    if (widget.amount != null) {
+      _coinsController.text = widget.amount.toString();
+    }
     ref.listenManual(briefcaseNotifierProvider(null), (_, state) {
       state.when(
         loading: () => DialogHelper.loading(context),
@@ -59,13 +71,18 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
       await ref
           .read(briefcaseNotifierProvider(null).notifier)
           .createTrade(
-            coin: coin.info,
+            coin: coin,
             amount: int.tryParse(_coinsController.text) ?? 0,
             type: TradeType.buy,
           );
     } else {
       ToastHelper.balanceError();
     }
+  }
+
+  void addAll(double balance, double price) {
+    final amount = balance ~/ price;
+    _coinsController.text = amount.toString();
   }
 
   @override
@@ -86,12 +103,12 @@ class _BuyCryptoCoinSheetState extends ConsumerState<BuyCryptoCoinSheet> {
           mainAxisAlignment: .center,
           mainAxisSize: .min,
           children: [
-            Text(
-              s.buy_coin(coin.info.name),
-              style: theme.textTheme.displayMedium,
-            ),
+            Text(s.buy_coin(coin.name), style: theme.textTheme.displayMedium),
             const SizeBox(height: 0.06),
-            CoinsTextField(coinsController: _coinsController),
+            CoinsTextField(
+              coinsController: _coinsController,
+              addAll: () => addAll(data.user.balance, coinPrice),
+            ),
             const SizeBox(height: 0.01),
             InfoCard(title: s.balance, value: data.user.balance.price4),
             InfoCard(title: S.of(context).trade, value: _totalPrice.price4),

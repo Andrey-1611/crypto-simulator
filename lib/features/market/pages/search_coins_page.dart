@@ -49,14 +49,14 @@ class _SearchCoinsPageState extends ConsumerState<SearchCoinsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final s = S.of(context);
+    final s = context.s;
     return Scaffold(
       appBar: AppBar(
         title: Text(s.search_coins),
         bottom: PreferredSize(
-          preferredSize: .fromHeight(60.sp),
+          preferredSize: .fromHeight(60.h),
           child: Padding(
-            padding: .all(8.sp),
+            padding: .all(8.r),
             child: Row(
               children: [
                 Expanded(
@@ -68,7 +68,10 @@ class _SearchCoinsPageState extends ConsumerState<SearchCoinsPage> {
                 ),
                 IconButton.filled(
                   onPressed: search,
-                  icon: const Icon(Icons.search),
+                  icon: Icon(
+                    Icons.search,
+                    color: context.textTheme.displayMedium?.color,
+                  ),
                   style: ButtonStyle(
                     shape: .all(
                       RoundedRectangleBorder(borderRadius: .circular(8.sp)),
@@ -106,7 +109,6 @@ class _EmptyList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = context.theme;
     final s = S.of(context);
     final isSearch = ref.watch(queryProvider) != '';
     return Column(
@@ -114,7 +116,7 @@ class _EmptyList extends ConsumerWidget {
       children: [
         Text(
           isSearch ? s.no_coins_found : s.start_searching_coins,
-          style: theme.textTheme.displayLarge,
+          style: context.displayLarge,
         ),
       ],
     );

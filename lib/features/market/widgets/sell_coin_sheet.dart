@@ -1,4 +1,3 @@
-import 'package:Bitmark/data/models/crypto_coin_details.dart';
 import 'package:Bitmark/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
@@ -11,13 +10,21 @@ import '../../../app/widgets/size_box.dart';
 import '../../../core/utils/dialog_helper.dart';
 import '../../../core/utils/extensions.dart';
 import '../../../data/models/coin_amount.dart';
+import '../../../data/models/crypto_coin.dart';
 import '../../briefcase/providers/briefcase_provider.dart';
 import 'coins_text_field.dart';
 
 class SellCryptoCoinSheet extends ConsumerStatefulWidget {
-  final CryptoCoinDetails coin;
+  final CryptoCoin coin;
+  final double coinPrice;
+  final int? amount;
 
-  const SellCryptoCoinSheet({super.key, required this.coin});
+  const SellCryptoCoinSheet({
+    super.key,
+    required this.coin,
+    required this.coinPrice,
+    this.amount,
+  });
 
   @override
   ConsumerState createState() => _BuyCryptoCoinSheetState();
@@ -28,7 +35,9 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
 
   double _totalPrice = 0;
 
-  CryptoCoinDetails get coin => widget.coin;
+  CryptoCoin get coin => widget.coin;
+
+  double get coinPrice => widget.coinPrice;
 
   late int coinsAmount;
 
@@ -38,9 +47,12 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
     _coinsController.addListener(() {
       coinsAmount = int.tryParse(_coinsController.text) ?? 0;
       setState(() {
-        _totalPrice = coinsAmount * coin.priceData.price;
+        _totalPrice = coinsAmount * coinPrice;
       });
     });
+    if (widget.amount != null) {
+      _coinsController.text = widget.amount.toString();
+    }
     ref.listenManual(briefcaseNotifierProvider(null), (_, state) {
       state.when(
         loading: () => DialogHelper.loading(context),
@@ -61,15 +73,13 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
     if (coinsAmount <= userCoinsAmount) {
       await ref
           .read(briefcaseNotifierProvider(null).notifier)
-          .createTrade(
-            coin: coin.info,
-            amount: coinsAmount,
-            type: TradeType.sell,
-          );
+          .createTrade(coin: coin, amount: coinsAmount, type: TradeType.sell);
     } else {
       ToastHelper.coinsAmountError();
     }
   }
+
+  void addAll(int amount) => _coinsController.text = amount.toString();
 
   @override
   Widget build(BuildContext context) {
@@ -84,12 +94,12 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
         bottom: size.viewInsets.bottom + 32.sp,
       ),
       child: ref.watchWhen(
-          briefcaseNotifierProvider(null),
+        briefcaseNotifierProvider(null),
         builder: (data) {
           final user = data.user;
           final userCoinsAmount = user.coins
               .firstWhere(
-                (c) => c.coin.symbol == coin.info.symbol,
+                (c) => c.coin.symbol == coin.symbol,
                 orElse: () => CoinAmount.empty(),
               )
               .amount;
@@ -98,11 +108,14 @@ class _BuyCryptoCoinSheetState extends ConsumerState<SellCryptoCoinSheet> {
             mainAxisSize: .min,
             children: [
               Text(
-                s.sell_coin_a(coin.info.name),
+                s.sell_coin_a(coin.name),
                 style: theme.textTheme.displayMedium,
               ),
               const SizeBox(height: 0.06),
-              CoinsTextField(coinsController: _coinsController),
+              CoinsTextField(
+                coinsController: _coinsController,
+                addAll: () => addAll(userCoinsAmount),
+              ),
               const SizeBox(height: 0.01),
               InfoCard(
                 title: s.coins_balance,

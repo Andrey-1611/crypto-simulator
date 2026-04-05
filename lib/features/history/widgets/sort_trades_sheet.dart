@@ -1,3 +1,4 @@
+import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:Bitmark/features/history/providers/sort_trades_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,7 +12,6 @@ class SortTradesSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sort = ref.watch(sortTradesProvider);
-    final theme = Theme.of(context);
     final s = S.of(context);
     return Padding(
       padding: .all(16.sp),
@@ -19,7 +19,7 @@ class SortTradesSheet extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(s.sort, style: theme.textTheme.displayMedium),
+          Text(s.sort, style: context.displayMedium),
           const SizeBox(height: 0.02),
           RadioGroup<TradeSortType>(
             groupValue: sort,

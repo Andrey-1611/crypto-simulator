@@ -1,3 +1,4 @@
+import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:Bitmark/core/utils/network_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -11,11 +12,8 @@ class UnknownError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final s = S.of(context);
-    final dioError = e is DioException
-        ? (e as DioException).error
-        : e;
+    final dioError = e is DioException ? (e as DioException).error : e;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -24,7 +22,7 @@ class UnknownError extends StatelessWidget {
             dioError is NoInternetException
                 ? s.no_internet_connection
                 : s.unknown_error,
-            style: theme.textTheme.displayLarge,
+            style: context.displayLarge,
           ),
           onPressed != null
               ? TextButton(onPressed: onPressed, child: Text(s.try_again))

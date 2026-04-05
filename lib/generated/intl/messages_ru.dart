@@ -76,6 +76,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "coin_id": MessageLookupByLibrary.simpleMessage("ID монеты"),
     "coin_info": MessageLookupByLibrary.simpleMessage("Данные о монетах"),
     "coin_price": MessageLookupByLibrary.simpleMessage("Цена монеты"),
+    "coin_removed": MessageLookupByLibrary.simpleMessage(
+      "Монета удалена из избранного",
+    ),
     "coins": MessageLookupByLibrary.simpleMessage("Монеты"),
     "coins_a": m1,
     "coins_amount_error": MessageLookupByLibrary.simpleMessage(
@@ -276,6 +279,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "try_again": MessageLookupByLibrary.simpleMessage("Попробовать еще раз"),
     "type": MessageLookupByLibrary.simpleMessage("Тип"),
+    "undo": MessageLookupByLibrary.simpleMessage("Отменить"),
     "unknown_error": MessageLookupByLibrary.simpleMessage("Неизвестная ошибка"),
     "unknown_error_try_again": MessageLookupByLibrary.simpleMessage(
       "Неизвестная ошибка, попробуйте еще раз",

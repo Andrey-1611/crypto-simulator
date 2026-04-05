@@ -165,3 +165,27 @@ extension IntCompact on int {
     }
   }
 }
+
+extension TextThemeExt on BuildContext {
+  TextTheme get textTheme => Theme.of(this).textTheme;
+
+  TextStyle get titleLarge => textTheme.titleLarge!;
+
+  TextStyle get titleMedium => textTheme.titleMedium!;
+
+  TextStyle get displayLarge => textTheme.displayLarge!;
+
+  TextStyle get displayMedium => textTheme.displayMedium!;
+
+  TextStyle get displaySmall => textTheme.displaySmall!;
+
+  TextStyle get bodyLarge => textTheme.bodyLarge!;
+
+  TextStyle get bodyMedium => textTheme.bodyMedium!;
+
+  TextStyle get bodySmall => textTheme.bodySmall!;
+
+  TextStyle get labelLarge => textTheme.labelLarge!;
+
+  Color get primaryColor => Theme.of(this).primaryColor;
+}

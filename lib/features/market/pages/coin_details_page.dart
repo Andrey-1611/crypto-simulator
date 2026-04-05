@@ -1,4 +1,5 @@
 import 'package:Bitmark/app/router/app_router.dart';
+import 'package:Bitmark/core/utils/dialog_helper.dart';
 import 'package:Bitmark/core/utils/extensions.dart';
 import 'package:Bitmark/data/models/price_point.dart';
 import 'package:Bitmark/features/briefcase/providers/favourite_provider.dart';
@@ -6,8 +7,6 @@ import 'package:Bitmark/app/widgets/info_bloc.dart';
 import 'package:Bitmark/app/widgets/loader.dart';
 import 'package:Bitmark/app/widgets/unknown_error.dart';
 import 'package:Bitmark/data/models/crypto_coin_details.dart';
-import 'package:Bitmark/features/market/widgets/buy_coin_sheet.dart';
-import 'package:Bitmark/features/market/widgets/sell_coin_sheet.dart';
 import 'package:Bitmark/generated/l10n.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -368,22 +367,6 @@ class _ActionsButtons extends ConsumerWidget {
 
   const _ActionsButtons({required this.coin});
 
-  void showBuyCoinSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (_) => BuyCryptoCoinSheet(coin: coin),
-    );
-  }
-
-  void showSellCoinSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (_) => SellCryptoCoinSheet(coin: coin),
-    );
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
@@ -398,7 +381,11 @@ class _ActionsButtons extends ConsumerWidget {
             width: double.infinity / 3,
             height: size.height * 0.05,
             child: ElevatedButton(
-              onPressed: () => showBuyCoinSheet(context),
+              onPressed: () => DialogHelper.buyCoin(
+                context: context,
+                coin: coin.info,
+                coinPrice: coin.priceData.price,
+              ),
               child: Text(s.buy),
             ),
           ),
@@ -414,7 +401,11 @@ class _ActionsButtons extends ConsumerWidget {
                       width: double.infinity / 3,
                       height: size.height * 0.05,
                       child: ElevatedButton(
-                        onPressed: () => showSellCoinSheet(context),
+                        onPressed: () => DialogHelper.sellCoin(
+                          context: context,
+                          coin: coin.info,
+                          coinPrice: coin.priceData.price,
+                        ),
                         child: Text(s.sell),
                       ),
                     ),
