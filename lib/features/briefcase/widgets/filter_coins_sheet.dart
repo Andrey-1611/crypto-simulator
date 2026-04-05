@@ -126,17 +126,11 @@ class _FilterTradesSheetState extends ConsumerState<FilterCoinsSheet> {
           Row(
             children: [
               Expanded(
-                child: OutlinedButton(
-                  onPressed: () => reset(),
-                  child: Text(s.reset),
-                ),
+                child: OutlinedButton(onPressed: reset, child: Text(s.reset)),
               ),
               const SizeBox(width: 0.05),
               Expanded(
-                child: ElevatedButton(
-                  onPressed: () => apply(),
-                  child: Text(s.apply),
-                ),
+                child: ElevatedButton(onPressed: apply, child: Text(s.apply)),
               ),
             ],
           ),

@@ -169,5 +169,7 @@
   "profit_per_hour": "Profit per hour",
   "profit_per_day": "Profit per day",
   "profit_per_month": "Profit per month",
-  "create_trade": "Create a trade"
+  "create_trade": "Create a trade",
+  "coin_removed": "Coin removed from favorites",
+  "undo": "Undo"
 }

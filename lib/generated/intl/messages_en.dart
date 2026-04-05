@@ -78,6 +78,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "coin_id": MessageLookupByLibrary.simpleMessage("Coin ID"),
     "coin_info": MessageLookupByLibrary.simpleMessage("Coin Information"),
     "coin_price": MessageLookupByLibrary.simpleMessage("Coin Price"),
+    "coin_removed": MessageLookupByLibrary.simpleMessage(
+      "Coin removed from favorites",
+    ),
     "coins": MessageLookupByLibrary.simpleMessage("Coins"),
     "coins_a": m1,
     "coins_amount_error": MessageLookupByLibrary.simpleMessage(
@@ -265,6 +268,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "try_again": MessageLookupByLibrary.simpleMessage("Try again"),
     "type": MessageLookupByLibrary.simpleMessage("Type"),
+    "undo": MessageLookupByLibrary.simpleMessage("Undo"),
     "unknown_error": MessageLookupByLibrary.simpleMessage("Unknown error"),
     "unknown_error_try_again": MessageLookupByLibrary.simpleMessage(
       "Unknown error, try again",

@@ -1,5 +1,6 @@
 import 'package:Bitmark/app/router/app_router.dart';
 import 'package:Bitmark/app/widgets/size_box.dart';
+import 'package:Bitmark/core/utils/toast_helper.dart';
 import 'package:Bitmark/features/briefcase/providers/favourite_provider.dart';
 import 'package:Bitmark/features/market/providers/compare_coins_provider.dart';
 import 'package:auto_route/auto_route.dart';
@@ -34,9 +35,14 @@ class CoinCard extends ConsumerWidget {
     }
   }
 
-  void remove(WidgetRef ref) => ref
-      .read(favouriteNotifierProvider.notifier)
-      .toggleIsFavourite(coin, price);
+  void remove(WidgetRef ref, BuildContext context) {
+    final notifier = ref.read(favouriteNotifierProvider.notifier);
+    notifier.toggleIsFavourite(coin, price);
+    ToastHelper.removeFavouriteCoin(
+      context: context,
+      onPressed: () => notifier.toggleIsFavourite(coin, price),
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -51,7 +57,7 @@ class CoinCard extends ConsumerWidget {
         subtitle: Text(price.price4),
         trailing: isFavourite ?? false
             ? IconButton(
-                onPressed: () => remove(ref),
+                onPressed: () => remove(ref, context),
                 icon: Icon(
                   Icons.favorite_outlined,
                   color: theme.colorScheme.error,

@@ -170,5 +170,7 @@
   "profit_per_hour": "Прибыль за час",
   "profit_per_day": "Прибыль за день",
   "profit_per_month": "Прибыль за месяц",
-  "create_trade": "Создайте сделку"
+  "create_trade": "Создайте сделку",
+  "coin_removed": "Монета удалена из избранного",
+  "undo": "Отменить"
 }

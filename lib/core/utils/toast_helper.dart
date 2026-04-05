@@ -1,8 +1,10 @@
+import 'package:Bitmark/core/utils/extensions.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../generated/l10n.dart';
 
 class ToastHelper {
-   static final s = S.current;
+  static final s = S.current;
 
   static void _toast(String msg) {
     Fluttertoast.showToast(msg: msg);
@@ -22,5 +24,23 @@ class ToastHelper {
 
   static void coinsAmountError() {
     _toast(s.coins_amount_error);
+  }
+
+  static void removeFavouriteCoin({
+    required BuildContext context,
+    required VoidCallback onPressed,
+  }) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(s.coin_removed, style: context.bodyMedium),
+        backgroundColor: context.theme.appBarTheme.backgroundColor,
+        action: SnackBarAction(
+          label: s.undo,
+          onPressed: onPressed,
+          textColor: context.displayLarge.color,
+        ),
+        duration: const Duration(seconds: 3),
+      ),
+    );
   }
 }
